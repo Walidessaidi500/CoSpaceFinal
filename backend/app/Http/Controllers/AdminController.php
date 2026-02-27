@@ -244,6 +244,14 @@ class AdminController extends Controller
             return response()->json(['message' => 'Espacio no encontrado'], 404);
         }
 
+        // Se convierten valores vacíos de latitud y longitud a null antes de validar
+        // y se normaliza el formato del precio (coma decimal → punto decimal)
+        $request->merge([
+            'latitud' => $request->input('latitud') !== '' ? $request->input('latitud') : null,
+            'longitud' => $request->input('longitud') !== '' ? $request->input('longitud') : null,
+            'precio_hora' => $request->input('precio_hora') ? str_replace(',', '.', $request->input('precio_hora')) : $request->input('precio_hora'),
+        ]);
+
         // Se validan los datos recibidos; 'sometimes' permite actualizar solo los campos enviados
         $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
             'titulo' => 'sometimes|required|string|max:100',
@@ -253,6 +261,12 @@ class AdminController extends Controller
             'precio_hora' => 'sometimes|required|numeric|min:0',
             'capacidad' => 'sometimes|required|integer|min:1',
             'estado' => 'sometimes|string',
+            'servicios' => 'array',
+            'servicios.*' => 'integer|exists:servicios,id_servicio',
+            'latitud' => 'sometimes|nullable|numeric',
+            'longitud' => 'sometimes|nullable|numeric',
+            'fotos' => 'sometimes|array',
+            'fotos.*' => 'image|mimes:jpeg,png,jpg|max:5120',
         ]);
 
         // Si la validación falla, se devuelven los errores con código 422 (entidad no procesable)
@@ -260,28 +274,51 @@ class AdminController extends Controller
             return response()->json(['message' => 'Datos inválidos', 'errors' => $validator->errors()], 422);
         }
 
-        // Se actualizan solo los campos permitidos del espacio
-        $espacio->update($request->only([
-            'titulo',
-            'ciudad',
-            'direccion',
-            'descripcion',
-            'precio_hora',
-            'capacidad',
-            'estado',
-            'latitud',
-            'longitud'
-        ]));
+        try {
+            DB::transaction(function () use ($request, $espacio) {
+                // Se actualizan solo los campos permitidos del espacio
+                $espacio->update($request->only([
+                    'titulo',
+                    'ciudad',
+                    'direccion',
+                    'descripcion',
+                    'precio_hora',
+                    'capacidad',
+                    'estado',
+                    'latitud',
+                    'longitud'
+                ]));
 
-        // Si se enviaron servicios, se sincronizan en la tabla pivote (relación muchos a muchos)
-        if ($request->has('servicios')) {
-            $espacio->servicios()->sync($request->servicios);
+                // Si se enviaron servicios, se sincronizan en la tabla pivote (relación muchos a muchos)
+                if ($request->has('servicios')) {
+                    $espacio->servicios()->sync($request->servicios);
+                }
+
+                // Si se enviaron nuevas fotos, se almacenan y registran como fotos adicionales del espacio
+                if ($request->hasFile('fotos')) {
+                    foreach ($request->file('fotos') as $foto) {
+                        $mimeType = $foto->getClientMimeType();
+                        $base64 = base64_encode(file_get_contents($foto->path()));
+
+                        \App\Models\FotoEspacio::create([
+                            'id_espacio' => $espacio->id_espacio,
+                            'url_foto' => 'data:' . $mimeType . ';base64,' . $base64,
+                            'es_principal' => false
+                        ]);
+                    }
+                }
+            });
+
+            return response()->json([
+                'message' => 'Espacio actualizado por admin exitosamente',
+                'data' => $espacio->load(['servicios', 'fotos'])
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al actualizar el espacio',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        return response()->json([
-            'message' => 'Espacio actualizado por admin exitosamente',
-            'data' => $espacio
-        ]);
     }
 
     // ==========================================
