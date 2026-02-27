@@ -34,6 +34,14 @@ export class ApiService {
   }
 
   /**
+   * Registra un nuevo anfitrión enviando los datos y fotos del espacio como FormData.
+   * Utiliza multipart/form-data para subir las imágenes del espacio junto con los datos del formulario.
+   */
+  registerWithPhotos(formData: FormData) {
+    return this.http.post(`${environment.apiUrl}/register`, formData);
+  }
+
+  /**
    * Registra un nuevo usuario con rol de Cliente en la plataforma.
    * Envía los datos básicos del formulario de registro (nombre, email, contraseña).
    */

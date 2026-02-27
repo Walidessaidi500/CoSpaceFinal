@@ -105,6 +105,8 @@ class AuthController extends Controller
             'precio_hora' => 'required|numeric|min:0',
             'latitud' => 'nullable|numeric',
             'longitud' => 'nullable|numeric',
+            'fotos' => 'required|array|min:3',
+            'fotos.*' => 'image|mimes:jpeg,png,jpg|max:5120',
         ]);
 
         try {
@@ -128,7 +130,7 @@ class AuthController extends Controller
             ]);
 
             // Se crea el primer espacio del anfitrión con los datos del formulario de registro
-            Espacio::create([
+            $espacio = Espacio::create([
                 'id_anfitrion' => $usuario->id_usuario,
                 'titulo' => $validatedData['titulo'],
                 'ciudad' => $validatedData['ciudad'],
@@ -140,6 +142,18 @@ class AuthController extends Controller
                 'longitud' => $validatedData['longitud'] ?? null,
                 'estado' => 'Disponible',
             ]);
+
+            // Se almacenan las fotos del espacio en el disco público
+            if ($request->hasFile('fotos')) {
+                foreach ($request->file('fotos') as $index => $foto) {
+                    $path = $foto->store('espacios', 'public');
+                    \App\Models\FotoEspacio::create([
+                        'id_espacio' => $espacio->id_espacio,
+                        'url_foto' => '/storage/' . $path,
+                        'es_principal' => $index === 0
+                    ]);
+                }
+            }
 
             DB::commit();
 

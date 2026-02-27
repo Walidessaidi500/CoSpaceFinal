@@ -17,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
  *
  * - **Datos personales**: Nombre, email, contraseña.
  * - **Datos del espacio**: Título, dirección, ciudad, capacidad, precio/hora, descripción.
+ * - **Fotos del espacio**: Mínimo 3 fotos del espacio (la primera será la principal).
  *
  * Integra Google Maps Places Autocomplete para facilitar la introducción de direcciones,
  * extrayendo automáticamente la ciudad, latitud y longitud del lugar seleccionado.
@@ -40,6 +41,11 @@ export class RegistroAnfitrionComponent implements AfterViewInit {
     loading = false;
     /** Mensaje de error si el registro falla */
     errorMessage = '';
+
+    /** Archivos de fotos seleccionados para el espacio */
+    selectedPhotos: File[] = [];
+    /** URLs de vista previa de las fotos seleccionadas */
+    photosPreviews: string[] = [];
 
     constructor(
         private fb: FormBuilder,
@@ -138,17 +144,64 @@ export class RegistroAnfitrionComponent implements AfterViewInit {
     }
 
     /**
-     * Envía los datos de registro al backend.
+     * Se ejecuta cuando el usuario selecciona fotos desde el input de archivos.
+     * Genera vistas previas (thumbnails) de las fotos seleccionadas.
+     */
+    onPhotosSelected(event: Event) {
+        const input = event.target as HTMLInputElement;
+        if (!input.files) return;
+
+        const newFiles = Array.from(input.files);
+        this.selectedPhotos = [...this.selectedPhotos, ...newFiles];
+
+        // Se generan las vistas previas para mostrar los thumbnails
+        for (const file of newFiles) {
+            const reader = new FileReader();
+            reader.onload = (e: any) => {
+                this.photosPreviews.push(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    /** Elimina una foto seleccionada por su índice. */
+    removePhoto(index: number) {
+        this.selectedPhotos.splice(index, 1);
+        this.photosPreviews.splice(index, 1);
+    }
+
+    /**
+     * Envía los datos de registro al backend como FormData (para incluir las fotos).
      * Si el registro es exitoso, redirige al usuario a la vista de inicio de sesión.
      */
     onSubmit() {
-        if (this.registroForm.invalid) {
+        if (this.registroForm.invalid || this.selectedPhotos.length < 3) {
             this.registroForm.markAllAsTouched();
+            if (this.selectedPhotos.length < 3) {
+                this.errorMessage = 'Se requieren al menos 3 fotos del espacio.';
+            }
             return;
         }
 
         this.loading = true;
-        this.apiService.register(this.registroForm.value).subscribe({
+
+        // Se construye un FormData para enviar datos y fotos juntos
+        const formData = new FormData();
+        const formValues = this.registroForm.value;
+
+        // Se añaden los campos del formulario al FormData
+        Object.keys(formValues).forEach(key => {
+            if (formValues[key] !== null && formValues[key] !== undefined) {
+                formData.append(key, formValues[key]);
+            }
+        });
+
+        // Se añaden las fotos al FormData
+        this.selectedPhotos.forEach(photo => {
+            formData.append('fotos[]', photo);
+        });
+
+        this.apiService.registerWithPhotos(formData).subscribe({
             next: (res: any) => {
                 alert('Cuenta creada con éxito');
                 this.router.navigate(['/iniciar-sesion']);

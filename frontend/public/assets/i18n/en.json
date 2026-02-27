@@ -123,7 +123,9 @@
             "SUBMIT": "Create Host Account",
             "ERROR_PASSWORD_MISMATCH": "Passwords do not match",
             "LOOKING_FOR_SPACE": "Looking for a space?",
-            "REGISTER_CLIENT_LINK": "Register as a Client"
+            "REGISTER_CLIENT_LINK": "Register as a Client",
+            "PHOTOS": "Space Photos",
+            "PHOTOS_HINT": "Upload at least 3 photos of your space (the first one will be the main photo)"
         },
         "FORGOT_PASSWORD": {
             "TITLE": "Recover Password",

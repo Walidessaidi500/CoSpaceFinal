@@ -123,7 +123,9 @@
             "SUBMIT": "Crear Cuenta de Anfitrión",
             "ERROR_PASSWORD_MISMATCH": "Las contraseñas no coinciden",
             "LOOKING_FOR_SPACE": "¿Buscando un espacio?",
-            "REGISTER_CLIENT_LINK": "Registrarse como Cliente"
+            "REGISTER_CLIENT_LINK": "Registrarse como Cliente",
+            "PHOTOS": "Fotos del Espacio",
+            "PHOTOS_HINT": "Sube al menos 3 fotos de tu espacio (la primera será la foto principal)"
         },
         "FORGOT_PASSWORD": {
             "TITLE": "Recuperar Contraseña",

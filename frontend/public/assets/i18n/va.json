@@ -123,7 +123,9 @@
             "SUBMIT": "Crear Compte d'Amfitrió",
             "ERROR_PASSWORD_MISMATCH": "Les contrasenyes no coincideixen",
             "LOOKING_FOR_SPACE": "Buscant un espai?",
-            "REGISTER_CLIENT_LINK": "Registrar-se com a Client"
+            "REGISTER_CLIENT_LINK": "Registrar-se com a Client",
+            "PHOTOS": "Fotos de l'Espai",
+            "PHOTOS_HINT": "Puja almenys 3 fotos del teu espai (la primera serà la foto principal)"
         },
         "FORGOT_PASSWORD": {
             "TITLE": "Recuperar Contrasenya",

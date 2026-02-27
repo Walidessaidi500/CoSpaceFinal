@@ -2,81 +2,83 @@
   class="min-h-screen flex items-center justify-center bg-[#f4f4f6] dark:bg-primary-blue py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
 
   <div
-    class="w-full max-w-lg bg-white dark:bg-[#1a2736] rounded-2xl shadow-xl p-8 md:p-10 transition-colors duration-300">
+    class="bg-white dark:bg-[#1a2736] p-10 rounded-2xl shadow-lg w-full max-w-[440px] mx-auto border border-[rgba(0,0,0,0.05)] dark:border-gray-700 transition-colors duration-300">
 
-    <div class="text-center mb-8">
-      <h2 class="text-3xl font-bold text-slate-900 dark:text-white leading-tight mb-2">
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <h2 class="text-[32px] font-semibold text-primary-blue dark:text-white mb-2 font-['Poppins']">
         {{ 'AUTH.REGISTER_CLIENT.TITLE' | translate }}
       </h2>
-      <p class="text-gray-500 dark:text-gray-400">
+      <p class="text-neutral-placeholder dark:text-gray-400 text-[16px]">
         {{ 'AUTH.REGISTER_CLIENT.SUBTITLE' | translate }}
       </p>
     </div>
 
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-5">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4">
 
-      <div>
-        <label for="fullName" class="block text-slate-700 dark:text-gray-300 text-sm font-bold mb-2">
+      <!-- Nombre Completo -->
+      <div class="space-y-2">
+        <label for="fullName" class="text-[14px] font-medium text-primary-blue dark:text-gray-200 block">
           {{ 'AUTH.REGISTER_CLIENT.FULL_NAME' | translate }}
         </label>
-        <div class="relative">
-          <input id="fullName" type="text" formControlName="nombre_completo"
-            [placeholder]="'AUTH.REGISTER_CLIENT.FULL_NAME_PLACEHOLDER' | translate"
-            class="w-full bg-gray-100 dark:bg-gray-700/50 text-slate-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 text-base rounded-lg px-4 py-3 outline-none focus:bg-white dark:focus:bg-gray-700 focus:ring-2 focus:ring-orange-500/50 transition-all border border-transparent focus:border-gray-300 dark:focus:border-gray-600">
-        </div>
+        <input id="fullName" type="text" formControlName="nombre_completo"
+          [placeholder]="'AUTH.REGISTER_CLIENT.FULL_NAME_PLACEHOLDER' | translate"
+          class="w-full px-4 py-3 rounded-2xl bg-neutral-input dark:bg-gray-700/50 border-none focus:ring-2 focus:ring-primary-orange/20 outline-none transition-all placeholder-neutral-placeholder dark:placeholder-gray-500 text-primary-blue dark:text-white font-medium">
       </div>
 
-      <div>
-        <label for="email" class="block text-slate-700 dark:text-gray-300 text-sm font-bold mb-2">
+      <!-- Email -->
+      <div class="space-y-2">
+        <label for="email" class="text-[14px] font-medium text-primary-blue dark:text-gray-200 block">
           {{ 'AUTH.LOGIN.EMAIL_LABEL' | translate }}
         </label>
         <input id="email" type="email" formControlName="email"
           [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate"
-          class="w-full bg-gray-100 dark:bg-gray-700/50 text-slate-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 text-base rounded-lg px-4 py-3 outline-none focus:bg-white dark:focus:bg-gray-700 focus:ring-2 focus:ring-orange-500/50 transition-all border border-transparent focus:border-gray-300 dark:focus:border-gray-600">
+          class="w-full px-4 py-3 rounded-2xl bg-neutral-input dark:bg-gray-700/50 border-none focus:ring-2 focus:ring-primary-orange/20 outline-none transition-all placeholder-neutral-placeholder dark:placeholder-gray-500 text-primary-blue dark:text-white font-medium">
       </div>
 
-      <div>
-        <label for="password" class="block text-slate-700 dark:text-gray-300 text-sm font-bold mb-2">
+      <!-- Contraseña -->
+      <div class="space-y-2">
+        <label for="password" class="text-[14px] font-medium text-primary-blue dark:text-gray-200 block">
           {{ 'AUTH.LOGIN.PASSWORD_LABEL' | translate }}
         </label>
         <input id="password" type="password" formControlName="password"
           [placeholder]="'AUTH.LOGIN.PASSWORD_PLACEHOLDER' | translate"
-          class="w-full bg-gray-100 dark:bg-gray-700/50 text-slate-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 text-base rounded-lg px-4 py-3 outline-none focus:bg-white dark:focus:bg-gray-700 focus:ring-2 focus:ring-orange-500/50 transition-all border border-transparent focus:border-gray-300 dark:focus:border-gray-600">
+          class="w-full px-4 py-3 rounded-2xl bg-neutral-input dark:bg-gray-700/50 border-none focus:ring-2 focus:ring-primary-orange/20 outline-none transition-all placeholder-neutral-placeholder dark:placeholder-gray-500 text-primary-blue dark:text-white font-medium">
       </div>
 
-      <div>
-        <label for="confirmPassword" class="block text-slate-700 dark:text-gray-300 text-sm font-bold mb-2">
+      <!-- Confirmar Contraseña -->
+      <div class="space-y-2">
+        <label for="confirmPassword" class="text-[14px] font-medium text-primary-blue dark:text-gray-200 block">
           {{ 'AUTH.REGISTER_CLIENT.CONFIRM_PASSWORD' | translate }}
         </label>
         <input id="confirmPassword" type="password" formControlName="confirmPassword"
           [placeholder]="'AUTH.LOGIN.PASSWORD_PLACEHOLDER' | translate"
-          class="w-full bg-gray-100 dark:bg-gray-700/50 text-slate-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 text-base rounded-lg px-4 py-3 outline-none focus:bg-white dark:focus:bg-gray-700 focus:ring-2 focus:ring-orange-500/50 transition-all border border-transparent focus:border-gray-300 dark:focus:border-gray-600">
+          class="w-full px-4 py-3 rounded-2xl bg-neutral-input dark:bg-gray-700/50 border-none focus:ring-2 focus:ring-primary-orange/20 outline-none transition-all placeholder-neutral-placeholder dark:placeholder-gray-500 text-primary-blue dark:text-white font-medium">
       </div>
 
-      <div class="pt-2">
-        <button type="submit" [disabled]="registerForm.invalid || loading"
-          class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-3 px-6 rounded-full transition-colors shadow-lg hover:shadow-xl disabled:bg-orange-300 disabled:cursor-not-allowed transform active:scale-[0.99]">
-          {{ (loading ? 'AUTH.REGISTER_CLIENT.SUBMITTING' : 'AUTH.REGISTER_CLIENT.SUBMIT') | translate }}
-        </button>
-      </div>
-
+      <!-- Botón de Registro -->
+      <button type="submit" [disabled]="registerForm.invalid || loading"
+        class="w-full py-3.5 px-6 bg-primary-orange hover:bg-[#e66e00] text-white rounded-full font-medium shadow-md hover:shadow-lg transform active:scale-[0.98] transition-all duration-200 mt-2 flex justify-center items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+        @if (loading) {
+        <span class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+        }
+        <span>{{ (loading ? 'AUTH.REGISTER_CLIENT.SUBMITTING' : 'AUTH.REGISTER_CLIENT.SUBMIT') | translate }}</span>
+      </button>
     </form>
 
-    <div class="mt-8 text-center space-y-2">
-      <p class="text-gray-600 dark:text-gray-400 text-sm">
-        {{ 'AUTH.REGISTER_CLIENT.ALREADY_ACCOUNT' | translate }}
-        <a routerLink="/iniciar-sesion"
-          class="text-orange-500 hover:text-orange-600 font-bold transition-colors cursor-pointer hover:underline">
-          {{ 'AUTH.LOGIN.SUBMIT' | translate }}
-        </a>
-      </p>
-      <p class="text-gray-600 dark:text-gray-400 text-sm">
-        {{ 'AUTH.REGISTER_CLIENT.WANT_HOST' | translate }}
-        <a routerLink="/registro-anfitrion"
-          class="text-orange-500 hover:text-orange-600 font-bold transition-colors cursor-pointer hover:underline">
-          {{ 'AUTH.REGISTER_CLIENT.REGISTER_HOST_LINK' | translate }}
-        </a>
-      </p>
+    <!-- Links -->
+    <div class="mt-8 text-center text-[14px] text-neutral-text dark:text-gray-400">
+      {{ 'AUTH.REGISTER_CLIENT.ALREADY_ACCOUNT' | translate }}
+      <a routerLink="/iniciar-sesion" class="text-primary-orange font-medium hover:text-[#e66e00] transition-colors">
+        {{ 'AUTH.LOGIN.SUBMIT' | translate }}
+      </a>
+    </div>
+    <div class="mt-4 text-center text-[14px] text-neutral-text dark:text-gray-400">
+      {{ 'AUTH.REGISTER_CLIENT.WANT_HOST' | translate }}
+      <a routerLink="/registro-anfitrion"
+        class="text-primary-orange font-medium hover:text-[#e66e00] transition-colors">
+        {{ 'AUTH.REGISTER_CLIENT.REGISTER_HOST_LINK' | translate }}
+      </a>
     </div>
 
   </div>
