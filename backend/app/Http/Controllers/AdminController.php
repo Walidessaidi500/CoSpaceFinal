@@ -261,12 +261,14 @@ class AdminController extends Controller
             'precio_hora' => 'sometimes|required|numeric|min:0',
             'capacidad' => 'sometimes|required|integer|min:1',
             'estado' => 'sometimes|string',
-            'servicios' => 'array',
+            'servicios' => 'sometimes|array',
             'servicios.*' => 'integer|exists:servicios,id_servicio',
             'latitud' => 'sometimes|nullable|numeric',
             'longitud' => 'sometimes|nullable|numeric',
             'fotos' => 'sometimes|array',
             'fotos.*' => 'image|mimes:jpeg,png,jpg|max:5120',
+            'fotos_eliminadas' => 'sometimes|array',
+            'fotos_eliminadas.*' => 'integer|exists:fotos_espacio,id_foto',
         ]);
 
         // Si la validación falla, se devuelven los errores con código 422 (entidad no procesable)
@@ -290,8 +292,15 @@ class AdminController extends Controller
                 ]));
 
                 // Si se enviaron servicios, se sincronizan en la tabla pivote (relación muchos a muchos)
-                if ($request->has('servicios')) {
-                    $espacio->servicios()->sync($request->servicios);
+                // Si la petición viene del formulario multipart, form-data omite arreglos vacíos.
+                // Usamos get() con un array vacío como predeterminado para permitir desmarcar todos.
+                $espacio->servicios()->sync($request->get('servicios', []));
+
+                // Si se indicaron fotos para eliminar, se eliminan
+                if ($request->has('fotos_eliminadas')) {
+                    \App\Models\FotoEspacio::whereIn('id_foto', $request->fotos_eliminadas)
+                        ->where('id_espacio', $espacio->id_espacio)
+                        ->delete();
                 }
 
                 // Si se enviaron nuevas fotos, se almacenan y registran como fotos adicionales del espacio

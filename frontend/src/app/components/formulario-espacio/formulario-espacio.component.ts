@@ -43,7 +43,12 @@ export class FormularioEspacioComponent implements AfterViewInit {
   /** Archivos de imagen seleccionados por el usuario */
   selectedFiles: File[] = [];
   /** URLs de previsualización de las imágenes seleccionadas */
+  /** URLs de previsualización de las imágenes seleccionadas */
   previewImages: string[] = [];
+  /** Lista original de fotos existentes cargadas desde el backend */
+  existingPhotos: any[] = [];
+  /** IDs de fotos existentes que el usuario ha solicitado eliminar */
+  fotosEliminadasIds: number[] = [];
 
   /**
    * Lista de amenidades disponibles con IDs fijos que corresponden
@@ -207,7 +212,14 @@ export class FormularioEspacioComponent implements AfterViewInit {
 
   /** Elimina un archivo y su previsualización en el índice especificado. */
   removeFile(index: number) {
-    this.selectedFiles.splice(index, 1);
+    if (index < this.existingPhotos.length) {
+      // Es una foto que ya existía en la base de datos
+      this.fotosEliminadasIds.push(this.existingPhotos[index].id_foto);
+      this.existingPhotos.splice(index, 1);
+    } else {
+      // Es una foto recién añadida que no está en la base de datos
+      this.selectedFiles.splice(index - this.existingPhotos.length, 1);
+    }
     this.previewImages.splice(index, 1);
   }
 
@@ -243,6 +255,11 @@ export class FormularioEspacioComponent implements AfterViewInit {
       formData.append('fotos[]', file);
     });
 
+    // Se envían los IDs de las fotos que el usuario ha eliminado
+    this.fotosEliminadasIds.forEach((id) => {
+      formData.append('fotos_eliminadas[]', id.toString());
+    });
+
     return formData;
   }
 
@@ -266,6 +283,7 @@ export class FormularioEspacioComponent implements AfterViewInit {
 
     // Se generan las URLs de previsualización para las fotos existentes
     if (data.fotos && data.fotos.length > 0) {
+      this.existingPhotos = [...data.fotos];
       this.previewImages = data.fotos.map((f: any) => this.getFullUrl(f.url_foto));
     }
   }

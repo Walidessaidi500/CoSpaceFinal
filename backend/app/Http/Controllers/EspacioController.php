@@ -313,12 +313,14 @@ class EspacioController extends Controller
             'descripcion' => 'sometimes|required|string|min:20',
             'precio_hora' => 'sometimes|required|numeric|min:0',
             'capacidad' => 'sometimes|required|integer|min:1',
-            'servicios' => 'array',
+            'servicios' => 'sometimes|array',
             'servicios.*' => 'integer|exists:servicios,id_servicio',
             'latitud' => 'sometimes|nullable|numeric',
             'longitud' => 'sometimes|nullable|numeric',
             'fotos' => 'sometimes|array',
             'fotos.*' => 'image|mimes:jpeg,png,jpg|max:5120',
+            'fotos_eliminadas' => 'sometimes|array',
+            'fotos_eliminadas.*' => 'integer|exists:fotos_espacio,id_foto',
         ]);
 
         if ($validator->fails()) {
@@ -343,8 +345,14 @@ class EspacioController extends Controller
                 ]));
 
                 // Si se enviaron servicios, se sincronizan con la tabla pivote (reemplaza los anteriores)
-                if ($request->has('servicios')) {
-                    $espacio->servicios()->sync($request->servicios);
+                // Se predetermina a vacío si form-data omite el array
+                $espacio->servicios()->sync($request->get('servicios', []));
+
+                // Si se indicaron fotos para eliminar, se eliminan
+                if ($request->has('fotos_eliminadas')) {
+                    \App\Models\FotoEspacio::whereIn('id_foto', $request->fotos_eliminadas)
+                        ->where('id_espacio', $espacio->id_espacio)
+                        ->delete();
                 }
 
                 // Si se enviaron nuevas fotos, se almacenan y registran como fotos adicionales del espacio
