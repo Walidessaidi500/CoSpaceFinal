@@ -31,7 +31,7 @@ export const routes: Routes = [
     { path: 'registro-cliente', component: RegistroClienteComponent, canActivate: [guestGuard], title: 'CoSpace - Registro Cliente' },
     { path: 'explorar', loadComponent: () => import('./components/explorar/explorar.component').then(m => m.ExplorarComponent), title: 'CoSpace - Explorar' },
     { path: 'espacios/:id', component: EspaciosDetallesComponent, title: 'CoSpace - Detalles del Espacio' },
-    { path: 'reserva/:id', component: ReservaComponent, title: 'CoSpace - Reservar Espacio' },
+    { path: 'reserva/:id', component: ReservaComponent, canActivate: [clienteGuard], title: 'CoSpace - Reservar Espacio' },
 
     // Rutas de información pública
     {
