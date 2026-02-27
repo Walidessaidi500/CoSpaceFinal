@@ -32,7 +32,6 @@ export const routes: Routes = [
     { path: 'explorar', loadComponent: () => import('./components/explorar/explorar.component').then(m => m.ExplorarComponent), title: 'CoSpace - Explorar' },
     { path: 'espacios/:id', component: EspaciosDetallesComponent, title: 'CoSpace - Detalles del Espacio' },
     { path: 'reserva/:id', component: ReservaComponent, title: 'CoSpace - Reservar Espacio' },
-    { path: 'anfitrion/:id', loadComponent: () => import('./components/perfil-anfitrion/perfil-anfitrion').then(m => m.PerfilAnfitrion), title: 'CoSpace - Perfil Anfitrión' },
 
     // Rutas de información pública
     {
@@ -52,6 +51,8 @@ export const routes: Routes = [
     },
 
     // Rutas del anfitrión (protegidas con anfitrionGuard que verifica el rol del usuario)
+    // IMPORTANT: estas rutas fijas deben ir ANTES de 'anfitrion/:id' para que Angular
+    // no las confunda como parámetros dinámicos de perfil
     {
         path: 'anfitrion/crear-espacio',
         component: CrearEspacioComponent,
@@ -71,6 +72,15 @@ export const routes: Routes = [
         canActivate: [anfitrionGuard]
     },
     {
+        path: 'anfitrion/reservas',
+        loadComponent: () => import('./components/reservas-anfitrion/reservas-anfitrion.component').then(m => m.ReservasAnfitrionComponent),
+        title: 'CoSpace - Reservas Recibidas',
+        canActivate: [anfitrionGuard]
+    },
+
+    // Ruta dinámica de perfil público del anfitrión — debe ir DESPUÉS de todas las rutas fijas
+    { path: 'anfitrion/:id', loadComponent: () => import('./components/perfil-anfitrion/perfil-anfitrion').then(m => m.PerfilAnfitrion), title: 'CoSpace - Perfil Anfitrión' },
+    {
         path: 'iniciar-sesion',
         component: LoginComponent,
         title: 'CoSpace - Iniciar Sesión',
@@ -86,12 +96,6 @@ export const routes: Routes = [
         path: 'configuracion',
         loadComponent: () => import('./components/configuracion/configuracion.component').then(m => m.ConfiguracionComponent),
         title: 'CoSpace - Configuración'
-    },
-    {
-        path: 'anfitrion/reservas',
-        loadComponent: () => import('./components/reservas-anfitrion/reservas-anfitrion.component').then(m => m.ReservasAnfitrionComponent),
-        title: 'CoSpace - Reservas Recibidas',
-        canActivate: [anfitrionGuard]
     },
 
     // Rutas del panel de administración (carga perezosa para mejor rendimiento)
