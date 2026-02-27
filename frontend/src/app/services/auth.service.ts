@@ -74,7 +74,7 @@ export class AuthService {
         localStorage.removeItem('user');
         localStorage.removeItem('role');
         this.currentUserSubject.next(null);
-        this.router.navigate(['/']);
+        this.router.navigate(['/iniciar-sesion']);
     }
 
     /**
