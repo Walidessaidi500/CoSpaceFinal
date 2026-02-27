@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -11,13 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('usuarios', function (Blueprint $table) {
-            $table->longText('foto_perfil')->nullable()->change();
-        });
-
-        Schema::table('fotos_espacio', function (Blueprint $table) {
-            $table->longText('url_foto')->change();
-        });
+        DB::statement('ALTER TABLE usuarios MODIFY foto_perfil LONGTEXT NULL');
+        DB::statement('ALTER TABLE fotos_espacio MODIFY url_foto LONGTEXT NOT NULL');
     }
 
     /**
@@ -25,12 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('usuarios', function (Blueprint $table) {
-            $table->string('foto_perfil', 255)->nullable()->change();
-        });
-
-        Schema::table('fotos_espacio', function (Blueprint $table) {
-            $table->string('url_foto', 255)->change();
-        });
+        DB::statement('ALTER TABLE usuarios MODIFY foto_perfil VARCHAR(255) NULL');
+        DB::statement('ALTER TABLE fotos_espacio MODIFY url_foto VARCHAR(255) NOT NULL');
     }
 };
