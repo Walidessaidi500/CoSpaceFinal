@@ -90,9 +90,11 @@ class EspacioController extends Controller
     public function store(Request $request)
     {
         // Se convierten valores vacíos de latitud y longitud a null antes de validar
+        // y se normaliza el formato del precio (coma decimal → punto decimal)
         $request->merge([
             'latitud' => $request->input('latitud') !== '' ? $request->input('latitud') : null,
             'longitud' => $request->input('longitud') !== '' ? $request->input('longitud') : null,
+            'precio_hora' => $request->input('precio_hora') ? str_replace(',', '.', $request->input('precio_hora')) : $request->input('precio_hora'),
         ]);
 
         $validator = Validator::make($request->all(), [
@@ -295,9 +297,11 @@ class EspacioController extends Controller
         }
 
         // Se convierten valores vacíos de latitud y longitud a null antes de validar
+        // y se normaliza el formato del precio (coma decimal → punto decimal)
         $request->merge([
             'latitud' => $request->input('latitud') !== '' ? $request->input('latitud') : null,
             'longitud' => $request->input('longitud') !== '' ? $request->input('longitud') : null,
+            'precio_hora' => $request->input('precio_hora') ? str_replace(',', '.', $request->input('precio_hora')) : $request->input('precio_hora'),
         ]);
 
         // Se validan los datos; 'sometimes' permite actualizar solo los campos enviados en la petición
