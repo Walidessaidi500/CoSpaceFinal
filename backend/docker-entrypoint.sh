@@ -21,6 +21,9 @@ fi
 # Run migrations
 php artisan migrate --force || echo "Migration failed, continuing..."
 
+# Run seeders
+php artisan db:seed --force || echo "Seeding failed, continuing..."
+
 # Cache configuration for production
 php artisan config:cache
 php artisan route:cache
@@ -28,6 +31,11 @@ php artisan view:cache
 
 # Create storage symlink
 php artisan storage:link || true
+
+# Forcefully ensure only prefork MPM is enabled to prevent startup crash
+rm -f /etc/apache2/mods-enabled/mpm*.conf
+rm -f /etc/apache2/mods-enabled/mpm*.load
+a2enmod mpm_prefork || true
 
 echo "Starting CoSpace Backend on port ${PORT}..."
 
