@@ -1,0 +1,11 @@
+<div
+  class="w-full bg-white dark:bg-[#1a2736] border-t border-neutral-200 dark:border-gray-700 p-4 px-8 flex justify-end gap-4 shadow-[0_-4px_20px_rgba(0,0,0,0.03)] items-center transition-colors">
+  <button (click)="cancelar.emit()"
+    class="px-8 py-3 rounded-full border border-neutral-300 dark:border-gray-600 text-primary-blue dark:text-gray-200 font-bold text-sm hover:bg-neutral-50 dark:hover:bg-gray-700 transition-colors">
+    Cancelar
+  </button>
+  <button (click)="guardar.emit()"
+    class="px-8 py-3 rounded-full bg-primary-orange text-white font-bold text-sm shadow-md hover:opacity-90 transition-colors">
+    {{ isEditMode ? 'Guardar Cambios' : 'Publicar Área' }}
+  </button>
+</div>

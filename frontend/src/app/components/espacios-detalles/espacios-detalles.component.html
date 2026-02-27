@@ -1,0 +1,646 @@
+<div class="min-h-screen bg-white dark:bg-primary-blue transition-colors duration-300 pb-20 pt-24">
+  @if (isLoading) {
+    <div class="min-h-[60vh] flex flex-col items-center justify-center gap-4">
+      <div class="w-12 h-12 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin"></div>
+      <p class="text-gray-500 dark:text-gray-400 font-medium">{{ 'SPACE_DETAILS.LOADING' | translate }}</p>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="min-h-[60vh] flex flex-col items-center justify-center gap-6 px-6 text-center">
+      <div class="bg-red-50 dark:bg-red-900/30 p-6 rounded-3xl">
+        <svg class="w-16 h-16 text-red-400 mb-4 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">{{ 'SPACE_DETAILS.ERROR_TITLE' | translate
+        }}</h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-6">{{ errorMessage }}</p>
+        <button routerLink="/explorar"
+          class="bg-[#0f172a] dark:bg-white text-white dark:text-[#0f172a] px-8 py-3 rounded-xl font-semibold hover:bg-slate-800 dark:hover:bg-gray-100 transition-all">
+          {{ 'SPACE_DETAILS.BACK_BTN' | translate }}
+        </button>
+      </div>
+    </div>
+  }
+
+  @if (!isLoading && space) {
+    <main class="max-w-6xl mx-auto p-6 md:p-10 font-sans text-gray-800 dark:text-gray-200">
+      @if (space.imagenes?.length) {
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 h-[350px] md:h-[500px] mb-10">
+          <div class="md:col-span-2 rounded-3xl overflow-hidden shadow-sm bg-gray-100 dark:bg-gray-700 cursor-pointer group relative"
+            (click)="openModal(space.imagenes[0])">
+            <img [src]="space.imagenes[0]"
+              class="w-full h-full object-cover hover:scale-105 transition duration-500" alt="Vista principal">
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
+          </div>
+          @if (space.imagenes[1]) {
+            <div class="hidden md:flex md:flex-col md:col-span-1 gap-4">
+              <div class="rounded-3xl overflow-hidden shadow-sm bg-gray-100 dark:bg-gray-700 flex-1 cursor-pointer group relative"
+                (click)="openModal(space.imagenes[1])">
+                <img [src]="space.imagenes[1]"
+                  class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300">
+                </div>
+              </div>
+              @if (space.imagenes[2]) {
+                <div class="rounded-3xl overflow-hidden shadow-sm bg-gray-100 dark:bg-gray-700 flex-1 cursor-pointer group relative"
+                  (click)="openModal(space.imagenes[2])">
+                  <img [src]="space.imagenes[2]"
+                    class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                  <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300">
+                  </div>
+                </div>
+              }
+            </div>
+          }
+          @if (space.imagenes[3]) {
+            <div class="hidden md:block md:col-span-1 rounded-3xl overflow-hidden shadow-sm bg-gray-100 dark:bg-gray-700 cursor-pointer group relative"
+              (click)="openModal(space.imagenes[3])">
+              <img [src]="space.imagenes[3]"
+                class="w-full h-full object-cover hover:scale-105 transition duration-500">
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
+            </div>
+          }
+        </div>
+      }
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div class="lg:col-span-2">
+          <div class="mb-8">
+            <div class="flex items-start justify-between gap-4">
+              <h1 class="text-4xl font-bold tracking-tight mb-3 dark:text-white text-gray-900">{{ space.titulo
+                }}
+              </h1>
+              <!-- Botón Reportar (Solo Clientes) -->
+              @if (isCliente) {
+                <button (click)="openReporteModal()"
+                  class="shrink-0 mt-1 p-2.5 text-gray-400 hover:text-red-500 dark:text-gray-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all"
+                  title="Reportar este espacio">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                  </svg>
+                </button>
+              }
+            </div>
+            <div class="flex flex-wrap items-center gap-6 text-gray-500 dark:text-gray-400">
+              <span class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-orange-500" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                  </path>
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg> {{ space.direccion }}
+              </span>
+              <span class="flex items-center gap-2 font-medium text-gray-900 dark:text-gray-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-orange-400" fill="currentColor"
+                  viewBox="0 0 20 20">
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                  </path>
+                </svg> {{ resumenValoraciones?.promedio ? resumenValoraciones.promedio : '0.0' }}
+                <span class="text-gray-400 font-normal">({{ resumenValoraciones?.total ?
+                  resumenValoraciones.total : 0 }} {{
+                'SPACE_DETAILS.REVIEWS' | translate }})</span>
+              </span>
+            </div>
+          </div>
+          <!-- Anfitrión Section -->
+          <div [routerLink]="['/anfitrion', space.anfitrionId]"
+            class="flex items-center gap-4 py-8 mb-8 border-y border-gray-100 dark:border-gray-800 cursor-pointer hover:bg-gray-50 dark:hover:bg-[#1a2736]/50 transition-colors duration-200 px-4 -mx-4 rounded-2xl group">
+            <div class="shrink-0 relative">
+              @if (space.anfitrionFoto) {
+                <img [src]="space.anfitrionFoto"
+                  class="w-16 h-16 rounded-full object-cover shadow-md border-2 border-white dark:border-[#1a2736] group-hover:scale-105 transition-transform"
+                  alt="Foto del anfitrión" />
+              }
+              @if (!space.anfitrionFoto) {
+                <div
+                  class="w-16 h-16 rounded-full bg-primary-orange flex items-center justify-center text-white font-bold text-xl shadow-md border-2 border-white dark:border-[#1a2736] group-hover:scale-105 transition-transform">
+                  {{ space.anfitrionNombre ? space.anfitrionNombre.charAt(0).toUpperCase() : 'A' }}
+                </div>
+              }
+            </div>
+            <div class="flex-1">
+              <h3
+                class="text-lg font-bold text-gray-900 dark:text-white m-0 tracking-tight group-hover:text-primary-orange transition-colors">
+                Anfitrión: {{
+              space.anfitrionNombre }}</h3>
+              <p class="text-sm text-gray-500 dark:text-gray-400 m-0 mt-0.5">Contacta para cualquier duda
+              sobre el espacio</p>
+            </div>
+            <div class="text-gray-400 group-hover:text-primary-orange transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+          <div class="prose prose-slate dark:prose-invert max-w-none mb-12">
+            <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">{{ 'SPACE_DETAILS.ABOUT_TITLE' |
+            translate }}</h2>
+            <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">{{ space.descripcion }}</p>
+          </div>
+          <section>
+            <h2 class="text-2xl font-bold mb-8 text-gray-900 dark:text-white">{{ 'SPACE_DETAILS.FEATURES_TITLE'
+            | translate }}</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+              @for (item of space.caracteristicas; track item) {
+                <div class="flex items-center gap-4 group">
+                  <div class="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-2xl text-orange-600 dark:text-orange-400 group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300 flex items-center justify-center"
+                    [innerHTML]="item.icono">
+                  </div>
+                  <span class="font-semibold text-gray-700 dark:text-gray-200">{{ item.nombre }}</span>
+                </div>
+              }
+            </div>
+          </section>
+          <section class="mt-12 mb-12">
+            <h2 class="text-2xl font-bold mb-8 text-gray-900 dark:text-white">{{ 'SPACE_DETAILS.LOCATION_TITLE'
+            | translate }}</h2>
+            <div
+              class="rounded-3xl overflow-hidden h-[400px] w-full bg-gray-100 dark:bg-gray-700 shadow-sm relative z-0">
+              @if (space.latitud && space.longitud) {
+                <google-map height="100%" width="100%"
+                  [options]="mapOptions">
+                  <map-advanced-marker [position]="markerPosition"></map-advanced-marker>
+                </google-map>
+              } @else {
+                <div class="w-full h-full flex items-center justify-center bg-gray-50 dark:bg-gray-800">
+                  <p class="text-gray-500 dark:text-gray-400">{{ 'SPACE_DETAILS.NO_MAP' | translate }}
+                  </p>
+                </div>
+              }
+            </div>
+          </section>
+          <!-- ========================== -->
+          <!-- SECCIÓN DE VALORACIONES    -->
+          <!-- ========================== -->
+          <section class="mt-12 mb-12" id="valoraciones">
+            <h2 class="text-2xl font-bold mb-8 text-gray-900 dark:text-white flex items-center gap-3">
+              <svg class="w-7 h-7 text-orange-400" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                </path>
+              </svg> Valoraciones y Reseñas
+            </h2>
+            <!-- Resumen de Valoraciones -->
+            <div
+              class="bg-white dark:bg-[#1a2736] rounded-2xl border border-gray-100 dark:border-gray-700 p-8 mb-8 shadow-sm">
+              <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+                <!-- Puntuación Grande -->
+                <div class="text-center md:text-left shrink-0">
+                  <div class="text-6xl font-black text-gray-900 dark:text-white leading-none">
+                    {{ resumenValoraciones.promedio || '0.0' }}
+                  </div>
+                  <div class="flex items-center gap-1 mt-3 justify-center md:justify-start">
+                    @for (star of getStarArray(); track star) {
+                      <span
+                        class="flex items-center justify-center p-0.5"
+                        [class]="star <= resumenValoraciones.promedio ? 'text-orange-400' : 'text-gray-200 dark:text-gray-600'">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="currentColor"
+                          viewBox="0 0 20 20">
+                          <path
+                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                          </path>
+                        </svg>
+                      </span>
+                    }
+                  </div>
+                  <p class="text-gray-500 dark:text-gray-400 text-sm mt-2">
+                    {{ resumenValoraciones.total || 0 }} reseñas en total
+                  </p>
+                </div>
+                <!-- Barras de Distribución -->
+                <div class="flex-1 w-full space-y-3">
+                  @for (star of getStarArray().slice().reverse(); track star) {
+                    <div
+                      class="flex items-center gap-3 cursor-pointer group"
+                      (click)="filtrarPorPuntuacion(star)">
+                      <span
+                        class="text-sm font-medium text-gray-600 dark:text-gray-300 w-14 text-right flex items-center justify-end gap-1"
+                        [class.text-orange-500]="filterPuntuacion === star">
+                        {{ star }} <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                        </path>
+                      </svg>
+                    </span>
+                    <div class="flex-1 h-3 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div class="h-full rounded-full transition-all duration-500"
+                        [class]="filterPuntuacion === star ? 'bg-orange-500' : 'bg-orange-300 dark:bg-orange-500/60 group-hover:bg-orange-400'"
+                        [style.width.%]="resumenValoraciones.distribucion[star]?.porcentaje || 0">
+                      </div>
+                    </div>
+                    <span class="text-sm text-gray-400 dark:text-gray-500 w-10 text-right">
+                      {{ resumenValoraciones.distribucion[star]?.count || 0 }}
+                    </span>
+                  </div>
+                }
+                @if (filterPuntuacion) {
+                  <button (click)="filtrarPorPuntuacion(null)"
+                    class="text-sm text-orange-500 hover:text-orange-600 font-medium mt-2 transition-colors">
+                    ✕ Quitar filtro
+                  </button>
+                }
+              </div>
+            </div>
+          </div>
+          <!-- Formulario de Reseña (Solo Clientes) -->
+          @if (isCliente && !yaValorado) {
+            <div
+              class="bg-white dark:bg-[#1a2736] rounded-2xl border border-gray-100 dark:border-gray-700 p-8 mb-8 shadow-sm">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6">Escribe tu reseña</h3>
+              <!-- Selector de Estrellas -->
+              <div class="mb-6">
+                <label class="text-sm font-medium text-gray-600 dark:text-gray-300 mb-3 block">Tu
+                puntuación</label>
+                <div class="flex items-center gap-2">
+                  @for (star of getStarArray(); track star) {
+                    <button (click)="setPuntuacion(star)"
+                      (mouseenter)="setHoverPuntuacion(star)" (mouseleave)="clearHoverPuntuacion()"
+                      class="transition-all duration-150 transform hover:scale-110 focus:outline-none flex items-center justify-center p-1"
+                      [class]="star <= (hoverPuntuacion || nuevaPuntuacion) ? 'text-orange-400 drop-shadow-sm' : 'text-gray-200 dark:text-gray-600'">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="currentColor"
+                        viewBox="0 0 20 20">
+                        <path
+                          d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                        </path>
+                      </svg>
+                    </button>
+                  }
+                  @if (nuevaPuntuacion > 0) {
+                    <span
+                      class="ml-3 text-lg font-bold text-gray-900 dark:text-white">
+                      {{ nuevaPuntuacion }}/5
+                    </span>
+                  }
+                </div>
+              </div>
+              <!-- Textarea -->
+              <div class="mb-6">
+                <label class="text-sm font-medium text-gray-600 dark:text-gray-300 mb-3 block">Tu
+                  comentario <span class="text-gray-400">(opcional)</span></label>
+                  <textarea [(ngModel)]="nuevoComentario" rows="4" maxlength="1000"
+                    placeholder="Cuéntanos tu experiencia en este espacio..."
+                    class="w-full bg-gray-50 dark:bg-primary-blue border border-gray-200 dark:border-gray-600 rounded-2xl p-4 text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all resize-none">
+                  </textarea>
+                  <p class="text-xs text-gray-400 mt-1 text-right">{{ nuevoComentario.length }}/1000</p>
+                </div>
+                <!-- Mensajes de Estado -->
+                @if (submitError) {
+                  <div
+                    class="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-4 py-3 rounded-xl mb-4 text-sm font-medium">
+                    {{ submitError }}
+                  </div>
+                }
+                @if (submitSuccess) {
+                  <div
+                    class="bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 px-4 py-3 rounded-xl mb-4 text-sm font-medium">
+                    {{ submitSuccess }}
+                  </div>
+                }
+                <!-- Botón Enviar -->
+                <button (click)="submitValoracion()" [disabled]="isSubmitting || nuevaPuntuacion === 0"
+                  class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-8 rounded-2xl shadow-lg shadow-orange-200 dark:shadow-none transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-orange-500">
+                  @if (!isSubmitting) {
+                    <span>Enviar Reseña</span>
+                  }
+                  @if (isSubmitting) {
+                    <span class="flex items-center gap-2">
+                      <span
+                      class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                      Enviando...
+                    </span>
+                  }
+                </button>
+              </div>
+            }
+            <!-- Mensaje ya valorado -->
+            @if (isCliente && yaValorado) {
+              <div
+                class="bg-green-50 dark:bg-green-900/20 rounded-2xl border border-green-200 dark:border-green-800 p-6 mb-8 text-center">
+                <svg class="w-10 h-10 text-green-500 mb-2 mx-auto" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <p class="text-green-700 dark:text-green-400 font-medium">Ya has escrito una reseña para este
+                espacio</p>
+              </div>
+            }
+            <!-- Controles de Ordenación -->
+            @if (resumenValoraciones.total > 0) {
+              <div class="flex flex-wrap items-center gap-3 mb-6">
+                <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Ordenar por:</span>
+                <div class="flex flex-wrap gap-2">
+                  <button (click)="cambiarOrden('reciente')"
+                    class="px-4 py-2 rounded-full text-sm font-medium transition-all"
+                    [class]="sortBy === 'reciente' ? 'bg-primary-blue dark:bg-white text-white dark:text-primary-blue shadow-sm' : 'bg-white dark:bg-[#1a2736] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:border-gray-300'">
+                    Más reciente
+                  </button>
+                  <button (click)="cambiarOrden('antigua')"
+                    class="px-4 py-2 rounded-full text-sm font-medium transition-all"
+                    [class]="sortBy === 'antigua' ? 'bg-primary-blue dark:bg-white text-white dark:text-primary-blue shadow-sm' : 'bg-white dark:bg-[#1a2736] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:border-gray-300'">
+                    Más antigua
+                  </button>
+                  <button (click)="cambiarOrden('mayor_puntuacion')"
+                    class="px-4 py-2 rounded-full text-sm font-medium transition-all"
+                    [class]="sortBy === 'mayor_puntuacion' ? 'bg-primary-blue dark:bg-white text-white dark:text-primary-blue shadow-sm' : 'bg-white dark:bg-[#1a2736] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:border-gray-300'">
+                    Mayor puntuación
+                  </button>
+                  <button (click)="cambiarOrden('menor_puntuacion')"
+                    class="px-4 py-2 rounded-full text-sm font-medium transition-all"
+                    [class]="sortBy === 'menor_puntuacion' ? 'bg-primary-blue dark:bg-white text-white dark:text-primary-blue shadow-sm' : 'bg-white dark:bg-[#1a2736] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:border-gray-300'">
+                    Menor puntuación
+                  </button>
+                </div>
+              </div>
+            }
+            <!-- Loading Valoraciones -->
+            @if (isLoadingValoraciones) {
+              <div class="flex justify-center py-8">
+                <div class="w-8 h-8 border-3 border-orange-200 border-t-orange-500 rounded-full animate-spin">
+                </div>
+              </div>
+            }
+            <!-- Lista de Reseñas -->
+            @if (!isLoadingValoraciones) {
+              <div class="space-y-6">
+                @for (valoracion of valoraciones; track valoracion) {
+                  <div
+                    class="bg-white dark:bg-[#1a2736] rounded-2xl border border-gray-100 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <div class="flex items-start gap-4">
+                      <!-- Avatar -->
+                      <div class="shrink-0">
+                        @if (getAutorFoto(valoracion)) {
+                          <img [src]="getAutorFoto(valoracion)"
+                            class="w-12 h-12 rounded-full object-cover border-2 border-gray-100 dark:border-gray-600"
+                            alt="Avatar">
+                        }
+                        @if (!getAutorFoto(valoracion)) {
+                          <div
+                            class="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-lg">
+                            {{ getInitial(valoracion.autor?.nombre_completo || '') }}
+                          </div>
+                        }
+                      </div>
+                      <!-- Contenido -->
+                      <div class="flex-1 min-w-0">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                          <h4 class="font-bold text-gray-900 dark:text-white">
+                            {{ valoracion.autor?.nombre_completo || 'Usuario anónimo' }}
+                          </h4>
+                          <span class="text-sm text-gray-400 dark:text-gray-500">
+                            {{ formatFecha(valoracion.created_at) }}
+                          </span>
+                        </div>
+                        <div class="flex items-center gap-0.5 mb-3">
+                          @for (star of getStarArray(); track star) {
+                            <span
+                              class="flex items-center justify-center"
+                              [class]="star <= valoracion.puntuacion ? 'text-orange-400' : 'text-gray-200 dark:text-gray-600'">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block"
+                                fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                </path>
+                              </svg>
+                            </span>
+                          }
+                        </div>
+                        <!-- Comentario -->
+                        @if (valoracion.comentario) {
+                          <p
+                            class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                            {{ valoracion.comentario }}
+                          </p>
+                        }
+                        @if (!valoracion.comentario) {
+                          <p
+                            class="text-gray-400 dark:text-gray-500 italic text-sm">
+                            Sin comentario
+                          </p>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+                <!-- Sin resultados -->
+                @if (valoraciones.length === 0 && !isLoadingValoraciones) {
+                  <div
+                    class="text-center py-12 bg-gray-50 dark:bg-[#1a2736] rounded-2xl">
+                    <svg class="w-12 h-12 text-gray-400 mb-3 mx-auto" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z">
+                      </path>
+                    </svg>
+                    <p class="text-gray-500 dark:text-gray-400 font-medium">
+                      {{ filterPuntuacion ? 'No hay reseñas con esta puntuación' : 'Aún no hay reseñas para
+                      este espacio' }}
+                    </p>
+                    @if (!filterPuntuacion && isCliente) {
+                      <p
+                        class="text-gray-400 dark:text-gray-500 text-sm mt-1">Sé el primero en dejar tu opinión
+                      arriba.</p>
+                    }
+                    @if (!filterPuntuacion && !isAuthenticated) {
+                      <div class="mt-4">
+                        <a routerLink="/iniciar-sesion"
+                          class="inline-flex items-center gap-2 text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors">
+                          Inicia sesión para dejar una reseña <span aria-hidden="true">&rarr;</span>
+                        </a>
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            }
+            <!-- Paginación -->
+            @if (lastPage > 1) {
+              <div class="flex justify-center items-center gap-2 mt-8">
+                <button (click)="cambiarPagina(currentPage - 1)" [disabled]="currentPage <= 1"
+                  class="px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-[#1a2736] border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+                  ← Anterior
+                </button>
+                <span class="text-sm text-gray-500 dark:text-gray-400 px-3">
+                  Página {{ currentPage }} de {{ lastPage }}
+                </span>
+                <button (click)="cambiarPagina(currentPage + 1)" [disabled]="currentPage >= lastPage"
+                  class="px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-[#1a2736] border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+                  Siguiente →
+                </button>
+              </div>
+            }
+          </section>
+        </div>
+        <div class="lg:col-span-1">
+          <div
+            class="sticky top-28 bg-white dark:bg-[#1a2736] p-8 rounded-[2.5rem] shadow-2xl shadow-gray-200/50 dark:shadow-black/50 border border-gray-100 dark:border-gray-700 transition-colors duration-300">
+            <div class="mb-8">
+              <span class="text-gray-400 text-sm font-medium uppercase tracking-wider">{{
+              'SPACE_DETAILS.PRICE_LABEL' | translate }}</span>
+              <div class="flex items-baseline gap-1 mt-1">
+                <span class="text-5xl font-black text-gray-900 dark:text-white">{{ space.precio }}€</span>
+              </div>
+            </div>
+            <div class="space-y-4">
+              @if (!isAnfitrion && !isReservedMode) {
+                <button [routerLink]="['/reserva', space.id]"
+                  class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-5 rounded-2xl shadow-lg shadow-orange-200 dark:shadow-none transition-all active:scale-95">
+                  {{ 'SPACE_DETAILS.BOOK_BTN' | translate }}
+                </button>
+              }
+              @if (!isAnfitrion && isReservedMode) {
+                <button disabled
+                  class="w-full bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-bold py-5 rounded-2xl cursor-not-allowed opacity-75">
+                  {{ 'SPACE_DETAILS.RESERVED_BTN' | translate }}
+                </button>
+              }
+              @if (isAnfitrion) {
+                <button disabled
+                  class="w-full bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-bold py-5 rounded-2xl cursor-not-allowed opacity-75">
+                  {{ 'SPACE_DETAILS.HOST_BTN' | translate }}
+                </button>
+              }
+              @if (!isAnfitrion) {
+                <button (click)="contactarAnfitrion()"
+                  class="w-full bg-white dark:bg-transparent border-2 border-gray-100 dark:border-gray-600 hover:border-orange-300 dark:hover:border-orange-500 text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 font-bold py-5 rounded-2xl transition-all flex items-center justify-center gap-3 group">
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5 text-gray-400 group-hover:text-orange-500 transition-colors"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                  </svg>
+                  {{ 'SPACE_DETAILS.CONTACT_BTN' | translate }}
+                </button>
+              }
+            </div>
+            <p class="text-center text-gray-400 text-xs mt-6 px-4">
+              {{ 'SPACE_DETAILS.NO_CHARGE_NOTE' | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+  }
+
+  <!-- Modal de Imagen -->
+  @if (isModalOpen) {
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 transition-all duration-300 animate-fade-in"
+      (click)="closeModal()">
+      <button
+        class="absolute top-6 right-6 text-white hover:text-gray-300 focus:outline-none z-50 p-2 transition-transform hover:scale-110"
+        (click)="closeModal()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <div class="relative max-w-7xl w-full max-h-screen flex items-center justify-center p-2"
+        (click)="$event.stopPropagation()">
+        <img [src]="selectedImage"
+          class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl transition-transform duration-300">
+      </div>
+    </div>
+  }
+
+  <!-- Modal de Reporte -->
+  @if (showReporteModal) {
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 transition-all duration-300"
+      (click)="closeReporteModal()">
+      <div class="bg-white dark:bg-[#1a2736] rounded-3xl shadow-2xl max-w-md w-full p-8 relative"
+        (click)="$event.stopPropagation()">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <div class="p-2 bg-red-50 dark:bg-red-900/20 rounded-xl">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Reportar Espacio</h3>
+          </div>
+          <button (click)="closeReporteModal()"
+            class="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <!-- Motivos -->
+        <div class="mb-6">
+          <label class="text-sm font-medium text-gray-600 dark:text-gray-300 mb-3 block">¿Cuál es el motivo del
+          reporte?</label>
+          <div class="space-y-2">
+            @for (motivo of motivosReporte; track motivo) {
+              <label
+                class="flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all"
+                        [class]="reporteMotivo === motivo.value
+                            ? 'border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-900/20'
+                            : 'border-gray-100 dark:border-gray-700 hover:border-gray-200 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800/30'">
+                <input type="radio" name="motivo" [value]="motivo.value" [(ngModel)]="reporteMotivo"
+                  class="w-4 h-4 text-red-500 focus:ring-red-400 border-gray-300 dark:border-gray-600">
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ motivo.label }}</span>
+              </label>
+            }
+          </div>
+        </div>
+        <!-- Descripción -->
+        <div class="mb-6">
+          <label class="text-sm font-medium text-gray-600 dark:text-gray-300 mb-3 block">Descripción adicional
+            <span class="text-gray-400">(opcional)</span></label>
+            <textarea [(ngModel)]="reporteDescripcion" rows="3" maxlength="1000"
+              placeholder="Describe con más detalle el problema..."
+              class="w-full bg-gray-50 dark:bg-primary-blue border border-gray-200 dark:border-gray-600 rounded-xl p-3 text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all resize-none text-sm">
+            </textarea>
+          </div>
+          <!-- Mensajes -->
+          @if (reporteError) {
+            <div
+              class="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-4 py-3 rounded-xl mb-4 text-sm font-medium">
+              {{ reporteError }}
+            </div>
+          }
+          @if (reporteSuccess) {
+            <div
+              class="bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 px-4 py-3 rounded-xl mb-4 text-sm font-medium">
+              {{ reporteSuccess }}
+            </div>
+          }
+          <!-- Botones -->
+          <div class="flex gap-3">
+            <button (click)="closeReporteModal()"
+              class="flex-1 py-3 px-4 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all">
+              Cancelar
+            </button>
+            <button (click)="submitReporte()" [disabled]="isSubmittingReporte || !reporteMotivo"
+              class="flex-1 py-3 px-4 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-xl shadow-lg shadow-red-200 dark:shadow-none transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
+              @if (!isSubmittingReporte) {
+                <span>Enviar Reporte</span>
+              }
+              @if (isSubmittingReporte) {
+                <span class="flex items-center justify-center gap-2">
+                  <span
+                  class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                  Enviando...
+                </span>
+              }
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>

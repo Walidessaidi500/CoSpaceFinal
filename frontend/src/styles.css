@@ -1,0 +1,50 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+@theme {
+    /* Colores Principales */
+    --color-primary-blue: #0d1b2a;
+    --color-primary-orange: #ff7a00;
+    --color-primary-red: #d4183d;
+
+    /* Escala de Grises y Fondos */
+    --color-neutral-bg: #f5f5f5;
+    --color-neutral-input: #f3f3f5;
+    --color-neutral-text: #4a5565;
+    --color-neutral-placeholder: #717182;
+
+    /* Tipografía */
+    --font-sans: "Poppins", sans-serif;
+}
+
+/* Estilos Globales */
+html.text-scale-sm {
+    font-size: 14px;
+}
+
+html.text-scale-base {
+    font-size: 16px;
+}
+
+html.text-scale-lg {
+    font-size: 18px;
+}
+
+html.text-scale-xl {
+    font-size: 20px;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--color-neutral-bg);
+    color: var(--color-primary-blue);
+}
+
+/* Dark Mode Global Overrides */
+.dark body {
+    background-color: #0d1b2a;
+    /* Dark Blue from palette or darker */
+    color: #f5f5f5;
+    /* Light text */
+}

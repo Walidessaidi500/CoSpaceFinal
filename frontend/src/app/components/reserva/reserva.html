@@ -1,0 +1,264 @@
+<div class="min-h-screen bg-gray-50 dark:bg-primary-blue transition-colors duration-300 py-10">
+
+  @if (isLoading) {
+    <div class="flex flex-col items-center justify-center min-h-[60vh]">
+      <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-orange mb-4"></div>
+      <p class="text-gray-500 dark:text-gray-400">Cargando detalles de reserva...</p>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+      <div class="bg-red-50 dark:bg-red-900/30 p-6 rounded-2xl max-w-md border border-red-100 dark:border-red-800">
+        <h3 class="text-xl font-bold text-red-600 dark:text-red-400 mb-2">Error</h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">{{ errorMessage }}</p>
+        <button routerLink="/" class="text-sm font-semibold text-primary-orange hover:underline">
+          Volver al inicio
+        </button>
+      </div>
+    </div>
+  }
+
+  @if (!isLoading && !errorMessage && espacio) {
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Main Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Left Column: Selection (8 cols) -->
+        <div
+          class="lg:col-span-8 bg-white dark:bg-[#1a2736] rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-700 transition-colors">
+          <h2 class="text-xl font-medium text-gray-800 dark:text-white mb-8">Seleccionar Fechas</h2>
+          <div class="space-y-8">
+            <!-- Date Selection Section -->
+            <div>
+              <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-6">Selecciona una fecha</h3>
+              <!-- Calendar Container (Now Functional) -->
+              <div
+                class="max-w-sm mx-auto bg-white dark:bg-primary-blue rounded-2xl border border-gray-100 dark:border-gray-700 p-6 shadow-sm select-none transition-colors">
+                <!-- Calendar Header -->
+                <div class="flex items-center justify-between mb-6">
+                  <button (click)="prevMonth()"
+                    class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors text-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <path d="m15 18-6-6 6-6" />
+                    </svg>
+                  </button>
+                  <span class="text-lg font-bold text-gray-800 dark:text-white">{{ currentMonthName
+                  }}</span>
+                  <button (click)="nextMonth()"
+                    class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors text-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <path d="m9 18 6-6-6-6" />
+                    </svg>
+                  </button>
+                </div>
+                <!-- Days Header -->
+                <div class="grid grid-cols-7 mb-4">
+                  @for (day of weekDays; track day) {
+                    <div
+                      class="text-center text-xs font-medium text-gray-400 py-1">
+                      {{ day }}
+                    </div>
+                  }
+                </div>
+                <!-- Calendar Grid -->
+                <div class="grid grid-cols-7 gap-y-2">
+                  @for (week of calendarDays; track week) {
+                    @for (date of week; track date) {
+                      <div class="text-center">
+                        <!-- Día no disponible (completo) -->
+                        @if (date && isDateUnavailable(date)) {
+                          <button
+                            class="w-10 h-10 rounded-full flex items-center justify-center text-sm bg-red-100 dark:bg-red-900/30 text-red-400 dark:text-red-500 cursor-not-allowed line-through opacity-60"
+                            disabled title="No disponible - Completo">
+                            {{ date.getDate() }}
+                          </button>
+                        }
+                        <!-- Día pasado -->
+                        @if (date && !isDateUnavailable(date) && isDatePast(date)) {
+                          <button
+                            class="w-10 h-10 rounded-full flex items-center justify-center text-sm text-gray-300 dark:text-gray-600 cursor-not-allowed"
+                            disabled>
+                            {{ date.getDate() }}
+                          </button>
+                        }
+                        <!-- Día disponible -->
+                        @if (date && !isDateUnavailable(date) && !isDatePast(date)) {
+                          <button
+                            (click)="selectDate(date)"
+                            class="w-10 h-10 rounded-full flex items-center justify-center text-sm transition-all duration-200"
+                                            [ngClass]="{
+                                                'bg-primary-blue dark:bg-white text-white dark:text-primary-blue font-medium shadow-md scale-105': isDateSelected(date),
+                                                'bg-orange-100 dark:bg-orange-900/30 text-orange-900 dark:text-orange-300': isDateInRange(date),
+                                                'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700': !isDateSelected(date) && !isDateInRange(date)
+                                            }">
+                            {{ date.getDate() }}
+                          </button>
+                        }
+                      </div>
+                    }
+                  }
+                </div>
+                <!-- Leyenda -->
+                <div
+                  class="flex items-center gap-4 mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400">
+                  <div class="flex items-center gap-1.5">
+                    <span
+                    class="w-3 h-3 rounded-full bg-red-100 dark:bg-red-900/30 border border-red-300 dark:border-red-700"></span>
+                    Completo
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span
+                    class="w-3 h-3 rounded-full bg-primary-blue dark:bg-white border border-blue-400 dark:border-gray-300"></span>
+                    Seleccionado
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span
+                    class="w-3 h-3 rounded-full bg-orange-100 dark:bg-orange-900/30 border border-orange-300 dark:border-orange-700"></span>
+                    Rango
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Aviso de disponibilidad -->
+            @if (availabilityWarning) {
+              <div
+                class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mt-0.5 shrink-0"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <div>
+                  <p class="text-sm font-semibold text-red-700 dark:text-red-400">No hay disponibilidad</p>
+                  <p class="text-sm text-red-600 dark:text-red-400 mt-0.5">{{ availabilityWarning }}</p>
+                </div>
+                <button (click)="availabilityWarning = null" class="ml-auto text-red-400 hover:text-red-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+              </div>
+            }
+            <!-- Date Inputs (Read Only ideally, displayed for confirmation) -->
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-gray-100 dark:border-gray-700 pt-8">
+              <div class="space-y-3">
+                <label class="block text-lg font-bold text-gray-900 dark:text-white">Fecha Inicio</label>
+                <div class="relative">
+                  <input type="datetime-local" [(ngModel)]="fechaInicio" (change)="onDateChange()"
+                    class="w-full bg-gray-100 dark:bg-gray-700/50 rounded-xl px-4 py-3 text-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-orange border-transparent border dark:border-gray-600 transition-colors">
+                  </div>
+                </div>
+                <div class="space-y-3">
+                  <label class="block text-lg font-bold text-gray-900 dark:text-white">Fecha Fin</label>
+                  <div class="relative">
+                    <input type="datetime-local" [(ngModel)]="fechaFin" (change)="onDateChange()"
+                      class="w-full bg-gray-100 dark:bg-gray-700/50 rounded-xl px-4 py-3 text-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-orange border-transparent border dark:border-gray-600 transition-colors">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Right Column: Summary (4 cols) -->
+            <div class="lg:col-span-4">
+              <div
+                class="bg-white dark:bg-[#1a2736] rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700 sticky top-28 transition-colors">
+              <h2 class="text-xl font-medium text-gray-800 dark:text-white mb-6">Resumen de la reserva</h2>
+              <div class="mb-6">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">{{ espacio.titulo }}</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">{{ espacio.direccion }}, {{ espacio.ciudad
+                }}</p>
+              </div>
+              <div class="border-t border-gray-100 dark:border-gray-700 py-6 space-y-4">
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-500 dark:text-gray-400 font-medium">Fecha Inicio</span>
+                  <span class="text-gray-900 dark:text-white font-semibold text-sm text-right">{{ fechaInicio
+                    | date:'short'
+                  }}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-500 dark:text-gray-400 font-medium">Fecha Fin</span>
+                  <span class="text-gray-900 dark:text-white font-semibold text-sm text-right">{{ fechaFin |
+                    date:'short'
+                  }}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-500 dark:text-gray-400 font-medium">Duración</span>
+                  <span class="text-gray-900 dark:text-white font-semibold">{{ days }} Días</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-500 dark:text-gray-400 font-medium">Tasa</span>
+                  <span class="text-gray-900 dark:text-white font-semibold">{{ espacio.precio_hora }}€ /
+                  día</span>
+                </div>
+              </div>
+              <!-- Desglose de precio -->
+              <div class="border-t border-gray-100 dark:border-gray-700 pt-6 mb-2 space-y-3">
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-500 dark:text-gray-400 text-sm">Subtotal ({{ espacio.precio_hora }}€
+                  × {{ days }} días)</span>
+                  <span class="text-gray-700 dark:text-gray-300 font-medium text-sm">{{ basePrice |
+                  number:'1.2-2' }}€</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-500 dark:text-gray-400 text-sm">Gastos de gestión (14,59%)</span>
+                  <span class="text-gray-700 dark:text-gray-300 font-medium text-sm">{{ commissionAmount |
+                  number:'1.2-2' }}€</span>
+                </div>
+              </div>
+              <div class="border-t-2 border-gray-200 dark:border-gray-600 pt-4 mb-8">
+                <div class="flex justify-between items-center">
+                  <span class="text-xl font-bold text-gray-900 dark:text-white">Total</span>
+                  <span class="text-xl font-bold text-gray-900 dark:text-white">{{ totalPrice | number:'1.2-2'
+                  }}€</span>
+                </div>
+                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1 text-right">Impuestos y comisiones
+                incluidos</p>
+              </div>
+              <!-- Payment Section -->
+              @if (showPayment) {
+                <div class="space-y-4">
+                  <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 min-h-[300px]">
+                    <h4 class="text-sm font-semibold text-gray-700 mb-3">Método de Pago</h4>
+                    <div id="payment-element" class="w-full"></div>
+                  </div>
+                  <button (click)="realizarPago()" [disabled]="isProcessingPayment"
+                    class="w-full bg-primary-blue dark:bg-white hover:bg-black dark:hover:bg-gray-100 text-white dark:text-primary-blue font-bold py-4 rounded-xl shadow-sm transition-colors text-lg disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center">
+                    @if (!isProcessingPayment) {
+                      <span>Pagar {{ totalPrice | number:'1.2-2' }}€</span>
+                    }
+                    @if (isProcessingPayment) {
+                      <div
+                        class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white dark:border-primary-blue">
+                      </div>
+                    }
+                  </button>
+                  <button (click)="showPayment = false"
+                    class="w-full text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-sm font-medium mt-2 underline">
+                    Cancelar pago
+                  </button>
+                </div>
+              }
+              <!-- Initial Confirmation Button -->
+              @if (!showPayment) {
+                <button (click)="iniciarProcesoReserva()"
+                        [disabled]="!fechaInicio || !fechaFin" [ngClass]="{
+                            'bg-gray-200 text-gray-400 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500': !fechaInicio || !fechaFin,
+                            'bg-primary-blue dark:bg-white hover:bg-black dark:hover:bg-gray-100 text-white dark:text-primary-blue shadow-lg': fechaInicio && fechaFin
+                        }" class="w-full font-bold py-4 rounded-xl transition-all duration-200 text-lg">
+                  Confirmar datos y pagar
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>

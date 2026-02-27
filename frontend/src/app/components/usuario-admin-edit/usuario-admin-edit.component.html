@@ -1,0 +1,115 @@
+<div class="flex h-screen bg-gray-50 dark:bg-[#0b1120] overflow-hidden">
+  <!-- Sidebar -->
+  <app-sidebar-admin></app-sidebar-admin>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+    <main class="flex-1 overflow-y-auto p-8 relative">
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">{{ 'ADMIN.USERS.EDIT_TITLE' | translate }}
+      </h1>
+
+      <!-- Loading API -->
+      @if (isLoading && !successMessage) {
+        <div class="flex flex-col items-center justify-center py-12">
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+          <p class="text-gray-500 dark:text-gray-400">{{ 'ADMIN.USERS.LOADING_EDIT' | translate }}</p>
+        </div>
+      }
+
+      <!-- Error -->
+      @if (errorMessage && !isLoading) {
+        <div
+          class="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-4 rounded-lg mb-6">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <!-- Success -->
+      @if (successMessage) {
+        <div
+          class="bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 p-4 rounded-lg mb-6 text-center">
+          {{ successMessage }}
+        </div>
+      }
+
+      <!-- Form -->
+      @if (!isLoading && !successMessage) {
+        <div
+          class="bg-white dark:bg-[#111827] rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 max-w-2xl">
+          <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="space-y-6">
+            <!-- Nombre Completo -->
+            <div>
+              <label for="nombre_completo"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{
+              'ADMIN.USERS.LABEL_NAME' | translate }}</label>
+              <input type="text" id="nombre_completo" formControlName="nombre_completo"
+                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-all shadow-sm"
+                [ngClass]="{'border-red-500 focus:ring-red-500': userForm.get('nombre_completo')?.invalid && userForm.get('nombre_completo')?.touched}">
+              @if (userForm.get('nombre_completo')?.invalid && userForm.get('nombre_completo')?.touched) {
+                <div
+                  class="text-red-500 text-xs mt-1">
+                  {{ 'ADMIN.USERS.ERROR_NAME' | translate }}
+                </div>
+              }
+            </div>
+            <!-- Email -->
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{
+              'ADMIN.USERS.LABEL_EMAIL' | translate }}</label>
+              <input type="email" id="email" formControlName="email"
+                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-all shadow-sm"
+                [ngClass]="{'border-red-500 focus:ring-red-500': userForm.get('email')?.invalid && userForm.get('email')?.touched}">
+              @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+                <div
+                  class="text-red-500 text-xs mt-1">
+                  {{ 'ADMIN.USERS.ERROR_EMAIL' | translate }}
+                </div>
+              }
+            </div>
+            <!-- Rol -->
+            <div>
+              <label for="tipo_usuario"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{
+              'ADMIN.USERS.LABEL_ROLE' | translate }}</label>
+              <select id="tipo_usuario" formControlName="tipo_usuario"
+                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-all shadow-sm">
+                <option value="Cliente">{{ 'ADMIN.USERS.ROLE_CLIENT' | translate }}</option>
+                <option value="Anfitrion">{{ 'ADMIN.USERS.ROLE_HOST' | translate }}</option>
+                <option value="Admin">{{ 'ADMIN.USERS.ROLE_ADMIN' | translate }}</option>
+              </select>
+              @if (userForm.get('tipo_usuario')?.invalid && userForm.get('tipo_usuario')?.touched) {
+                <div
+                  class="text-red-500 text-xs mt-1">
+                  {{ 'ADMIN.USERS.ERROR_ROLE' | translate }}
+                </div>
+              }
+            </div>
+            <!-- Actions -->
+            <div class="flex justify-between items-center pt-6 border-t border-gray-100 dark:border-gray-800">
+              <button type="button" (click)="initiateDelete()"
+                class="px-6 py-2.5 text-red-600 bg-red-50 border border-transparent rounded-lg shadow-sm hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all font-medium dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/30">
+                {{ 'ADMIN.USERS.BTN_DELETE' | translate }}
+              </button>
+              <div class="flex gap-3">
+                <button type="button" (click)="onCancel()"
+                  class="px-6 py-2.5 text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 transition-all dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700">
+                  {{ 'ADMIN.USERS.BTN_CANCEL' | translate }}
+                </button>
+                <button type="submit" [disabled]="userForm.invalid || isLoading"
+                  class="px-6 py-2.5 text-white bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed">
+                  {{ 'ADMIN.USERS.BTN_SAVE' | translate }}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      }
+    </main>
+  </div>
+
+  <!-- Confirm Modal -->
+  <app-confirm-modal [isOpen]="showDeleteModal" [title]="'ADMIN.USERS.MODAL_DELETE_TITLE' | translate"
+    [message]="'ADMIN.USERS.MODAL_DELETE_MESSAGE' | translate" [isLoading]="deletingId !== null"
+    (confirm)="confirmDelete()" (cancel)="closeDeleteModal()">
+  </app-confirm-modal>
+</div>

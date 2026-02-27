@@ -1,0 +1,87 @@
+<div class="min-h-screen bg-slate-50/50 dark:bg-primary-blue transition-colors duration-300">
+
+  <main class="max-w-7xl mx-auto px-6 py-12">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-10 transition-colors">
+      {{ 'EXPLORE.TITLE' | translate }}
+    </h1>
+
+    @if (errorMessage) {
+      <div
+        class="bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-800 text-red-700 dark:text-red-300 px-4 py-3 rounded relative mb-6"
+        role="alert">
+        <strong class="font-bold">{{ 'EXPLORE.ERROR_TITLE' | translate }}</strong>
+        <span class="block sm:inline">{{ errorMessage }}</span>
+      </div>
+    }
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+      <div class="relative">
+        <input type="text" [(ngModel)]="filtroCiudad" (input)="filtrarEspacios()"
+          [placeholder]="'EXPLORE.SEARCH_PLACEHOLDER' | translate"
+          class="w-full bg-white dark:bg-[#1a2736] border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-gray-500 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all placeholder-gray-400 dark:placeholder-gray-500">
+          <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 dark:text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="relative">
+          <select [(ngModel)]="filtroPrecio" (change)="filtrarEspacios()"
+            class="w-full appearance-none bg-white dark:bg-[#1a2736] border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-gray-500 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all">
+            <option value="">{{ 'EXPLORE.FILTERS.ALL_PRICES' | translate }}</option>
+            <option value="0-20">{{ 'EXPLORE.FILTERS.LESS_THAN_20' | translate }}</option>
+            <option value="20-50">{{ 'EXPLORE.FILTERS.BETWEEN_20_50' | translate }}</option>
+            <option value="50+">{{ 'EXPLORE.FILTERS.MORE_THAN_50' | translate }}</option>
+          </select>
+          <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 dark:text-gray-500">▼
+          </div>
+        </div>
+
+        <div class="relative">
+          <select [(ngModel)]="filtroEstado" (change)="filtrarEspacios()"
+            class="w-full appearance-none bg-white dark:bg-[#1a2736] border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-gray-500 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all">
+            <option value="">{{ 'EXPLORE.FILTERS.ALL_STATUS' | translate }}</option>
+            <option value="Disponible">{{ 'EXPLORE.FILTERS.AVAILABLE' | translate }}</option>
+            <option value="Mantenimiento">{{ 'EXPLORE.FILTERS.MAINTENANCE' | translate }}</option>
+          </select>
+          <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 dark:text-gray-500">▼
+          </div>
+        </div>
+
+        <div class="relative">
+          <select [(ngModel)]="filtroRating" (change)="filtrarEspacios()"
+            class="w-full appearance-none bg-white dark:bg-[#1a2736] border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-gray-500 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all">
+            <option value="">{{ 'EXPLORE.FILTERS.ALL_RATINGS' | translate }}</option>
+            <option value="5">5 {{ 'EXPLORE.FILTERS.STARS' | translate }}</option>
+            <option value="4">4 {{ 'EXPLORE.FILTERS.STARS_OR_MORE' | translate }}</option>
+            <option value="3">3 {{ 'EXPLORE.FILTERS.STARS_OR_MORE' | translate }}</option>
+            <option value="2">2 {{ 'EXPLORE.FILTERS.STARS_OR_MORE' | translate }}</option>
+            <option value="1">1 {{ 'EXPLORE.FILTERS.STAR_OR_MORE' | translate }}</option>
+          </select>
+          <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 dark:text-gray-500">▼
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        @for (item of listaEspacios; track item) {
+          <app-espacio-card [espacio]="item">
+          </app-espacio-card>
+        }
+      </div>
+
+      @if (isLoading) {
+        <div class="text-center py-20">
+          <p class="text-gray-400 text-lg">{{ 'EXPLORE.LOADING' | translate }}</p>
+        </div>
+      }
+
+      @if (!isLoading && listaEspacios.length === 0 && !errorMessage) {
+        <div class="text-center py-20">
+          <p class="text-gray-400 text-lg">{{ 'EXPLORE.NO_RESULTS' | translate }}</p>
+        </div>
+      }
+    </main>
+  </div>

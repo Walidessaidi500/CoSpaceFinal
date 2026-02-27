@@ -1,0 +1,154 @@
+<div class="flex min-h-screen bg-neutral-bg dark:bg-primary-blue transition-colors duration-300">
+  <app-sidebar-anfitrion></app-sidebar-anfitrion>
+
+  <div class="grow p-10 font-sans">
+    <div class="mb-10">
+      <h1 class="text-[40px] font-semibold text-primary-blue dark:text-white">Reservas Recibidas</h1>
+      <p class="text-neutral-text dark:text-gray-400 text-base mt-2">Gestiona las reservas de tus espacios</p>
+    </div>
+
+    <!-- Loading State -->
+    @if (isLoading) {
+      <div class="space-y-4">
+        @for (i of [1,2,3]; track i) {
+          <div class="bg-white dark:bg-[#1a2736] rounded-2xl h-32 animate-pulse"></div>
+        }
+      </div>
+    }
+
+    <!-- Error State -->
+    @if (errorMessage) {
+      <div class="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-4 rounded-xl">
+        {{ errorMessage }}
+      </div>
+    }
+
+    <!-- Empty State -->
+    @if (!isLoading && reservas.length === 0) {
+      <div class="text-center py-20">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-300 dark:text-gray-600 mb-4"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <p class="text-xl text-gray-500 dark:text-gray-400 font-medium">No has recibido ninguna reserva todavía.</p>
+      </div>
+    }
+
+    <!-- Reservations List -->
+    @if (!isLoading && reservas.length > 0) {
+      <div class="space-y-6">
+        @for (reserva of reservas; track reserva) {
+          <div
+            class="bg-white dark:bg-[#1a2736] rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all flex flex-col md:flex-row gap-6">
+            <!-- Image -->
+            <div class="w-full md:w-48 h-32 shrink-0">
+              <img [src]="getEspacioImage(reserva)" alt="Espacio" class="w-full h-full object-cover rounded-xl"
+                (error)="handleImageError($event)">
+            </div>
+            <!-- Info -->
+            <div class="grow grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <!-- Column 1: Space Info -->
+              <div class="flex flex-col justify-center">
+                <h3 class="font-bold text-lg text-primary-blue dark:text-white mb-1">{{ reserva.espacio?.titulo
+                }}</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  {{ reserva.espacio?.ciudad }}
+                </p>
+              </div>
+              <!-- Column 2: Date & Time -->
+              <div class="flex flex-col justify-center">
+                <p class="text-sm font-semibold text-gray-900 dark:text-white mb-1">Fecha</p>
+                <p class="text-sm text-gray-600 dark:text-gray-300">
+                  {{ reserva.fecha_inicio | date:'dd MMM yyyy' }}
+                </p>
+                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                  {{ reserva.fecha_inicio | date:'dd MMM yyyy' }} - {{ reserva.fecha_fin | date:'dd MMM yyyy'
+                  }}
+                </p>
+              </div>
+              <!-- Column 3: Client Info -->
+              <div class="flex flex-col justify-center">
+                <p class="text-sm font-semibold text-gray-900 dark:text-white mb-1">Cliente</p>
+                <div class="flex items-center gap-2">
+                  <div
+                    class="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 flex items-center justify-center text-xs font-bold">
+                    {{ reserva.usuario?.nombre_completo?.charAt(0) || 'U' }}
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-700 dark:text-gray-200">{{
+                    reserva.usuario?.nombre_completo || 'Usuario' }}</p>
+                    <p class="text-xs text-gray-400 mb-1.5">{{ reserva.usuario?.email }}</p>
+                    @if (reserva.id_cliente) {
+                      <button (click)="contactarCliente(reserva.id_cliente)"
+                        class="flex items-center gap-1.5 text-xs font-semibold text-orange-500 hover:text-orange-600 transition-colors group">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                          class="w-3.5 h-3.5 group-hover:scale-110 transition-transform"
+                          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        Contactar Cliente
+                      </button>
+                    }
+                  </div>
+                </div>
+              </div>
+              <!-- Column 4: Status & Price -->
+              <div class="flex flex-col justify-center items-end">
+                <!-- Status Dropdown -->
+                <div class="relative mb-2">
+                  <select [ngModel]="reserva.estado" (ngModelChange)="onEstadoChange(reserva, $event)"
+                    [disabled]="updatingId === reserva.id_reserva"
+                    class="appearance-none pl-3 pr-8 py-1.5 rounded-full text-xs font-semibold border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 transition-all"
+                                [ngClass]="{
+                                    'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 focus:ring-green-400': reserva.estado === 'Confirmada',
+                                    'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 focus:ring-blue-400': reserva.estado === 'En_Curso',
+                                    'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300 focus:ring-gray-400': reserva.estado === 'Finalizada',
+                                    'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 focus:ring-yellow-400': reserva.estado === 'Pendiente',
+                                    'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 focus:ring-red-400': reserva.estado === 'Cancelada'
+                                }">
+                    @for (estado of estadosDisponibles; track estado) {
+                      <option [value]="estado">
+                        {{ getEstadoLabel(estado) }}
+                      </option>
+                    }
+                  </select>
+                  <!-- Loading spinner overlay -->
+                  @if (updatingId === reserva.id_reserva) {
+                    <div
+                      class="absolute inset-0 flex items-center justify-center bg-white/60 dark:bg-gray-800/60 rounded-full">
+                      <div
+                        class="animate-spin h-4 w-4 border-2 border-blue-500 border-t-transparent rounded-full">
+                      </div>
+                    </div>
+                  }
+                  <!-- Dropdown arrow -->
+                  <svg class="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none text-current opacity-60"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                      d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+                <p class="text-xl font-bold text-primary-blue dark:text-white mb-3">{{ reserva.monto_total |
+                currency:'EUR' }}</p>
+                <button [routerLink]="['/espacios', reserva.espacio?.id_espacio]"
+                  [queryParams]="{mode: 'reserved'}"
+                  class="px-5 py-2 text-sm border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 font-semibold transition-colors duration-200">
+                  Ver Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

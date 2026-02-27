@@ -1,0 +1,98 @@
+<footer class="bg-primary-blue mt-auto font-sans text-white border-t border-white/10">
+  <div class="w-full px-8 sm:px-12 lg:px-16 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="col-span-1 md:col-span-1">
+        <div class="flex items-center gap-3 mb-4">
+          <div
+            class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-primary-blue font-bold text-lg">
+            C
+          </div>
+          <span class="font-bold text-xl text-white tracking-tight">CoSpace</span>
+        </div>
+        <p class="text-white/60 text-sm leading-relaxed">
+          {{ 'FOOTER.DESCRIPTION' | translate }}
+        </p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-white mb-5 text-[16px]">{{ 'FOOTER.PLATFORM' | translate }}</h3>
+        <ul class="space-y-3">
+          <li><a routerLink="/" class="text-white/60 hover:text-white text-sm transition-colors">{{
+            'HEADER.HOME' |
+          translate }}</a>
+        </li>
+        <li><a routerLink="/explorar" class="text-white/60 hover:text-white text-sm transition-colors">{{
+        'HEADER.COWORKINGS' | translate }}</a>
+      </li>
+    </ul>
+  </div>
+  @if (!(currentUser$ | async)) {
+    <div>
+      <h3 class="font-semibold text-white mb-5 text-[16px]">Únete</h3>
+      <ul class="space-y-3">
+        <li><a routerLink="/registro-cliente"
+        class="text-white/60 hover:text-white text-sm transition-colors">Registro Cliente</a>
+      </li>
+      <li><a routerLink="/registro-anfitrion"
+      class="text-white/60 hover:text-white text-sm transition-colors">Registro Anfitrión</a></li>
+      <li><a routerLink="/iniciar-sesion"
+      class="text-white/60 hover:text-white text-sm transition-colors">Iniciar Sesión</a>
+    </li>
+  </ul>
+</div>
+}
+@if (currentUser$ | async; as user) {
+  <div>
+    <h3 class="font-semibold text-white mb-5 text-[16px]">Accesos Rápidos</h3>
+    <ul class="space-y-3">
+      @switch (user.tipo_usuario) {
+        @case ('Admin') {
+          <li>
+            <a routerLink="/admin/panel"
+              class="text-white/60 hover:text-white text-sm transition-colors">Panel de
+            Administración</a>
+          </li>
+        }
+        @case ('Anfitrion') {
+          <li>
+            <a routerLink="/anfitrion/mis-areas"
+            class="text-white/60 hover:text-white text-sm transition-colors">Panel de Anfitrión</a>
+          </li>
+        }
+        @case ('Cliente') {
+          <li>
+            <a routerLink="/cliente/panel"
+            class="text-white/60 hover:text-white text-sm transition-colors">Panel de Cliente</a>
+          </li>
+        }
+      }
+      <li><a routerLink="/configuracion"
+      class="text-white/60 hover:text-white text-sm transition-colors">Configuración</a>
+    </li>
+  </ul>
+</div>
+}
+<div>
+  <h3 class="font-semibold text-white mb-5 text-[16px]">{{ 'FOOTER.COMPANY' | translate }}</h3>
+  <ul class="space-y-3">
+    <li><a routerLink="/sobre-nosotros"
+      class="text-white/60 hover:text-white text-sm transition-colors">{{ 'FOOTER.ABOUT' |
+    translate }}</a>
+  </li>
+  <li><a routerLink="/aviso-legal" class="text-white/60 hover:text-white text-sm transition-colors">{{
+  'FOOTER.LEGAL' | translate }}</a>
+</li>
+<li><a routerLink="/contacto" class="text-white/60 hover:text-white text-sm transition-colors">{{
+'FOOTER.CONTACT' | translate }}</a>
+</li>
+</ul>
+</div>
+</div>
+<div
+  class="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-white/50">
+  <p>&copy; 2026 CoSpace. {{ 'FOOTER.RIGHTS' | translate }}</p>
+  <div class="flex space-x-6 mt-4 md:mt-0">
+    <!-- Social placeholders if needed -->
+  </div>
+</div>
+</div>
+</footer>

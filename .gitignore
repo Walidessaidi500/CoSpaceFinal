@@ -1,0 +1,26 @@
+# General
+.DS_Store
+node_modules/
+vendor/
+.env
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/*.log
+frontend/.vscode/
+
+# Backend
+backend/vendor/
+backend/node_modules/
+backend/public/storage
+backend/public/hot
+backend/storage/*.key
+backend/storage/framework/cache/data/*
+backend/storage/framework/sessions/*
+backend/storage/framework/views/*
+backend/storage/logs/*
+backend/*.log
+backend/.phpunit.cache
+backend/.vscode/

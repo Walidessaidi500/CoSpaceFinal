@@ -1,0 +1,182 @@
+<div class="max-w-5xl mx-auto pb-24 font-sans">
+  <div class="mb-8">
+    <h1 class="text-[40px] font-semibold text-primary-blue dark:text-white">{{ isEditMode ? 'Editar Área' : 'Añadir
+    Nueva Área' }}</h1>
+    <p class="text-neutral-text dark:text-gray-400 text-base mt-1">{{ isEditMode ? 'Edita la información de tu espacio'
+      : 'Completa la
+    información de tu espacio de coworking' }}</p>
+  </div>
+
+  <form [formGroup]="espacioForm" class="space-y-6">
+
+    <!-- Sección Información Básica -->
+    <div
+      class="bg-white dark:bg-[#1a2736] p-6 rounded-2xl shadow-lg border border-neutral-100/10 dark:border-gray-700 transition-colors">
+      <h2 class="text-2xl font-semibold text-primary-blue dark:text-white mb-6">Información Básica</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-medium text-primary-blue dark:text-gray-200 mb-2">Nombre del Espacio
+          *</label>
+          <input formControlName="titulo"
+            class="w-full bg-neutral-input dark:bg-gray-700/50 rounded-2xl px-4 py-3 text-sm text-primary-blue dark:text-white placeholder-neutral-placeholder dark:placeholder-gray-500 border-none focus:ring-2 focus:ring-primary-orange focus:outline-none transition-shadow"
+            placeholder="Ej: Espacio Creativo Urbano">
+          @if (espacioForm.get('titulo')?.invalid && (espacioForm.get('titulo')?.dirty || espacioForm.get('titulo')?.touched)) {
+            <span
+              class="text-primary-red text-xs mt-1 block">
+              El Nombre del Espacio es obligatorio.
+            </span>
+          }
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-primary-blue dark:text-gray-200 mb-2">Ciudad *</label>
+          <input formControlName="ciudad"
+            class="w-full bg-neutral-input dark:bg-gray-700/50 rounded-2xl px-4 py-3 text-sm text-primary-blue dark:text-white placeholder-neutral-placeholder dark:placeholder-gray-500 border-none focus:ring-2 focus:ring-primary-orange focus:outline-none transition-shadow"
+            placeholder="Ej: Madrid, España">
+          @if (espacioForm.get('ciudad')?.invalid && (espacioForm.get('ciudad')?.dirty || espacioForm.get('ciudad')?.touched)) {
+            <span
+              class="text-primary-red text-xs mt-1 block">
+              La Ciudad es obligatoria.
+            </span>
+          }
+        </div>
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium text-primary-blue dark:text-gray-200 mb-2">Dirección Completa
+          *</label>
+          <input #addressInput formControlName="direccion"
+            class="w-full bg-neutral-input dark:bg-gray-700/50 rounded-2xl px-4 py-3 text-sm text-primary-blue dark:text-white placeholder-neutral-placeholder dark:placeholder-gray-500 border-none focus:ring-2 focus:ring-primary-orange focus:outline-none transition-shadow"
+            placeholder="Calle, número, código postal">
+          @if (espacioForm.get('direccion')?.invalid && (espacioForm.get('direccion')?.dirty || espacioForm.get('direccion')?.touched)) {
+            <span
+              class="text-primary-red text-xs mt-1 block">
+              La Dirección es obligatoria.
+            </span>
+          }
+        </div>
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium text-primary-blue dark:text-gray-200 mb-2">Descripción *</label>
+          <textarea formControlName="descripcion" rows="4"
+            class="w-full bg-neutral-input dark:bg-gray-700/50 rounded-2xl px-4 py-3 text-sm text-primary-blue dark:text-white placeholder-neutral-placeholder dark:placeholder-gray-500 border-none focus:ring-2 focus:ring-primary-orange focus:outline-none transition-shadow resize-none"
+          placeholder="Describe tu espacio, sus características principales..."></textarea>
+          @if (espacioForm.get('descripcion')?.invalid && (espacioForm.get('descripcion')?.dirty || espacioForm.get('descripcion')?.touched)) {
+            <span
+              class="text-primary-red text-xs mt-1 block">
+              La descripción debe tener al menos 20 caracteres.
+            </span>
+          }
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-primary-blue dark:text-gray-200 mb-2">Precio por Día (€)
+          *</label>
+          <input formControlName="precio_hora" type="number"
+            class="w-full bg-neutral-input dark:bg-gray-700/50 rounded-2xl px-4 py-3 text-sm text-primary-blue dark:text-white placeholder-neutral-placeholder dark:placeholder-gray-500 border-none focus:ring-2 focus:ring-primary-orange focus:outline-none transition-shadow">
+            @if (espacioForm.get('precio_hora')?.invalid && (espacioForm.get('precio_hora')?.dirty || espacioForm.get('precio_hora')?.touched)) {
+              <span
+                class="text-primary-red text-xs mt-1 block">
+              El precio debe ser mayor a 0.
+            </span>
+          }
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-primary-blue dark:text-gray-200 mb-2">Capacidad (personas)
+          *</label>
+          <input formControlName="capacidad" type="number"
+            class="w-full bg-neutral-input dark:bg-gray-700/50 rounded-2xl px-4 py-3 text-sm text-primary-blue dark:text-white placeholder-neutral-placeholder dark:placeholder-gray-500 border-none focus:ring-2 focus:ring-primary-orange focus:outline-none transition-shadow">
+            @if (espacioForm.get('capacidad')?.invalid && (espacioForm.get('capacidad')?.dirty || espacioForm.get('capacidad')?.touched)) {
+              <span
+                class="text-primary-red text-xs mt-1 block">
+              La capacidad debe ser al menos 1 persona.
+            </span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección Amenidades -->
+    <div
+      class="bg-white dark:bg-[#1a2736] p-6 rounded-2xl shadow-lg border border-neutral-100/10 dark:border-gray-700 transition-colors">
+      <h2 class="text-2xl font-semibold text-primary-blue dark:text-white mb-6">Amenidades y Servicios</h2>
+      <p class="text-sm text-neutral-text dark:text-gray-400 mb-4">Selecciona las amenidades disponibles en tu espacio
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        @for (item of amenidades; track item) {
+          <label
+            class="flex items-center gap-3 p-4 border border-neutral-200 dark:border-gray-700 rounded-2xl cursor-pointer hover:bg-neutral-50 dark:hover:bg-gray-800 transition-colors group">
+            <div class="relative flex items-center">
+              <input type="checkbox" (change)="toggleAmenidad(item.id, $event)"
+                class="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-neutral-300 dark:border-gray-500 transition-all checked:border-primary-orange checked:bg-primary-orange">
+              <div
+                class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 peer-checked:opacity-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd" />
+                </svg>
+              </div>
+            </div>
+            <span
+            class="text-sm text-neutral-text dark:text-gray-300 font-medium group-hover:text-primary-blue dark:group-hover:text-white transition-colors">{{item.nombre}}</span>
+          </label>
+        }
+      </div>
+    </div>
+
+    <!-- Sección Imágenes -->
+    <div
+      class="bg-white dark:bg-[#1a2736] p-6 rounded-2xl shadow-lg border border-neutral-100/10 dark:border-gray-700 transition-colors">
+      <h2 class="text-2xl font-semibold text-primary-blue dark:text-white mb-6">Imágenes del Espacio</h2>
+      <p class="text-sm text-neutral-text dark:text-gray-400 mb-4">Agrega fotos atractivas de tu espacio (mínimo 3
+      imágenes)</p>
+
+      <div
+        class="border-2 border-dashed border-neutral-300 dark:border-gray-600 rounded-2xl p-12 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-neutral-50 dark:hover:bg-gray-800 transition-colors group relative"
+        (drop)="onFileDropped($event)" (dragover)="onDragOver($event)">
+
+        <input type="file" multiple (change)="onFileSelected($event)"
+          class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+
+        <div
+          class="w-12 h-12 bg-primary-orange/10 rounded-full flex items-center justify-center mb-4 text-xl group-hover:scale-110 transition-transform">
+          <span class="text-primary-orange">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </span>
+        </div>
+        <h3 class="font-semibold text-primary-blue dark:text-white text-base">Arrastra y suelta tus imágenes aquí</h3>
+        <p class="text-sm text-neutral-text dark:text-gray-400 mb-6">o haz clic para seleccionar archivos</p>
+        <button type="button"
+          class="bg-white dark:bg-gray-700 text-primary-blue dark:text-white border border-neutral-200 dark:border-gray-600 px-6 py-3 rounded-full text-sm font-medium hover:bg-neutral-50 dark:hover:bg-gray-600 transition-colors pointer-events-none">
+          Seleccionar Imágenes
+        </button>
+        <p class="text-xs text-neutral-text/60 dark:text-gray-500 mt-4">Formato: JPG, PNG - Tamaño máximo: 5MB por
+        imagen</p>
+      </div>
+
+      <!-- Preview de Imágenes -->
+      @if (previewImages.length > 0) {
+        <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+          @for (img of previewImages; track img; let i = $index) {
+            <div class="relative group">
+              <img [src]="img" class="w-full h-32 object-cover rounded-xl border border-neutral-200 dark:border-gray-600">
+              <button type="button" (click)="removeFile(i)"
+                class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 shadow-md hover:bg-red-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+  </form>
+</div>

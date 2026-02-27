@@ -1,0 +1,192 @@
+<div class="flex h-screen bg-gray-50 dark:bg-[#0b1120] overflow-hidden">
+  <app-sidebar-admin></app-sidebar-admin>
+
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+    <header class="bg-white dark:bg-[#111827] border-b border-gray-200 dark:border-gray-800 z-10">
+      <div class="px-8 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ 'ADMIN.RESERVATIONS.TITLE' |
+          translate }}</h1>
+          <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
+            {{ 'ADMIN.RESERVATIONS.SHOWING' | translate }} <span
+            class="font-semibold text-gray-700 dark:text-gray-200">{{ totalFiltrados
+          }}</span>
+          {{ 'ADMIN.RESERVATIONS.OF' | translate }} <span class="font-semibold">{{ totalReservas }}</span>
+          {{ 'ADMIN.RESERVATIONS.ITEMS' | translate }}
+        </p>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()"
+            [placeholder]="'ADMIN.RESERVATIONS.SEARCH_PLACEHOLDER' | translate"
+            class="pl-9 pr-4 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 w-64">
+        </div>
+        <select [(ngModel)]="filterEstado" (ngModelChange)="onFilterChange()"
+          class="text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="">{{ 'ADMIN.RESERVATIONS.ALL_STATUS' | translate }}</option>
+          @for (e of estadosDisponibles; track e) {
+            <option [value]="e">{{ getEstadoLabel(e) }}</option>
+          }
+        </select>
+        @if (searchTerm || filterEstado) {
+          <button (click)="clearFilters()"
+            class="text-xs text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 underline">
+            {{ 'ADMIN.RESERVATIONS.CLEAR' | translate }}
+          </button>
+        }
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 overflow-y-auto p-8 relative">
+    @if (isLoading) {
+      <div class="flex flex-col items-center justify-center py-12">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+        <p class="text-gray-500 dark:text-gray-400">{{ 'ADMIN.RESERVATIONS.LOADING' | translate }}</p>
+      </div>
+    }
+
+    @if (errorMessage && !isLoading) {
+      <div
+        class="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-4 rounded-lg mb-6">
+        {{ errorMessage }}<button (click)="loadReservas()" class="underline ml-2">{{ 'ADMIN.RESERVATIONS.RETRY'
+      | translate }}</button>
+    </div>
+  }
+
+  @if (!isLoading && !errorMessage && reservas.length === 0 && (searchTerm || filterEstado)) {
+    <div
+      class="flex flex-col items-center justify-center py-20 text-center">
+      <div class="text-5xl mb-4">🔍</div>
+      <p class="text-gray-500 dark:text-gray-400 font-medium">{{ 'ADMIN.RESERVATIONS.ERROR_FILTERS' |
+      translate }}</p>
+      <button (click)="clearFilters()" class="mt-3 text-blue-500 hover:underline text-sm">{{
+      'ADMIN.RESERVATIONS.CLEAR_FILTERS' | translate }}</button>
+    </div>
+  }
+
+  @if (!isLoading && !errorMessage && reservas.length > 0) {
+    <div
+      class="bg-white dark:bg-[#111827] rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800">
+              <th
+                class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              {{ 'ADMIN.RESERVATIONS.TABLE.ID' | translate }}</th>
+              <th
+                class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              {{ 'ADMIN.RESERVATIONS.TABLE.CLIENT' | translate }}</th>
+              <th
+                class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              {{ 'ADMIN.RESERVATIONS.TABLE.SPACE' | translate }}</th>
+              <th
+                class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              {{ 'ADMIN.RESERVATIONS.TABLE.START_DATE' | translate }}</th>
+              <th
+                class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              {{ 'ADMIN.RESERVATIONS.TABLE.END_DATE' | translate }}</th>
+              <th
+                class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              {{ 'ADMIN.RESERVATIONS.TABLE.AMOUNT' | translate }}</th>
+              <th
+                class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              {{ 'ADMIN.RESERVATIONS.TABLE.STATUS' | translate }}</th>
+              <th
+                class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider text-right">
+              {{ 'ADMIN.RESERVATIONS.TABLE.ACTIONS' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+            @for (reserva of reservas; track reserva) {
+              <tr
+                class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors group">
+                <td class="p-4 text-sm text-gray-500 dark:text-gray-400">#{{ reserva.id }}</td>
+                <td class="p-4">
+                  <div class="text-sm font-medium text-gray-900 dark:text-white">{{ reserva.cliente }}
+                  </div>
+                </td>
+                <td class="p-4 text-sm text-gray-600 dark:text-gray-300">{{ reserva.espacio }}</td>
+                <td class="p-4 text-sm text-gray-500 dark:text-gray-400">{{ reserva.fecha_inicio }}</td>
+                <td class="p-4 text-sm text-gray-500 dark:text-gray-400">{{ reserva.fecha_fin }}</td>
+                <td class="p-4 text-sm font-medium text-gray-900 dark:text-white">€{{
+                reserva.monto_total }}</td>
+                <td class="p-4">
+                  <div class="relative inline-block">
+                    <select [ngModel]="reserva.estado"
+                      (ngModelChange)="onEstadoChange(reserva, $event)"
+                      [disabled]="updatingId === reserva.id"
+                      class="appearance-none pl-3 pr-7 py-1 rounded-full text-xs font-medium border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1 transition-all capitalize"
+                                            [ngClass]="{
+                                                'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300 focus:ring-yellow-400': reserva.estado === 'Pendiente',
+                                                'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 focus:ring-green-400': reserva.estado === 'Confirmada',
+                                                'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 focus:ring-blue-400': reserva.estado === 'En_Curso',
+                                                'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 focus:ring-gray-400': reserva.estado === 'Finalizada',
+                                                'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 focus:ring-red-400': reserva.estado === 'Cancelada'
+                                            }">
+                      @for (estado of estadosDisponibles; track estado) {
+                        <option [value]="estado">{{
+                        getEstadoLabel(estado) }}</option>
+                      }
+                    </select>
+                    @if (updatingId === reserva.id) {
+                      <div
+                        class="absolute inset-0 flex items-center justify-center bg-white/60 dark:bg-gray-800/60 rounded-full">
+                        <div
+                          class="animate-spin h-3.5 w-3.5 border-2 border-blue-500 border-t-transparent rounded-full">
+                        </div>
+                      </div>
+                    }
+                    <svg class="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none text-current opacity-50"
+                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                        d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </td>
+                <td class="p-4 text-right">
+                  <div
+                    class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button (click)="openDeleteModal(reserva.id)"
+                      [disabled]="deletingId === reserva.id"
+                      class="p-1.5 text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                      [title]="'ADMIN.RESERVATIONS.TOOLTIPS.DELETE' | translate">
+                      @if (deletingId !== reserva.id) {
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                          width="16" height="16" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <path d="M3 6h18"></path>
+                          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                        </svg>
+                      }
+                      @if (deletingId === reserva.id) {
+                        <div
+                          class="animate-spin h-4 w-4 border-2 border-red-600 border-t-transparent rounded-full">
+                        </div>
+                      }
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</main>
+</div>
+
+<app-confirm-modal [isOpen]="showDeleteModal" [title]="'ADMIN.RESERVATIONS.MODAL_DELETE_TITLE' | translate"
+  [message]="'ADMIN.RESERVATIONS.MODAL_DELETE_MESSAGE' | translate" [isLoading]="deletingId !== null"
+  (confirm)="confirmDelete()" (cancel)="closeDeleteModal()">
+</app-confirm-modal>
+</div>

@@ -1,0 +1,115 @@
+<!-- Header moved to app.component.html -->
+
+<header class="relative h-[600px] w-full flex items-center justify-center text-center px-4">
+    <div class="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
+            alt="Oficina Coworking" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-slate-900/60"></div>
+    </div>
+
+    <div class="relative z-10 max-w-4xl mx-auto text-white">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">
+            {{ 'LANDING.HERO_TITLE' | translate }}
+        </h1>
+        <p class="text-lg md:text-xl mb-8 font-light text-gray-200">
+            {{ 'LANDING.HERO_SUBTITLE' | translate }}
+        </p>
+        <button routerLink="/explorar"
+            class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-8 rounded-full text-lg transition shadow-lg">
+            {{ 'LANDING.CTA_EXPLORE' | translate }}
+        </button>
+    </div>
+</header>
+
+<section class="py-20 px-6 bg-white dark:bg-primary-blue transition-colors duration-300">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white text-center mb-16">
+            {{ 'LANDING.WHY_TITLE' | translate }}
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+
+            <div class="flex flex-col items-center">
+                <div
+                    class="w-16 h-16 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center mb-6 text-orange-500 dark:text-orange-400 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">{{ 'LANDING.FEATURES.WIFI_TITLE' |
+                    translate }}</h3>
+                <p class="text-gray-500 dark:text-gray-400 leading-relaxed">
+                    {{ 'LANDING.FEATURES.WIFI_DESC' | translate }}
+                </p>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <div
+                    class="w-16 h-16 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center mb-6 text-orange-500 dark:text-orange-400 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 1v3M10 1v3M14 1v3" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">{{ 'LANDING.FEATURES.COFFEE_TITLE' |
+                    translate }}</h3>
+                <p class="text-gray-500 dark:text-gray-400 leading-relaxed">
+                    {{ 'LANDING.FEATURES.COFFEE_DESC' | translate }}
+                </p>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <div
+                    class="w-16 h-16 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center mb-6 text-orange-500 dark:text-orange-400 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">{{ 'LANDING.FEATURES.NETWORKING_TITLE'
+                    | translate }}</h3>
+                <p class="text-gray-500 dark:text-gray-400 leading-relaxed">
+                    {{ 'LANDING.FEATURES.NETWORKING_DESC' | translate }}
+                </p>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <div
+                    class="w-16 h-16 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center mb-6 text-orange-500 dark:text-orange-400 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">{{
+                    'LANDING.FEATURES.EASY_BOOKING_TITLE' | translate }}</h3>
+                <p class="text-gray-500 dark:text-gray-400 leading-relaxed">
+                    {{ 'LANDING.FEATURES.EASY_BOOKING_DESC' | translate }}
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="py-24 bg-gray-50 dark:bg-[#1a2736] text-center px-4 transition-colors duration-300">
+    <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">
+            {{ 'LANDING.READY_TITLE' | translate }}
+        </h2>
+        <p class="text-gray-600 dark:text-gray-300 text-lg mb-10">
+            {{ 'LANDING.READY_DESC' | translate }}
+        </p>
+        <button routerLink="/explorar"
+            class="bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-gray-100 text-white dark:text-slate-900 font-medium py-3 px-8 rounded-full text-lg transition shadow-lg">
+            {{ 'LANDING.CTA_SEARCH' | translate }}
+        </button>
+    </div>
+</section>

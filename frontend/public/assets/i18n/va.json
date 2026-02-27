@@ -1,0 +1,512 @@
+{
+    "HEADER": {
+        "HOME": "Inici",
+        "COWORKINGS": "Coworkings",
+        "LOGIN": "Iniciar Sessió",
+        "REGISTER": "Registrar",
+        "PROFILE": "Perfil",
+        "LOGOUT": "Tancar Sessió",
+        "HOST_PANEL": "Tauler d'Amfitrió",
+        "CLIENT_PANEL": "El Meu Tauler",
+        "ADMIN_PANEL": "Tauler Admin",
+        "SETTINGS": "Configuració",
+        "DARK_MODE": "Mode Fosc",
+        "LIGHT_MODE": "Mode Clar"
+    },
+    "ACCESSIBILITY": {
+        "TITLE": "Accessibilitat",
+        "LANGUAGE": "Idioma",
+        "TEXT_SIZE": "Mida de text",
+        "TEXT_SMALL": "Xicotet",
+        "TEXT_NORMAL": "Normal",
+        "TEXT_LARGE": "Gran",
+        "TEXT_XLARGE": "Molt gran",
+        "THEME": "Tema",
+        "DARK_MODE": "Mode fosc",
+        "LIGHT_MODE": "Mode clar"
+    },
+    "FOOTER": {
+        "DESCRIPTION": "Troba el teu espai de treball ideal en qualsevol lloc. Connectant professionals amb els millors espais.",
+        "PLATFORM": "Plataforma",
+        "PRICING": "Preus",
+        "COMPANY": "Companyia",
+        "ABOUT": "Sobre nosaltres",
+        "BLOG": "Blog",
+        "CONTACT": "Contacte",
+        "LEGAL": "Legal",
+        "PRIVACY": "Privacitat",
+        "TERMS": "Termes",
+        "RIGHTS": "Tots els drets reservats."
+    },
+    "SIDEBAR_ADMIN": {
+        "TITLE": "Tauler d'Administrador",
+        "DASHBOARD": "Dashboard",
+        "USERS": "Usuaris",
+        "SPACES": "Espais",
+        "BOOKINGS": "Reserves",
+        "PAYMENTS": "Pagaments",
+        "REPORTS": "Informes",
+        "SETTINGS": "Configuració"
+    },
+    "SIDEBAR_HOST": {
+        "TITLE": "Tauler d'Amfitrió",
+        "MY_AREAS": "Les Meues Àrees",
+        "ADD_AREAS": "Afegir Àrees",
+        "MY_BOOKINGS": "Les Meues Reserves"
+    },
+    "LANDING": {
+        "HERO_TITLE": "Troba el teu Espai de treball",
+        "HERO_SUBTITLE": "Descobreix espais de coworking inspiradors i millora la teua productivitat",
+        "CTA_EXPLORE": "Explora Coworkings",
+        "WHY_TITLE": "Perquè triar CoSpace",
+        "FEATURES": {
+            "WIFI_TITLE": "Velocitat Wi-Fi",
+            "WIFI_DESC": "Alta velocitat d'internet per a un treball sense interrupcions",
+            "COFFEE_TITLE": "Café",
+            "COFFEE_DESC": "Begudes incloses",
+            "NETWORKING_TITLE": "Networking",
+            "NETWORKING_DESC": "Connecta amb professionals afins",
+            "EASY_BOOKING_TITLE": "Reserva Fàcil",
+            "EASY_BOOKING_DESC": "Reserva el teu espai en segons"
+        },
+        "READY_TITLE": "Preparat per a començar?",
+        "READY_DESC": "Uneix-te a milers de professionals que treballen en espais increïbles.",
+        "CTA_SEARCH": "Buscar Espais"
+    },
+    "AUTH": {
+        "LOGIN": {
+            "TITLE": "Benvingut de nou",
+            "SUBTITLE": "Inicia sessió al teu compte de CoSpace",
+            "EMAIL_LABEL": "Correu electrònic",
+            "EMAIL_PLACEHOLDER": "elteu@email.com",
+            "PASSWORD_LABEL": "Contrasenya",
+            "PASSWORD_PLACEHOLDER": "........",
+            "SUBMIT": "Iniciar sessió",
+            "SUBMITTING": "Iniciant sessió...",
+            "NO_ACCOUNT": "No tens un compte?",
+            "REGISTER_LINK": "Registra't",
+            "FORGOT_PASSWORD": "Has oblidat la teua contrasenya?",
+            "RECOVER_LINK": "Recuperar contrasenya",
+            "ERRORS": {
+                "REQUIRED_EMAIL": "El correu electrònic és obligatori.",
+                "INVALID_EMAIL": "Introdueix un correu electrònic vàlid.",
+                "REQUIRED_PASSWORD": "La contrasenya és obligatoria."
+            }
+        },
+        "REGISTER_CLIENT": {
+            "TITLE": "Crear Compte de Client",
+            "SUBTITLE": "Uneix-te a CoSpace i troba el teu espai ideal.",
+            "FULL_NAME": "Nom Complet",
+            "FULL_NAME_PLACEHOLDER": "Josep Joan",
+            "CONFIRM_PASSWORD": "Confirmar Contrasenya",
+            "SUBMIT": "Crear Compte de Client",
+            "SUBMITTING": "Creant...",
+            "ALREADY_ACCOUNT": "Ja tens un compte?",
+            "WANT_HOST": "Vols ser amfitrió?",
+            "REGISTER_HOST_LINK": "Registrar-se com a amfitrió"
+        },
+        "REGISTER_HOST": {
+            "TITLE": "Crear Compte d'Amfitrió",
+            "SUBTITLE": "Anuncia el teu espai de coworking a CoSpace.",
+            "WORKSPACE_NAME": "Nom Espai de Treball",
+            "WORKSPACE_PLACEHOLDER": "El meu Espai de Treball",
+            "ADDRESS": "Direcció",
+            "ADDRESS_PLACEHOLDER": "Carrer Joan Ramon, 12, planta 3, Sagunt, València",
+            "CITY": "Ciutat",
+            "CITY_PLACEHOLDER": "València",
+            "CAPACITY": "Capacitat (Persones)",
+            "CAPACITY_PLACEHOLDER": "Ex. 10",
+            "PRICE": "Preu per Dia (€)",
+            "PRICE_PLACEHOLDER": "Ex. 15.50",
+            "DESCRIPTION": "Breu Descripció",
+            "DESCRIPTION_PLACEHOLDER": "Descriu el teu espai de treball",
+            "SUBMIT": "Crear Compte d'Amfitrió",
+            "ERROR_PASSWORD_MISMATCH": "Les contrasenyes no coincideixen",
+            "LOOKING_FOR_SPACE": "Buscant un espai?",
+            "REGISTER_CLIENT_LINK": "Registrar-se com a Client"
+        },
+        "FORGOT_PASSWORD": {
+            "TITLE": "Recuperar Contrasenya",
+            "SUBTITLE": "Introdueix el teu correu electrònic i t'enviarem un codi per restablir la contrasenya.",
+            "SUBMIT": "Enviar Codi",
+            "SUBMITTING": "Enviant...",
+            "HAVE_CODE_BTN": "Tinc el meu codi",
+            "HAVE_CODE_LINK": "Ja tens un codi? Introdueix-lo ací",
+            "BACK_TO_LOGIN": "Tornar a l'inici de sessió",
+            "LOADING_TEXT": "Enviant instruccions..."
+        },
+        "RESET_PASSWORD": {
+            "TITLE": "Nova Contrasenya",
+            "SUBTITLE": "Introdueix el codi, el teu correu electrònic i la nova contrasenya.",
+            "CODE_LABEL": "Codi de Verificació",
+            "CODE_PLACEHOLDER": "123456",
+            "NEW_PASSWORD_LABEL": "Nova Contrasenya",
+            "NEW_PASSWORD_PLACEHOLDER": "Mín. 8 caràcters",
+            "CONFIRM_PASSWORD_PLACEHOLDER": "Repeteix la contrasenya",
+            "SUBMIT": "Restablir Contrasenya",
+            "SUBMITTING": "Restablint..."
+        }
+    },
+    "EXPLORE": {
+        "TITLE": "Explorar Espais de Coworking",
+        "SEARCH_PLACEHOLDER": "Buscar ciutat...",
+        "FILTERS": {
+            "ALL_PRICES": "Tots els preus",
+            "LESS_THAN_20": "Menys de 20€/d",
+            "BETWEEN_20_50": "20€ - 50€/d",
+            "MORE_THAN_50": "Més de 50€/d",
+            "ALL_STATUS": "Tots els estats",
+            "AVAILABLE": "Disponible",
+            "MAINTENANCE": "En Manteniment",
+            "ALL_RATINGS": "Totes les valoracions",
+            "STARS": "estrelles",
+            "STARS_OR_MORE": "estrellas o més",
+            "STAR_OR_MORE": "estrella o més"
+        },
+        "LOADING": "Carregant espais increïbles per a tu...",
+        "NO_RESULTS": "No s'han trobat espais disponibles en aquest moment.",
+        "ERROR_TITLE": "Error!",
+        "CARD": {
+            "PER_HOUR": "/dia",
+            "DETAILS_BTN": "Veure Detalls",
+            "UNITS": "U."
+        }
+    },
+    "SPACE_DETAILS": {
+        "LOADING": "Carregant detalls de l'espai...",
+        "ERROR_TITLE": "Ui! Alguna cosa ha anat malament",
+        "BACK_BTN": "Tornar a Explorar",
+        "REVIEWS": "ressenyes",
+        "ABOUT_TITLE": "Sobre Aquest Espai",
+        "FEATURES_TITLE": "Característiques",
+        "LOCATION_TITLE": "Localització",
+        "NO_MAP": "Ubicació exacta no disponible al mapa",
+        "PRICE_LABEL": "Preu per dia",
+        "BOOK_BTN": "Reservar Ara",
+        "RESERVED_BTN": "Espai Reservat",
+        "HOST_BTN": "Reservar (No disponible per a Amfitrions)",
+        "CONTACT_BTN": "Contactar Amfitrió",
+        "NO_CHARGE_NOTE": "No se't cobrarà res fins que confirmes la reserva."
+    },
+    "CLIENT_DASHBOARD": {
+        "TITLE": "El Meu Tauler",
+        "SUBTITLE": "Gestiona les teues reserves i explora nous espais.",
+        "TABS": {
+            "ACTIVE": "Reserves Actives",
+            "PAST": "Reserves Anteriors"
+        },
+        "LOADING": "Carregant les teues reserves...",
+        "RETRY_BTN": "Reintentar",
+        "STATUS": {
+            "CANCELLED": "Cancel·lada",
+            "CONFIRMED": "Confirmada"
+        },
+        "NO_LOCATION": "Sense ubicació",
+        "ACTIONS": {
+            "DETAILS": "Veure Detalls",
+            "CANCEL": "Cancel·lar",
+            "EXPLORE": "Explorar Espais"
+        },
+        "EMPTY_STATE": "No tens reserves en aquesta secció."
+    },
+    "SETTINGS": {
+        "TITLE": "Configuració",
+        "DESCRIPTION": "Gestiona el teu perfil i preferències de l'aplicació.",
+        "PROFILE": {
+            "TITLE": "Informació Personal",
+            "CHANGE_PHOTO": "Canviar foto de perfil",
+            "FULL_NAME": "Nom Complet",
+            "EMAIL": "Correu Electrònic",
+            "PHONE": "Telèfon (Opcional)",
+            "SAVE": "Guardar Canvis",
+            "SAVING": "Guardant...",
+            "ABOUT_ME": "Sobre mi (Biografia)",
+            "ABOUT_ME_PLACEHOLDER": "Escriu una breu descripció sobre tu..."
+        },
+        "PREFERENCES": {
+            "TITLE": "Preferències i Accessibilitat",
+            "DARK_MODE": "Mode Fosc",
+            "DARK_MODE_DESC": "Canvia l'aparença de l'aplicació a tons foscos.",
+            "TEXT_SIZE": "Mida del Text",
+            "TEXT_SIZE_DESC": "Ajusta la mida de la font per a millorar la llegibilitat.",
+            "TEXT_SIZE_SMALL": "Xicotet",
+            "TEXT_SIZE_NORMAL": "Normal",
+            "TEXT_SIZE_LARGE": "Gran",
+            "TEXT_SIZE_XL": "Molt Gran",
+            "LANGUAGE": "Idioma"
+        },
+        "SECURITY": {
+            "TITLE": "Seguretat",
+            "CHANGE_PASSWORD": "Canviar Contrasenya",
+            "TWO_FACTOR": "Autenticació en 2 passos",
+            "ENABLED": "Activat",
+            "DISABLED": "Desactivat"
+        },
+        "MODALS": {
+            "CHANGE_PASSWORD": {
+                "TITLE": "Canviar Contrasenya",
+                "CURRENT_PASSWORD": "Contrasenya Actual",
+                "NEW_PASSWORD": "Nova Contrasenya",
+                "NEW_PASSWORD_PLACEHOLDER": "Mínim 8 caràcters",
+                "CONFIRM_PASSWORD": "Confirmar Contrasenya",
+                "CONFIRM_PASSWORD_PLACEHOLDER": "Repeteix la contrasenya",
+                "CANCEL": "Cancel·lar",
+                "UPDATE": "Actualitzar",
+                "SUCCESS": "Contrasenya actualitzada correctament.",
+                "ERROR_MATCH": "Les noves contrasenyes no coincideixen.",
+                "ERROR_GENERIC": "Error en canviar la contrasenya"
+            },
+            "SUCCESS_TOAST": {
+                "TITLE": "Canvis Guardats!",
+                "MESSAGE": "El teu perfil s'ha actualitzat correctament."
+            }
+        },
+        "ERRORS": {
+            "UPDATE_PROFILE": "Error en actualitzar el perfil",
+            "UPDATE_2FA": "Error en actualitzar 2FA"
+        }
+    },
+    "HOST_PROFILE": {
+        "BACK": "Tornar",
+        "VERIFIED_HOST": "Amfitrió verificat",
+        "REGISTERED_HOST": "Amfitrió registrat",
+        "PUBLISHED_SPACES": "espais publicats",
+        "SPACES_OF": "Espais de",
+        "NO_SPACES": "Aquest amfitrió no té espais publicats en aquest moment.",
+        "PHOTO_ALT": "Foto de l'amfitrió"
+    },
+    "ADMIN": {
+        "DASHBOARD": {
+            "TITLE": "Dashboard",
+            "SUBTITLE": "Resum general de la plataforma",
+            "LOADING": "Carregant dades...",
+            "ERROR": "Error processant dades del servidor.",
+            "ERROR_FETCH": "No s'han pogut carregar les dades del dashboard. Per favor, intenta-ho de nou més tard.",
+            "RETRY": "Reintentar",
+            "TOTAL_USERS": "Total Usuaris",
+            "ACTIVE_SPACES": "Espais Actius",
+            "MONTH_BOOKINGS": "Reserves del Mes",
+            "MONTH_REVENUE": "Ingressos del Mes",
+            "RECENT_BOOKINGS": "Últimes Reserves",
+            "NO_RECENT_BOOKINGS": "No hi ha reserves recents.",
+            "POPULAR_SPACES": "Espais Populars",
+            "NO_POPULAR_SPACES": "No hi ha espais populars encara.",
+            "BOOKINGS": "Reserves",
+            "VIEW_DETAIL": "Veure Detall"
+        },
+        "USERS": {
+            "TITLE": "Gestió d'Usuaris",
+            "SHOWING": "Mostrant",
+            "OF": "de",
+            "ITEMS": "usuaris",
+            "SEARCH_PLACEHOLDER": "Buscar per nom o correu...",
+            "ALL_ROLES": "Tots els rols",
+            "ROLE_CLIENT": "Client",
+            "ROLE_HOST": "Amfitrió",
+            "ROLE_ADMIN": "Admin",
+            "CLEAR": "Netejar",
+            "LOADING": "Carregant usuaris...",
+            "ERROR": "No s'han trobat usuaris amb estos filtres.",
+            "CLEAR_FILTERS": "Netejar filtres",
+            "RETRY": "Reintentar",
+            "TABLE": {
+                "ID": "ID",
+                "USER": "Usuari",
+                "ROLE": "Rol",
+                "EMAIL": "Correu",
+                "STATUS": "Estat",
+                "REGISTRATION_DATE": "Data Registre",
+                "ACTIONS": "Accions"
+            },
+            "TOOLTIPS": {
+                "ACTIVATE": "Activar compte",
+                "SUSPEND": "Suspendre compte",
+                "EDIT": "Editar",
+                "DELETE": "Eliminar"
+            },
+            "MODAL_DELETE_TITLE": "Eliminar Usuari",
+            "MODAL_DELETE_MESSAGE": "Estàs segur que vols eliminar este usuari? Esta acció no es pot desfer.",
+            "EDIT_TITLE": "Editar Usuari",
+            "LOADING_EDIT": "Processant sol·licitud...",
+            "ERROR_NOT_FOUND": "Usuari no trobat.",
+            "ERROR_EDIT": "Error en carregar les dades de l'usuari.",
+            "SUCCESS_EDIT": "Usuari actualitzat correctament.",
+            "LABEL_NAME": "Nom Complet",
+            "ERROR_NAME": "El nom és requerit i ha de tindre almenys 3 caràcters.",
+            "LABEL_EMAIL": "Correu Electrònic",
+            "ERROR_EMAIL": "Introduïx un correu electrònic vàlid.",
+            "LABEL_ROLE": "Rol d'Usuari",
+            "ERROR_ROLE": "El rol és requerit.",
+            "BTN_DELETE": "Eliminar Usuari",
+            "BTN_CANCEL": "Cancel·lar",
+            "BTN_SAVE": "Guardar Canvis"
+        },
+        "SPACES": {
+            "TITLE": "Gestió d'Espais",
+            "SHOWING": "Mostrant",
+            "OF": "de",
+            "ITEMS": "espais",
+            "SEARCH_PLACEHOLDER": "Buscar per títol, ciutat o amfitrió...",
+            "ALL_STATUS": "Tots els estats",
+            "STATUS_ACTIVE": "Actiu",
+            "STATUS_INACTIVE": "Inactiu",
+            "CLEAR": "Netejar",
+            "LOADING": "Carregant espais...",
+            "ERROR": "No s'han trobat espais amb estos filtres.",
+            "CLEAR_FILTERS": "Netejar filtres",
+            "RETRY": "Reintentar",
+            "TABLE": {
+                "SPACE": "Espai",
+                "LOCATION": "Ubicació",
+                "HOST": "Amfitrió",
+                "PRICE_DAY": "Preu/Dia",
+                "STATUS": "Estat",
+                "ACTIONS": "Accions"
+            },
+            "TOOLTIPS": {
+                "VIEW": "Veure",
+                "EDIT": "Editar",
+                "DELETE": "Eliminar"
+            },
+            "MODAL_DELETE_TITLE": "Eliminar Espai",
+            "MODAL_DELETE_MESSAGE": "Estàs segur que vols eliminar este espai? Esta acció no es pot desfer.",
+            "EDIT_TITLE": "Editar Espai",
+            "LOADING_EDIT": "Processant sol·licitud...",
+            "BTN_CANCEL": "Cancel·lar",
+            "BTN_SAVE": "Guardar Canvis"
+        },
+        "PAYMENTS": {
+            "TITLE": "Gestió de Pagaments",
+            "SHOWING": "Mostrant",
+            "OF": "de",
+            "ITEMS": "registres",
+            "SEARCH_PLACEHOLDER": "Buscar client, espai o ID transacció...",
+            "ALL_STATUS": "Tots els estats",
+            "STATUS_COMPLETED": "Completat",
+            "STATUS_PENDING": "Pendent",
+            "STATUS_FAILED": "Fallat",
+            "STATUS_REFUNDED": "Reemborsat",
+            "ALL_METHODS": "Tots els mètodes",
+            "METHOD_CARD": "Targeta",
+            "METHOD_PAYPAL": "PayPal",
+            "METHOD_TRANSFER": "Transferència",
+            "CLEAR": "Netejar",
+            "LOADING": "Carregant pagaments...",
+            "ERROR_EMPTY": "Sense pagaments registrats",
+            "ERROR_EMPTY_DESC": "Encara no s'ha processat cap pagament en la plataforma.",
+            "ERROR_FILTERS": "No s'han trobat pagaments amb estos filtres.",
+            "CLEAR_FILTERS": "Netejar filtres",
+            "RETRY": "Reintentar",
+            "STATS": {
+                "INCOME": "Ingressos per gestió",
+                "COMPLETED": "Completats",
+                "REFUNDED": "Reemborsats"
+            },
+            "TABLE": {
+                "ID": "ID",
+                "CLIENT": "Client",
+                "SPACE": "Espai",
+                "AMOUNT": "Import",
+                "METHOD": "Mètode",
+                "STATUS": "Estat",
+                "DATE": "Data",
+                "TRANSACTION_ID": "ID Transacció",
+                "ACTIONS": "Accions"
+            },
+            "TOOLTIPS": {
+                "VIEW_BOOKING": "Veure reserva associada",
+                "DELETE": "Eliminar registre"
+            }
+        },
+        "REPORTS": {
+            "TITLE": "Gestió de Reportes",
+            "SHOWING": "Mostrant",
+            "OF": "de",
+            "ITEMS": "reportes",
+            "SEARCH_PLACEHOLDER": "Buscar per espai, usuari o descripció...",
+            "ALL_STATUS": "Tots els estats",
+            "STATUS_PENDING": "Pendent",
+            "STATUS_REVIEWED": "Revisat",
+            "STATUS_RESOLVED": "Resolt",
+            "STATUS_REJECTED": "Rebutjat",
+            "ALL_MOTIVES": "Tots els motius",
+            "CLEAR": "Netejar",
+            "LOADING": "Carregant reportes...",
+            "ERROR_EMPTY": "No hi ha reportes",
+            "ERROR_EMPTY_DESC": "No s'han rebut reportes d'espais encara.",
+            "ERROR_FILTERS": "No s'han trobat reportes amb estos filtres.",
+            "CLEAR_FILTERS": "Netejar filtres",
+            "RETRY": "Reintentar",
+            "TABLE": {
+                "ID": "ID",
+                "SPACE": "Espai",
+                "REPORTED_BY": "Reportat per",
+                "MOTIVE": "Motiu",
+                "DATE": "Data",
+                "STATUS": "Estat",
+                "ACTIONS": "Accions",
+                "CHANGE_STATUS": "Canviar estat"
+            },
+            "TOOLTIPS": {
+                "CONTACT": "Contactar per correu",
+                "DELETE": "Eliminar"
+            },
+            "MODAL_DELETE_TITLE": "Eliminar Report",
+            "MODAL_DELETE_MESSAGE": "Estàs segur que vols eliminar este report? Esta acció no es pot desfer."
+        },
+        "RESERVATIONS": {
+            "TITLE": "Gestió de Reserves",
+            "SHOWING": "Mostrant",
+            "OF": "de",
+            "ITEMS": "reserves",
+            "SEARCH_PLACEHOLDER": "Buscar per client o espai...",
+            "ALL_STATUS": "Tots els estats",
+            "STATUS_PENDING": "Pendent",
+            "STATUS_CONFIRMED": "Confirmada",
+            "STATUS_IN_PROGRESS": "En curs",
+            "STATUS_FINISHED": "Finalitzada",
+            "STATUS_CANCELLED": "Cancel·lada",
+            "CLEAR": "Netejar",
+            "LOADING": "Carregant reserves...",
+            "RETRY": "Reintentar",
+            "ERROR_EMPTY": "No hi ha reserves",
+            "ERROR_EMPTY_DESC": "No hi ha reserves a la plataforma.",
+            "ERROR_FILTERS": "No s'han trobat reserves amb eixos filtres.",
+            "CLEAR_FILTERS": "Netejar filtres",
+            "TABLE": {
+                "ID": "ID",
+                "CLIENT": "Client",
+                "SPACE": "Espai",
+                "START_DATE": "Data Inici",
+                "END_DATE": "Data Fi",
+                "AMOUNT": "Import",
+                "STATUS": "Estat",
+                "ACTIONS": "Accions"
+            },
+            "TOOLTIPS": {
+                "DELETE": "Eliminar"
+            },
+            "MODAL_DELETE_TITLE": "Eliminar Reserva",
+            "MODAL_DELETE_MESSAGE": "Estàs segur que vols eliminar esta reserva? Esta acció no es pot desfer."
+        },
+        "RESERVATIONS_EDIT": {
+            "TITLE": "Editar Reserva",
+            "LOADING": "Processant sol·licitud...",
+            "ERROR_NOT_FOUND": "Reserva no trobada.",
+            "ERROR_LOAD": "Error en carregar la reserva.",
+            "SUCCESS": "Reserva actualitzada correctament.",
+            "LABEL_AMOUNT": "Import Total (€)",
+            "ERROR_AMOUNT": "L'import és requerit i ha de ser major o igual a 0.",
+            "LABEL_STATUS": "Estat de la Reserva",
+            "ERROR_STATUS": "L'estat és requerit.",
+            "BTN_DELETE": "Eliminar Reserva",
+            "BTN_CANCEL": "Cancel·lar",
+            "BTN_SAVE": "Guardar Canvis"
+        },
+        "CONFIRM_MODAL": {
+            "CANCEL": "Cancel·lar",
+            "DELETE_IN_PROGRESS": "Eliminant...",
+            "DELETE": "Eliminar"
+        }
+    }
+}

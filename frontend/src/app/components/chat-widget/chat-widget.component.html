@@ -1,0 +1,171 @@
+<!-- ================================== -->
+<!-- BOTÓN FLOTANTE DE CHAT             -->
+<!-- ================================== -->
+@if (isAuthenticated && conversations.length > 0) {
+  <div class="chat-widget-container">
+    <!-- Botón flotante -->
+    <button class="chat-fab" (click)="toggleChat()" [class.chat-fab--open]="isChatOpen"
+      [attr.aria-label]="isChatOpen ? 'Cerrar chat' : 'Abrir chat'">
+      <!-- Icono de chat (cuando está cerrado) -->
+      @if (!isChatOpen) {
+        <svg xmlns="http://www.w3.org/2000/svg" class="chat-fab__icon" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        </svg>
+      }
+      <!-- Icono de cerrar (cuando está abierto) -->
+      @if (isChatOpen) {
+        <svg xmlns="http://www.w3.org/2000/svg" class="chat-fab__icon" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      }
+      <!-- Badge de mensajes no leídos -->
+      @if (unreadCount > 0 && !isChatOpen) {
+        <span class="chat-fab__badge">
+          {{ unreadCount > 99 ? '99+' : unreadCount }}
+        </span>
+      }
+    </button>
+    <!-- ================================== -->
+    <!-- BANDEJA DE CHAT (POPUP)            -->
+    <!-- ================================== -->
+    <div class="chat-tray" [class.chat-tray--open]="isChatOpen">
+      <!-- ======================== -->
+      <!-- VISTA: LISTA DE CHATS    -->
+      <!-- ======================== -->
+      @if (!activeConversationId) {
+        <div class="chat-tray__content">
+          <!-- Header de la lista -->
+          <div class="chat-header">
+            <div class="chat-header__info">
+              <div class="chat-header__avatar-group">
+                <div class="chat-header__logo">
+                  <span>C</span>
+                </div>
+              </div>
+              <div>
+                <h3 class="chat-header__title">Mis Conversaciones</h3>
+                <p class="chat-header__subtitle">{{ conversations.length }} chat{{ conversations.length !== 1 ?
+                's' : '' }}</p>
+              </div>
+            </div>
+          </div>
+          <!-- Lista de conversaciones -->
+          <div class="chat-list">
+            @if (conversations.length === 0) {
+              <div class="chat-list__empty">
+                <svg xmlns="http://www.w3.org/2000/svg" class="chat-list__empty-icon" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+                <p class="chat-list__empty-text">Aún no tienes conversaciones</p>
+                <p class="chat-list__empty-hint">Contacta a un anfitrión desde la página de un espacio</p>
+              </div>
+            }
+            @for (conv of conversations; track conv) {
+              <div class="chat-list__item" (click)="openConversation(conv)">
+                <div class="chat-list__avatar">
+                  <span>{{ getInitial(conv.otro_usuario.nombre_completo) }}</span>
+                </div>
+                <div class="chat-list__details">
+                  <div class="chat-list__top-row">
+                    <span class="chat-list__name">{{ conv.otro_usuario.nombre_completo }}</span>
+                    @if (conv.ultimo_mensaje) {
+                      <span class="chat-list__time">{{
+                      formatTime(conv.ultimo_mensaje.created_at) }}</span>
+                    }
+                  </div>
+                  <div class="chat-list__bottom-row">
+                    @if (conv.ultimo_mensaje) {
+                      <span class="chat-list__last-msg">
+                        @if (conv.ultimo_mensaje.es_mio) {
+                          <span class="chat-list__you">Tú: </span>
+                          }{{
+                          conv.ultimo_mensaje.contenido }}
+                        </span>
+                      }
+                      @if (!conv.ultimo_mensaje) {
+                        <span class="chat-list__last-msg">Sin mensajes aún</span>
+                      }
+                      @if (conv.no_leidos > 0) {
+                        <span class="chat-list__unread-badge">{{
+                        conv.no_leidos }}</span>
+                      }
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+        <!-- ======================== -->
+        <!-- VISTA: CONVERSACIÓN      -->
+        <!-- ======================== -->
+        @if (activeConversationId && activeConvInfo) {
+          <div class="chat-tray__content">
+            <!-- Header de la conversación -->
+            <div class="chat-header chat-header--conversation">
+              <button class="chat-header__back" (click)="goBackToList()" aria-label="Volver">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
+              </button>
+              <div class="chat-header__avatar-sm">
+                <span>{{ getInitial(activeConvInfo.otro_usuario.nombre_completo) }}</span>
+              </div>
+              <div class="chat-header__info">
+                <h3 class="chat-header__title">{{ activeConvInfo.otro_usuario.nombre_completo }}</h3>
+                <p class="chat-header__subtitle">CoSpace Chat</p>
+              </div>
+            </div>
+            <!-- Área de mensajes -->
+            <div class="chat-messages" #messagesContainer>
+              @if (messages.length === 0) {
+                <div class="chat-messages__empty">
+                  <p>Envía un mensaje para comenzar la conversación</p>
+                </div>
+              }
+              @for (msg of messages; track msg) {
+                <div class="chat-bubble-wrapper"
+                  [class.chat-bubble-wrapper--own]="msg.es_mio" [class.chat-bubble-wrapper--other]="!msg.es_mio">
+                  <div class="chat-bubble" [class.chat-bubble--own]="msg.es_mio"
+                    [class.chat-bubble--other]="!msg.es_mio">
+                    <p class="chat-bubble__text">{{ msg.contenido }}</p>
+                    <div class="chat-bubble__meta">
+                      <span class="chat-bubble__time">{{ formatMessageTime(msg.created_at) }}</span>
+                      @if (msg.es_mio && msg.leido) {
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                          class="chat-bubble__read-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      }
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+            <!-- Input de mensaje -->
+            <div class="chat-input">
+              <div class="chat-input__wrapper">
+                <input type="text" class="chat-input__field" [(ngModel)]="messageText" (keyup.enter)="sendMessage()"
+                  placeholder="Escribe un mensaje..." autocomplete="off" />
+                <button class="chat-input__send" (click)="sendMessage()" [disabled]="!messageText.trim()"
+                  aria-label="Enviar mensaje">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }

@@ -1,0 +1,512 @@
+{
+    "HEADER": {
+        "HOME": "Home",
+        "COWORKINGS": "Coworkings",
+        "LOGIN": "Log In",
+        "REGISTER": "Register",
+        "PROFILE": "Profile",
+        "LOGOUT": "Log Out",
+        "HOST_PANEL": "Host Dashboard",
+        "CLIENT_PANEL": "My Dashboard",
+        "ADMIN_PANEL": "Admin Dashboard",
+        "SETTINGS": "Settings",
+        "DARK_MODE": "Dark Mode",
+        "LIGHT_MODE": "Light Mode"
+    },
+    "ACCESSIBILITY": {
+        "TITLE": "Accessibility",
+        "LANGUAGE": "Language",
+        "TEXT_SIZE": "Text size",
+        "TEXT_SMALL": "Small",
+        "TEXT_NORMAL": "Normal",
+        "TEXT_LARGE": "Large",
+        "TEXT_XLARGE": "Very large",
+        "THEME": "Theme",
+        "DARK_MODE": "Dark mode",
+        "LIGHT_MODE": "Light mode"
+    },
+    "FOOTER": {
+        "DESCRIPTION": "Find your ideal workspace anywhere. Connecting professionals with the best spaces.",
+        "PLATFORM": "Platform",
+        "PRICING": "Pricing",
+        "COMPANY": "Company",
+        "ABOUT": "About",
+        "BLOG": "Blog",
+        "CONTACT": "Contact",
+        "LEGAL": "Legal",
+        "PRIVACY": "Privacy",
+        "TERMS": "Terms",
+        "RIGHTS": "All rights reserved."
+    },
+    "SIDEBAR_ADMIN": {
+        "TITLE": "Admin Dashboard",
+        "DASHBOARD": "Dashboard",
+        "USERS": "Users",
+        "SPACES": "Spaces",
+        "BOOKINGS": "Bookings",
+        "PAYMENTS": "Payments",
+        "REPORTS": "Reports",
+        "SETTINGS": "Settings"
+    },
+    "SIDEBAR_HOST": {
+        "TITLE": "Host Dashboard",
+        "MY_AREAS": "My Areas",
+        "ADD_AREAS": "Add Areas",
+        "MY_BOOKINGS": "My Bookings"
+    },
+    "LANDING": {
+        "HERO_TITLE": "Find your Workspace",
+        "HERO_SUBTITLE": "Discover inspiring coworking spaces and boost your productivity",
+        "CTA_EXPLORE": "Explore Coworkings",
+        "WHY_TITLE": "Why Choose CoSpace",
+        "FEATURES": {
+            "WIFI_TITLE": "High-Speed Wi-Fi",
+            "WIFI_DESC": "Fast internet for uninterrupted work",
+            "COFFEE_TITLE": "Coffee",
+            "COFFEE_DESC": "Drinks included",
+            "NETWORKING_TITLE": "Networking",
+            "NETWORKING_DESC": "Connect with like-minded professionals",
+            "EASY_BOOKING_TITLE": "Easy Booking",
+            "EASY_BOOKING_DESC": "Book your space in seconds"
+        },
+        "READY_TITLE": "Ready to Start?",
+        "READY_DESC": "Join thousands of professionals working in amazing spaces.",
+        "CTA_SEARCH": "Search Spaces"
+    },
+    "AUTH": {
+        "LOGIN": {
+            "TITLE": "Welcome Back",
+            "SUBTITLE": "Log in to your CoSpace account",
+            "EMAIL_LABEL": "Email",
+            "EMAIL_PLACEHOLDER": "you@email.com",
+            "PASSWORD_LABEL": "Password",
+            "PASSWORD_PLACEHOLDER": "........",
+            "SUBMIT": "Log In",
+            "SUBMITTING": "Logging in...",
+            "NO_ACCOUNT": "Don't have an account?",
+            "REGISTER_LINK": "Register",
+            "FORGOT_PASSWORD": "Forgot your password?",
+            "RECOVER_LINK": "Recover password",
+            "ERRORS": {
+                "REQUIRED_EMAIL": "Email is required.",
+                "INVALID_EMAIL": "Please enter a valid email.",
+                "REQUIRED_PASSWORD": "Password is required."
+            }
+        },
+        "REGISTER_CLIENT": {
+            "TITLE": "Create Client Account",
+            "SUBTITLE": "Join CoSpace and find your perfect space.",
+            "FULL_NAME": "Full Name",
+            "FULL_NAME_PLACEHOLDER": "John Doe",
+            "CONFIRM_PASSWORD": "Confirm Password",
+            "SUBMIT": "Create Client Account",
+            "SUBMITTING": "Creating...",
+            "ALREADY_ACCOUNT": "Already have an account?",
+            "WANT_HOST": "Want to be a host?",
+            "REGISTER_HOST_LINK": "Register as a host"
+        },
+        "REGISTER_HOST": {
+            "TITLE": "Create Host Account",
+            "SUBTITLE": "Advertise your coworking space on CoSpace.",
+            "WORKSPACE_NAME": "Workspace Name",
+            "WORKSPACE_PLACEHOLDER": "My Workspace",
+            "ADDRESS": "Address",
+            "ADDRESS_PLACEHOLDER": "123 Main St, Floor 3, New York, NY",
+            "CITY": "City",
+            "CITY_PLACEHOLDER": "New York",
+            "CAPACITY": "Capacity (People)",
+            "CAPACITY_PLACEHOLDER": "Ex. 10",
+            "PRICE": "Price per Day (€)",
+            "PRICE_PLACEHOLDER": "Ex. 15.50",
+            "DESCRIPTION": "Short Description",
+            "DESCRIPTION_PLACEHOLDER": "Describe your workspace",
+            "SUBMIT": "Create Host Account",
+            "ERROR_PASSWORD_MISMATCH": "Passwords do not match",
+            "LOOKING_FOR_SPACE": "Looking for a space?",
+            "REGISTER_CLIENT_LINK": "Register as a Client"
+        },
+        "FORGOT_PASSWORD": {
+            "TITLE": "Recover Password",
+            "SUBTITLE": "Enter your email and we will send you a code to reset your password.",
+            "SUBMIT": "Send Code",
+            "SUBMITTING": "Sending...",
+            "HAVE_CODE_BTN": "I have my code",
+            "HAVE_CODE_LINK": "Already have a code? Enter it here",
+            "BACK_TO_LOGIN": "Back to login",
+            "LOADING_TEXT": "Sending instructions..."
+        },
+        "RESET_PASSWORD": {
+            "TITLE": "New Password",
+            "SUBTITLE": "Enter the code, your email, and your new password.",
+            "CODE_LABEL": "Verification Code",
+            "CODE_PLACEHOLDER": "123456",
+            "NEW_PASSWORD_LABEL": "New Password",
+            "NEW_PASSWORD_PLACEHOLDER": "Min. 8 characters",
+            "CONFIRM_PASSWORD_PLACEHOLDER": "Repeat password",
+            "SUBMIT": "Reset Password",
+            "SUBMITTING": "Resetting..."
+        }
+    },
+    "EXPLORE": {
+        "TITLE": "Explore Coworking Spaces",
+        "SEARCH_PLACEHOLDER": "Search city...",
+        "FILTERS": {
+            "ALL_PRICES": "All amounts",
+            "LESS_THAN_20": "Less than 20€/d",
+            "BETWEEN_20_50": "20€ - 50€/d",
+            "MORE_THAN_50": "More than 50€/d",
+            "ALL_STATUS": "All statuses",
+            "AVAILABLE": "Available",
+            "MAINTENANCE": "Maintenance",
+            "ALL_RATINGS": "All ratings",
+            "STARS": "stars",
+            "STARS_OR_MORE": "stars or more",
+            "STAR_OR_MORE": "star or more"
+        },
+        "LOADING": "Loading amazing spaces for you...",
+        "NO_RESULTS": "No spaces available at that moment.",
+        "ERROR_TITLE": "Error!",
+        "CARD": {
+            "PER_HOUR": "/day",
+            "DETAILS_BTN": "View Details",
+            "UNITS": "U."
+        }
+    },
+    "SPACE_DETAILS": {
+        "LOADING": "Loading space details...",
+        "ERROR_TITLE": "Oops! Something went wrong",
+        "BACK_BTN": "Back to Explore",
+        "REVIEWS": "reviews",
+        "ABOUT_TITLE": "About This Space",
+        "FEATURES_TITLE": "Features",
+        "LOCATION_TITLE": "Location",
+        "NO_MAP": "Exact location not available on map",
+        "PRICE_LABEL": "Price per day",
+        "BOOK_BTN": "Book Now",
+        "RESERVED_BTN": "Space Reserved",
+        "HOST_BTN": "Book (Not available for Hosts)",
+        "CONTACT_BTN": "Contact Host",
+        "NO_CHARGE_NOTE": "You won't be charged until you confirm the reservation."
+    },
+    "CLIENT_DASHBOARD": {
+        "TITLE": "My Dashboard",
+        "SUBTITLE": "Manage your bookings and explore new spaces.",
+        "TABS": {
+            "ACTIVE": "Active Bookings",
+            "PAST": "Previous Bookings"
+        },
+        "LOADING": "Loading your bookings...",
+        "RETRY_BTN": "Retry",
+        "STATUS": {
+            "CANCELLED": "Cancelled",
+            "CONFIRMED": "Confirmed"
+        },
+        "NO_LOCATION": "No location",
+        "ACTIONS": {
+            "DETAILS": "View Details",
+            "CANCEL": "Cancel",
+            "EXPLORE": "Explore Spaces"
+        },
+        "EMPTY_STATE": "You have no bookings in this section."
+    },
+    "SETTINGS": {
+        "TITLE": "Settings",
+        "DESCRIPTION": "Manage your profile and application preferences.",
+        "PROFILE": {
+            "TITLE": "Personal Information",
+            "CHANGE_PHOTO": "Change profile picture",
+            "FULL_NAME": "Full Name",
+            "EMAIL": "Email Address",
+            "PHONE": "Phone (Optional)",
+            "SAVE": "Save Changes",
+            "SAVING": "Saving...",
+            "ABOUT_ME": "About Me (Biography)",
+            "ABOUT_ME_PLACEHOLDER": "Write a brief description about yourself..."
+        },
+        "PREFERENCES": {
+            "TITLE": "Preferences and Accessibility",
+            "DARK_MODE": "Dark Mode",
+            "DARK_MODE_DESC": "Change the application appearance to dark tones.",
+            "TEXT_SIZE": "Text Size",
+            "TEXT_SIZE_DESC": "Adjust font size for better readability.",
+            "TEXT_SIZE_SMALL": "Small",
+            "TEXT_SIZE_NORMAL": "Normal",
+            "TEXT_SIZE_LARGE": "Large",
+            "TEXT_SIZE_XL": "Very Large",
+            "LANGUAGE": "Language"
+        },
+        "SECURITY": {
+            "TITLE": "Security",
+            "CHANGE_PASSWORD": "Change Password",
+            "TWO_FACTOR": "Two-factor authentication",
+            "ENABLED": "Enabled",
+            "DISABLED": "Disabled"
+        },
+        "MODALS": {
+            "CHANGE_PASSWORD": {
+                "TITLE": "Change Password",
+                "CURRENT_PASSWORD": "Current Password",
+                "NEW_PASSWORD": "New Password",
+                "NEW_PASSWORD_PLACEHOLDER": "Minimum 8 characters",
+                "CONFIRM_PASSWORD": "Confirm Password",
+                "CONFIRM_PASSWORD_PLACEHOLDER": "Repeat password",
+                "CANCEL": "Cancel",
+                "UPDATE": "Update",
+                "SUCCESS": "Password updated successfully.",
+                "ERROR_MATCH": "New passwords do not match.",
+                "ERROR_GENERIC": "Error changing password"
+            },
+            "SUCCESS_TOAST": {
+                "TITLE": "Changes Saved!",
+                "MESSAGE": "Your profile has been updated successfully."
+            }
+        },
+        "ERRORS": {
+            "UPDATE_PROFILE": "Error updating profile",
+            "UPDATE_2FA": "Error updating 2FA"
+        }
+    },
+    "HOST_PROFILE": {
+        "BACK": "Back",
+        "VERIFIED_HOST": "Verified host",
+        "REGISTERED_HOST": "Registered host",
+        "PUBLISHED_SPACES": "published spaces",
+        "SPACES_OF": "Spaces of",
+        "NO_SPACES": "This host has no published spaces at the moment.",
+        "PHOTO_ALT": "Host photo"
+    },
+    "ADMIN": {
+        "DASHBOARD": {
+            "TITLE": "Dashboard",
+            "SUBTITLE": "Platform overview",
+            "LOADING": "Loading data...",
+            "ERROR": "Error processing data from server.",
+            "ERROR_FETCH": "Could not load dashboard data. Please try again later.",
+            "RETRY": "Retry",
+            "TOTAL_USERS": "Total Users",
+            "ACTIVE_SPACES": "Active Spaces",
+            "MONTH_BOOKINGS": "Month Bookings",
+            "MONTH_REVENUE": "Month Revenue",
+            "RECENT_BOOKINGS": "Recent Bookings",
+            "NO_RECENT_BOOKINGS": "No recent bookings.",
+            "POPULAR_SPACES": "Popular Spaces",
+            "NO_POPULAR_SPACES": "No popular spaces yet.",
+            "BOOKINGS": "Bookings",
+            "VIEW_DETAIL": "View Detail"
+        },
+        "USERS": {
+            "TITLE": "User Management",
+            "SHOWING": "Showing",
+            "OF": "of",
+            "ITEMS": "users",
+            "SEARCH_PLACEHOLDER": "Search by name or email...",
+            "ALL_ROLES": "All roles",
+            "ROLE_CLIENT": "Client",
+            "ROLE_HOST": "Host",
+            "ROLE_ADMIN": "Admin",
+            "CLEAR": "Clear",
+            "LOADING": "Loading users...",
+            "ERROR": "No users found with these filters.",
+            "CLEAR_FILTERS": "Clear filters",
+            "RETRY": "Retry",
+            "TABLE": {
+                "ID": "ID",
+                "USER": "User",
+                "ROLE": "Role",
+                "EMAIL": "Email",
+                "STATUS": "Status",
+                "REGISTRATION_DATE": "Registration Date",
+                "ACTIONS": "Actions"
+            },
+            "TOOLTIPS": {
+                "ACTIVATE": "Activate account",
+                "SUSPEND": "Suspend account",
+                "EDIT": "Edit",
+                "DELETE": "Delete"
+            },
+            "MODAL_DELETE_TITLE": "Delete User",
+            "MODAL_DELETE_MESSAGE": "Are you sure you want to delete this user? This action cannot be undone.",
+            "EDIT_TITLE": "Edit User",
+            "LOADING_EDIT": "Processing request...",
+            "ERROR_NOT_FOUND": "User not found.",
+            "ERROR_EDIT": "Error loading user data.",
+            "SUCCESS_EDIT": "User successfully updated.",
+            "LABEL_NAME": "Full Name",
+            "ERROR_NAME": "Name is required and must be at least 3 characters long.",
+            "LABEL_EMAIL": "Email Address",
+            "ERROR_EMAIL": "Enter a valid email address.",
+            "LABEL_ROLE": "User Role",
+            "ERROR_ROLE": "Role is required.",
+            "BTN_DELETE": "Delete User",
+            "BTN_CANCEL": "Cancel",
+            "BTN_SAVE": "Save Changes"
+        },
+        "SPACES": {
+            "TITLE": "Space Management",
+            "SHOWING": "Showing",
+            "OF": "of",
+            "ITEMS": "spaces",
+            "SEARCH_PLACEHOLDER": "Search by title, city or host...",
+            "ALL_STATUS": "All statuses",
+            "STATUS_ACTIVE": "Active",
+            "STATUS_INACTIVE": "Inactive",
+            "CLEAR": "Clear",
+            "LOADING": "Loading spaces...",
+            "ERROR": "No spaces found with these filters.",
+            "CLEAR_FILTERS": "Clear filters",
+            "RETRY": "Retry",
+            "TABLE": {
+                "SPACE": "Space",
+                "LOCATION": "Location",
+                "HOST": "Host",
+                "PRICE_DAY": "Price/Day",
+                "STATUS": "Status",
+                "ACTIONS": "Actions"
+            },
+            "TOOLTIPS": {
+                "VIEW": "View",
+                "EDIT": "Edit",
+                "DELETE": "Delete"
+            },
+            "MODAL_DELETE_TITLE": "Delete Space",
+            "MODAL_DELETE_MESSAGE": "Are you sure you want to delete this space? This action cannot be undone.",
+            "EDIT_TITLE": "Edit Space",
+            "LOADING_EDIT": "Processing request...",
+            "BTN_CANCEL": "Cancel",
+            "BTN_SAVE": "Save Changes"
+        },
+        "PAYMENTS": {
+            "TITLE": "Payment Management",
+            "SHOWING": "Showing",
+            "OF": "of",
+            "ITEMS": "records",
+            "SEARCH_PLACEHOLDER": "Search client, space or transaction ID...",
+            "ALL_STATUS": "All statuses",
+            "STATUS_COMPLETED": "Completed",
+            "STATUS_PENDING": "Pending",
+            "STATUS_FAILED": "Failed",
+            "STATUS_REFUNDED": "Refunded",
+            "ALL_METHODS": "All methods",
+            "METHOD_CARD": "Card",
+            "METHOD_PAYPAL": "PayPal",
+            "METHOD_TRANSFER": "Transfer",
+            "CLEAR": "Clear",
+            "LOADING": "Loading payments...",
+            "ERROR_EMPTY": "No payments registered",
+            "ERROR_EMPTY_DESC": "No payment has been processed on the platform yet.",
+            "ERROR_FILTERS": "No payments found with these filters.",
+            "CLEAR_FILTERS": "Clear filters",
+            "RETRY": "Retry",
+            "STATS": {
+                "INCOME": "Management revenue",
+                "COMPLETED": "Completed",
+                "REFUNDED": "Refunded"
+            },
+            "TABLE": {
+                "ID": "ID",
+                "CLIENT": "Client",
+                "SPACE": "Space",
+                "AMOUNT": "Amount",
+                "METHOD": "Method",
+                "STATUS": "Status",
+                "DATE": "Date",
+                "TRANSACTION_ID": "Transaction ID",
+                "ACTIONS": "Actions"
+            },
+            "TOOLTIPS": {
+                "VIEW_BOOKING": "View associated booking",
+                "DELETE": "Delete record"
+            }
+        },
+        "REPORTS": {
+            "TITLE": "Report Management",
+            "SHOWING": "Showing",
+            "OF": "of",
+            "ITEMS": "reports",
+            "SEARCH_PLACEHOLDER": "Search by space, user or description...",
+            "ALL_STATUS": "All statuses",
+            "STATUS_PENDING": "Pending",
+            "STATUS_REVIEWED": "Reviewed",
+            "STATUS_RESOLVED": "Resolved",
+            "STATUS_REJECTED": "Rejected",
+            "ALL_MOTIVES": "All motives",
+            "CLEAR": "Clear",
+            "LOADING": "Loading reports...",
+            "ERROR_EMPTY": "No reports",
+            "ERROR_EMPTY_DESC": "No space reports have been received yet.",
+            "ERROR_FILTERS": "No reports found with these filters.",
+            "CLEAR_FILTERS": "Clear filters",
+            "RETRY": "Retry",
+            "TABLE": {
+                "ID": "ID",
+                "SPACE": "Space",
+                "REPORTED_BY": "Reported by",
+                "MOTIVE": "Motive",
+                "DATE": "Date",
+                "STATUS": "Status",
+                "ACTIONS": "Actions",
+                "CHANGE_STATUS": "Change status"
+            },
+            "TOOLTIPS": {
+                "CONTACT": "Contact by email",
+                "DELETE": "Delete"
+            },
+            "MODAL_DELETE_TITLE": "Delete Report",
+            "MODAL_DELETE_MESSAGE": "Are you sure you want to delete this report? This action cannot be undone."
+        },
+        "RESERVATIONS": {
+            "TITLE": "Reservation Management",
+            "SHOWING": "Showing",
+            "OF": "of",
+            "ITEMS": "reservations",
+            "SEARCH_PLACEHOLDER": "Search by client or space...",
+            "ALL_STATUS": "All status",
+            "STATUS_PENDING": "Pending",
+            "STATUS_CONFIRMED": "Confirmed",
+            "STATUS_IN_PROGRESS": "In progress",
+            "STATUS_FINISHED": "Finished",
+            "STATUS_CANCELLED": "Cancelled",
+            "CLEAR": "Clear",
+            "LOADING": "Loading reservations...",
+            "RETRY": "Retry",
+            "ERROR_EMPTY": "No reservations",
+            "ERROR_EMPTY_DESC": "There are no reservations on the platform.",
+            "ERROR_FILTERS": "No reservations found with those filters.",
+            "CLEAR_FILTERS": "Clear filters",
+            "TABLE": {
+                "ID": "ID",
+                "CLIENT": "Client",
+                "SPACE": "Space",
+                "START_DATE": "Start Date",
+                "END_DATE": "End Date",
+                "AMOUNT": "Amount",
+                "STATUS": "Status",
+                "ACTIONS": "Actions"
+            },
+            "TOOLTIPS": {
+                "DELETE": "Delete"
+            },
+            "MODAL_DELETE_TITLE": "Delete Reservation",
+            "MODAL_DELETE_MESSAGE": "Are you sure you want to delete this reservation? This action cannot be undone."
+        },
+        "RESERVATIONS_EDIT": {
+            "TITLE": "Edit Reservation",
+            "LOADING": "Processing request...",
+            "ERROR_NOT_FOUND": "Reservation not found.",
+            "ERROR_LOAD": "Error loading reservation.",
+            "SUCCESS": "Reservation successfully updated.",
+            "LABEL_AMOUNT": "Total Amount (€)",
+            "ERROR_AMOUNT": "Amount is required and must be greater than or equal to 0.",
+            "LABEL_STATUS": "Reservation Status",
+            "ERROR_STATUS": "Status is required.",
+            "BTN_DELETE": "Delete Reservation",
+            "BTN_CANCEL": "Cancel",
+            "BTN_SAVE": "Save Changes"
+        },
+        "CONFIRM_MODAL": {
+            "CANCEL": "Cancel",
+            "DELETE_IN_PROGRESS": "Deleting...",
+            "DELETE": "Delete"
+        }
+    }
+}

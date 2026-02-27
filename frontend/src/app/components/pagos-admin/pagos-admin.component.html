@@ -1,0 +1,335 @@
+<div class="flex h-screen bg-gray-50 dark:bg-[#0b1120] overflow-hidden">
+  <app-sidebar-admin></app-sidebar-admin>
+
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+
+    <!-- ── Header ── -->
+    <header class="bg-white dark:bg-[#111827] border-b border-gray-200 dark:border-gray-800 z-10">
+      <div class="px-8 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ 'ADMIN.PAYMENTS.TITLE' | translate
+          }}</h1>
+          <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
+            {{ 'ADMIN.PAYMENTS.SHOWING' | translate }}
+            <span class="font-semibold text-gray-700 dark:text-gray-200">{{ totalFiltrados }}</span>
+            {{ 'ADMIN.PAYMENTS.OF' | translate }}
+            <span class="font-semibold">{{ totalPagos }}</span> {{ 'ADMIN.PAYMENTS.ITEMS' | translate }}
+          </p>
+        </div>
+
+        <!-- Search + Filters -->
+        <div class="flex flex-wrap items-center gap-3">
+          <!-- Search -->
+          <div class="relative">
+            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()"
+              [placeholder]="'ADMIN.PAYMENTS.SEARCH_PLACEHOLDER' | translate"
+              class="pl-9 pr-4 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 w-72">
+          </div>
+
+          <!-- Estado filter -->
+          <select [(ngModel)]="filterEstado" (ngModelChange)="onFilterChange()"
+            class="text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="">{{ 'ADMIN.PAYMENTS.ALL_STATUS' | translate }}</option>
+            <option value="Completado">{{ 'ADMIN.PAYMENTS.STATUS_COMPLETED' | translate }}</option>
+            <option value="Pendiente">{{ 'ADMIN.PAYMENTS.STATUS_PENDING' | translate }}</option>
+            <option value="Fallido">{{ 'ADMIN.PAYMENTS.STATUS_FAILED' | translate }}</option>
+            <option value="Reembolsado">{{ 'ADMIN.PAYMENTS.STATUS_REFUNDED' | translate }}</option>
+          </select>
+
+          <!-- Método filter -->
+          <select [(ngModel)]="filterMetodo" (ngModelChange)="onFilterChange()"
+            class="text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="">{{ 'ADMIN.PAYMENTS.ALL_METHODS' | translate }}</option>
+            <option value="Tarjeta">{{ 'ADMIN.PAYMENTS.METHOD_CARD' | translate }}</option>
+            <option value="PayPal">{{ 'ADMIN.PAYMENTS.METHOD_PAYPAL' | translate }}</option>
+            <option value="Transferencia">{{ 'ADMIN.PAYMENTS.METHOD_TRANSFER' | translate }}</option>
+          </select>
+
+          @if (searchTerm || filterEstado || filterMetodo) {
+            <button (click)="clearFilters()"
+              class="text-xs text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 underline">
+              {{ 'ADMIN.PAYMENTS.CLEAR' | translate }}
+            </button>
+          }
+        </div>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="flex-1 overflow-y-auto p-8 space-y-6">
+
+      <!-- ── Stats Cards ── -->
+      @if (!isLoading && !errorMessage) {
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <!-- Total ingresos -->
+          <div
+            class="bg-white dark:bg-[#111827] rounded-xl border border-gray-200 dark:border-gray-800 p-5 flex items-center gap-4">
+            <div
+              class="h-12 w-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600 dark:text-emerald-400"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wider">
+              {{ 'ADMIN.PAYMENTS.STATS.INCOME' | translate }}</p>
+              <p class="text-2xl font-bold text-gray-900 dark:text-white mt-0.5">
+                €{{ totalIngresos | number:'1.2-2' }}
+              </p>
+            </div>
+          </div>
+          <!-- Completados -->
+          <div
+            class="bg-white dark:bg-[#111827] rounded-xl border border-gray-200 dark:border-gray-800 p-5 flex items-center gap-4">
+            <div
+              class="h-12 w-12 rounded-xl bg-green-50 dark:bg-green-900/20 flex items-center justify-center shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600 dark:text-green-400"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wider">
+              {{ 'ADMIN.PAYMENTS.STATS.COMPLETED' | translate }}</p>
+              <p class="text-2xl font-bold text-gray-900 dark:text-white mt-0.5">{{ totalCompletados }}</p>
+            </div>
+          </div>
+          <!-- Reembolsados -->
+          <div
+            class="bg-white dark:bg-[#111827] rounded-xl border border-gray-200 dark:border-gray-800 p-5 flex items-center gap-4">
+            <div
+              class="h-12 w-12 rounded-xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600 dark:text-purple-400"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wider">
+              {{ 'ADMIN.PAYMENTS.STATS.REFUNDED' | translate }}</p>
+              <p class="text-2xl font-bold text-gray-900 dark:text-white mt-0.5">{{ totalReembolsados }}</p>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- ── Loading ── -->
+      @if (isLoading) {
+        <div class="flex flex-col items-center justify-center py-12">
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+          <p class="text-gray-500 dark:text-gray-400">{{ 'ADMIN.PAYMENTS.LOADING' | translate }}</p>
+        </div>
+      }
+
+      <!-- ── Error ── -->
+      @if (errorMessage && !isLoading) {
+        <div
+          class="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-4 rounded-lg">
+          {{ errorMessage }}
+          <button (click)="loadPagos()" class="underline ml-2">{{ 'ADMIN.PAYMENTS.RETRY' | translate }}</button>
+        </div>
+      }
+
+      <!-- ── Empty (no data at all) ── -->
+      @if (!isLoading && !errorMessage && !allPagos.length) {
+        <div
+          class="flex flex-col items-center justify-center py-20">
+          <div class="text-6xl mb-4">💳</div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ 'ADMIN.PAYMENTS.ERROR_EMPTY' |
+          translate }}</h3>
+          <p class="text-gray-500 dark:text-gray-400">{{ 'ADMIN.PAYMENTS.ERROR_EMPTY_DESC' | translate }}</p>
+        </div>
+      }
+
+      <!-- ── Empty (filtered) ── -->
+      @if (!isLoading && !errorMessage && allPagos.length > 0 && pagos.length === 0) {
+        <div
+          class="flex flex-col items-center justify-center py-20 text-center">
+          <div class="text-5xl mb-4">🔍</div>
+          <p class="text-gray-500 dark:text-gray-400 font-medium">{{ 'ADMIN.PAYMENTS.ERROR_FILTERS' | translate }}
+          </p>
+          <button (click)="clearFilters()" class="mt-3 text-blue-500 hover:underline text-sm">{{
+          'ADMIN.PAYMENTS.CLEAR_FILTERS' | translate }}</button>
+        </div>
+      }
+
+      <!-- ── Table ── -->
+      @if (!isLoading && !errorMessage && pagos.length > 0) {
+        <div
+          class="bg-white dark:bg-[#111827] rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800">
+                  <th
+                    class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  {{ 'ADMIN.PAYMENTS.TABLE.ID' | translate }}</th>
+                  <th
+                    class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  {{ 'ADMIN.PAYMENTS.TABLE.CLIENT' | translate }}</th>
+                  <th
+                    class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  {{ 'ADMIN.PAYMENTS.TABLE.SPACE' | translate }}</th>
+                  <th
+                    class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  {{ 'ADMIN.PAYMENTS.TABLE.AMOUNT' | translate }}</th>
+                  <th
+                    class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  {{ 'ADMIN.PAYMENTS.TABLE.METHOD' | translate }}</th>
+                  <th
+                    class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  {{ 'ADMIN.PAYMENTS.TABLE.STATUS' | translate }}</th>
+                  <th
+                    class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  {{ 'ADMIN.PAYMENTS.TABLE.DATE' | translate }}</th>
+                  <th
+                    class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  {{ 'ADMIN.PAYMENTS.TABLE.TRANSACTION_ID' | translate }}</th>
+                  <th
+                    class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider text-right">
+                  {{ 'ADMIN.PAYMENTS.TABLE.ACTIONS' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                @for (pago of pagos; track pago) {
+                  <tr
+                    class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors group">
+                    <!-- ID -->
+                    <td class="p-4 text-sm text-gray-500 dark:text-gray-400">#{{ pago.id }}</td>
+                    <!-- Cliente -->
+                    <td class="p-4">
+                      <div class="text-sm font-medium text-gray-900 dark:text-white">{{ pago.cliente }}
+                      </div>
+                      <div class="text-xs text-gray-400 dark:text-gray-500">{{ pago.email }}</div>
+                    </td>
+                    <!-- Espacio -->
+                    <td class="p-4 text-sm text-gray-600 dark:text-gray-300 max-w-[160px] truncate"
+                      [title]="pago.espacio">
+                      {{ pago.espacio }}
+                    </td>
+                    <!-- Monto -->
+                    <td class="p-4">
+                      <span class="text-sm font-semibold text-gray-900 dark:text-white">
+                        €{{ pago.monto | number:'1.2-2' }}
+                      </span>
+                    </td>
+                    <!-- Método -->
+                    <td class="p-4">
+                      <span
+                        class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                        <!-- Card icon -->
+                        @if (pago.metodo_pago === 'Tarjeta') {
+                          <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                          </svg>
+                        }
+                        <!-- Transfer icon -->
+                        @if (pago.metodo_pago === 'Transferencia') {
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                          </svg>
+                        }
+                        <!-- PayPal icon (generic) -->
+                        @if (pago.metodo_pago === 'PayPal') {
+                          <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                          </svg>
+                        }
+                        {{ pago.metodo_pago }}
+                      </span>
+                    </td>
+                    <!-- Estado -->
+                    <td class="p-4">
+                      <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                        [ngClass]="getEstadoClasses(pago.estado_pago)">
+                        {{ pago.estado_pago }}
+                      </span>
+                    </td>
+                    <!-- Fecha -->
+                    <td class="p-4 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                      {{ pago.fecha_pago }}
+                    </td>
+                    <!-- ID Transacción -->
+                    <td class="p-4">
+                      @if (pago.id_transaccion) {
+                        <span
+                          class="text-xs font-mono text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 px-2 py-0.5 rounded max-w-[140px] truncate inline-block"
+                          [title]="pago.id_transaccion">
+                          {{ pago.id_transaccion }}
+                        </span>
+                      }
+                      @if (!pago.id_transaccion) {
+                        <span
+                        class="text-xs text-gray-300 dark:text-gray-600">—</span>
+                      }
+                    </td>
+                    <!-- Acciones -->
+                    <td class="p-4 text-right">
+                      <div
+                        class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <!-- Ver reserva asociada -->
+                        <a [routerLink]="['/admin/reservas']" [queryParams]="{search: pago.cliente}"
+                          class="p-1.5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors"
+                          [title]="'ADMIN.PAYMENTS.TOOLTIPS.VIEW_BOOKING' | translate">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                        </a>
+                        <!-- Eliminar -->
+                        <button (click)="openDeleteModal(pago.id)" [disabled]="deletingId === pago.id"
+                          class="p-1.5 text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                          [title]="'ADMIN.PAYMENTS.TOOLTIPS.DELETE' | translate">
+                          @if (deletingId !== pago.id) {
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                              width="16" height="16" viewBox="0 0 24 24" fill="none"
+                              stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round">
+                              <path d="M3 6h18"></path>
+                              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                            </svg>
+                          }
+                          @if (deletingId === pago.id) {
+                            <div
+                              class="animate-spin h-4 w-4 border-2 border-red-600 border-t-transparent rounded-full">
+                            </div>
+                          }
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      }
+    </main>
+  </div>
+
+  <!-- Confirm Modal -->
+  <app-confirm-modal [isOpen]="showDeleteModal" [title]="modalTitle" [message]="modalMessage"
+    [isLoading]="deletingId !== null" (confirm)="confirmDelete()" (cancel)="closeDeleteModal()">
+  </app-confirm-modal>
+</div>

@@ -1,0 +1,47 @@
+@if (isOpen) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden p-4 sm:p-6 bg-black/50 backdrop-blur-sm transition-opacity">
+    <div
+      class="relative w-full max-w-md transform rounded-2xl bg-white dark:bg-[#111c29] p-6 text-left shadow-xl transition-all border border-gray-100 dark:border-gray-800">
+      <!-- Close Button (Absolute) -->
+      <button (click)="onCancel()"
+        class="absolute right-4 top-4 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <!-- Icon -->
+      <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30 mb-4">
+        <svg class="h-6 w-6 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+      </div>
+      <!-- Content -->
+      <div class="text-center">
+        <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white mb-2">
+          {{ title }}
+        </h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          {{ message }}
+        </p>
+      </div>
+      <!-- Actions -->
+      <div class="mt-8 grid grid-cols-2 gap-3">
+        <button type="button" (click)="onCancel()"
+          class="w-full inline-flex justify-center items-center rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors">
+          {{ 'ADMIN.CONFIRM_MODAL.CANCEL' | translate }}
+        </button>
+        <button type="button" (click)="onConfirm()" [disabled]="isLoading"
+          class="w-full inline-flex justify-center items-center rounded-xl border border-transparent bg-red-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+          @if (isLoading) {
+            <div
+            class="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+          }
+          {{ isLoading ? ('ADMIN.CONFIRM_MODAL.DELETE_IN_PROGRESS' | translate) : ('ADMIN.CONFIRM_MODAL.DELETE' |
+          translate) }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

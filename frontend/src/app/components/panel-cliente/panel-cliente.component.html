@@ -1,0 +1,168 @@
+<div class="container mx-auto px-4 py-8 mb-4 max-w-5xl">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ 'CLIENT_DASHBOARD.TITLE' | translate }}</h1>
+    <p class="text-gray-600 dark:text-gray-400 mt-2">{{ 'CLIENT_DASHBOARD.SUBTITLE' | translate }}</p>
+  </div>
+
+  <!-- Tabs (Pills) -->
+  <div
+    class="flex items-center space-x-1 bg-white dark:bg-[#1a2736] p-1 rounded-full w-fit mb-8 shadow-sm border border-gray-100 dark:border-gray-700">
+    <button (click)="setTab('active')" [class.bg-white]="activeTab === 'active'"
+      [class.dark:bg-primary-blue]="activeTab === 'active'" [class.shadow-sm]="activeTab === 'active'"
+      [class.text-gray-900]="activeTab === 'active'" [class.dark:text-white]="activeTab === 'active'"
+      [class.bg-transparent]="activeTab !== 'active'" [class.text-gray-500]="activeTab !== 'active'"
+      [class.dark:text-gray-400]="activeTab !== 'active'"
+      class="px-6 py-2 rounded-full text-sm font-semibold transition-all duration-200 focus:outline-none border border-transparent"
+      [class.border-gray-200]="activeTab === 'active'" [class.dark:border-gray-600]="activeTab === 'active'">
+      {{ 'CLIENT_DASHBOARD.TABS.ACTIVE' | translate }}
+    </button>
+    <button (click)="setTab('past')" [class.bg-white]="activeTab === 'past'"
+      [class.dark:bg-primary-blue]="activeTab === 'past'" [class.shadow-sm]="activeTab === 'past'"
+      [class.text-gray-900]="activeTab === 'past'" [class.dark:text-white]="activeTab === 'past'"
+      [class.bg-transparent]="activeTab !== 'past'" [class.text-gray-500]="activeTab !== 'past'"
+      [class.dark:text-gray-400]="activeTab !== 'past'"
+      class="px-6 py-2 rounded-full text-sm font-semibold transition-all duration-200 focus:outline-none border border-transparent"
+      [class.border-gray-200]="activeTab === 'past'" [class.dark:border-gray-600]="activeTab === 'past'">
+      {{ 'CLIENT_DASHBOARD.TABS.PAST' | translate }}
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading) {
+    <div class="flex flex-col items-center justify-center py-20">
+      <div
+        class="animate-spin rounded-full h-12 w-12 border-4 border-gray-200 dark:border-gray-700 border-t-blue-500 mb-4">
+      </div>
+      <p class="text-gray-500 dark:text-gray-400 font-medium">{{ 'CLIENT_DASHBOARD.LOADING' | translate }}</p>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (errorMessage && !isLoading) {
+    <div
+      class="text-center py-16 bg-red-50 dark:bg-red-900/20 rounded-2xl border border-red-200 dark:border-red-800">
+      <p class="text-red-600 dark:text-red-400 font-medium">{{ errorMessage }}</p>
+      <button (click)="loadReservations()"
+        class="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+        {{ 'CLIENT_DASHBOARD.RETRY_BTN' | translate }}
+      </button>
+    </div>
+  }
+
+  <!-- List -->
+  @if (!isLoading && !errorMessage) {
+    <div class="space-y-6">
+      @for (res of filteredReservations; track res) {
+        <div
+          class="bg-white dark:bg-[#1a2736] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 flex flex-col md:flex-row justify-between items-start md:items-center transition-shadow hover:shadow-md"
+          [class.opacity-60]="res.estado === 'Cancelada'">
+          <!-- Image container with relative positioning for status badge -->
+          <div
+            class="w-full md:w-48 h-32 shrink-0 mb-4 md:mb-0 mr-6 relative group overflow-hidden rounded-xl shadow-sm">
+            <img [src]="getSpaceImage(res)" [alt]="res.espacio?.titulo"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              (error)="handleImageError($event)">
+            <!-- Status Badge Overlay -->
+            <div class="absolute top-2 left-2 z-10">
+              @if (res.estado === 'Cancelada') {
+                <span
+                  class="px-2.5 py-1 text-[10px] uppercase tracking-wider font-bold bg-white/90 dark:bg-red-900/80 backdrop-blur-md text-red-600 dark:text-red-200 rounded-lg shadow-sm border border-red-100 dark:border-red-800">
+                  {{ 'CLIENT_DASHBOARD.STATUS.CANCELLED' | translate }}
+                </span>
+              }
+              @if (res.estado === 'Confirmada') {
+                <span
+                  class="px-2.5 py-1 text-[10px] uppercase tracking-wider font-bold bg-white/90 dark:bg-green-600/80 backdrop-blur-md text-green-600 dark:text-white rounded-lg shadow-sm border border-green-100 dark:border-green-800">
+                  {{ 'CLIENT_DASHBOARD.STATUS.CONFIRMED' | translate }}
+                </span>
+              }
+              @if (res.estado === 'En_Curso') {
+                <span
+                  class="px-2.5 py-1 text-[10px] uppercase tracking-wider font-bold bg-white/90 dark:bg-blue-600/80 backdrop-blur-md text-blue-600 dark:text-white rounded-lg shadow-sm border border-blue-100 dark:border-blue-800">
+                  En Curso
+                </span>
+              }
+              @if (res.estado === 'Finalizada') {
+                <span
+                  class="px-2.5 py-1 text-[10px] uppercase tracking-wider font-bold bg-white/90 dark:bg-gray-800/80 backdrop-blur-md text-gray-600 dark:text-gray-200 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
+                  Finalizada
+                </span>
+              }
+              @if (res.estado === 'Pendiente') {
+                <span
+                  class="px-2.5 py-1 text-[10px] uppercase tracking-wider font-bold bg-white/90 dark:bg-amber-500/80 backdrop-blur-md text-amber-600 dark:text-white rounded-lg shadow-sm border border-amber-100 dark:border-amber-800">
+                  Pendiente
+                </span>
+              }
+            </div>
+          </div>
+          <!-- Info -->
+          <div class="flex-1 min-w-0">
+            <div class="mb-2">
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white truncate" [title]="res.espacio?.titulo">
+                {{ res.espacio?.titulo || 'Espacio' }}
+              </h3>
+            </div>
+            <div class="flex items-center text-gray-500 dark:text-gray-400 mb-2 text-base">
+              <!-- Location Icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400 dark:text-gray-500"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <span class="font-medium">{{ res.espacio?.ciudad || ('CLIENT_DASHBOARD.NO_LOCATION' | translate)
+              }}</span>
+            </div>
+            <div class="flex items-center text-gray-500 dark:text-gray-400 text-base">
+              <!-- Calendar Icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400 dark:text-gray-500"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span>{{ formatDate(res.fecha_inicio) }} - {{ formatDate(res.fecha_fin) }}</span>
+            </div>
+          </div>
+          <!-- Actions -->
+          <div class="flex flex-col md:flex-row items-end md:items-center gap-4 w-full md:w-auto">
+            <span class="text-2xl font-bold text-gray-900 dark:text-white mb-2 md:mb-0">{{ res.monto_total
+            }}€</span>
+            <div class="flex gap-3 w-full md:w-auto">
+              <button [routerLink]="['/espacios', res.espacio?.id_espacio]" [queryParams]="{mode: 'reserved'}"
+                class="flex-1 md:flex-none px-5 py-2.5 text-sm border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 font-semibold transition-colors duration-200">
+                {{ 'CLIENT_DASHBOARD.ACTIONS.DETAILS' | translate }}
+              </button>
+              @if (activeTab === 'active' && res.estado !== 'Cancelada') {
+                <button
+                  (click)="cancelReservation(res)"
+                  class="flex-1 md:flex-none px-5 py-2.5 text-sm bg-rose-500 dark:bg-rose-600 text-white rounded-full hover:bg-rose-600 dark:hover:bg-rose-700 font-semibold transition-colors duration-200 shadow-sm shadow-rose-200 dark:shadow-none">
+                  {{ 'CLIENT_DASHBOARD.ACTIONS.CANCEL' | translate }}
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+      }
+      <!-- Empty State -->
+      @if (filteredReservations.length === 0) {
+        <div
+          class="text-center py-16 bg-white dark:bg-[#1a2736] rounded-2xl border border-dashed border-gray-200 dark:border-gray-700">
+          <div class="mx-auto h-12 w-12 text-gray-300 dark:text-gray-600 mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+          </div>
+          <p class="text-gray-500 dark:text-gray-400 font-medium">{{ 'CLIENT_DASHBOARD.EMPTY_STATE' | translate }}</p>
+          <a routerLink="/explorar"
+            class="inline-block mt-4 px-6 py-2 bg-blue-500 text-white rounded-full font-semibold hover:bg-blue-600 transition-colors">
+            {{ 'CLIENT_DASHBOARD.ACTIONS.EXPLORE' | translate }}
+          </a>
+        </div>
+      }
+    </div>
+  }
+</div>
