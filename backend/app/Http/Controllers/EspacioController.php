@@ -89,6 +89,12 @@ class EspacioController extends Controller
      */
     public function store(Request $request)
     {
+        // Se convierten valores vacíos de latitud y longitud a null antes de validar
+        $request->merge([
+            'latitud' => $request->input('latitud') !== '' ? $request->input('latitud') : null,
+            'longitud' => $request->input('longitud') !== '' ? $request->input('longitud') : null,
+        ]);
+
         $validator = Validator::make($request->all(), [
             'titulo' => 'required|string|max:100',
             'ciudad' => 'required|string|max:100',
@@ -288,6 +294,12 @@ class EspacioController extends Controller
             return response()->json(['message' => 'Espacio no encontrado o no autorizado'], 404);
         }
 
+        // Se convierten valores vacíos de latitud y longitud a null antes de validar
+        $request->merge([
+            'latitud' => $request->input('latitud') !== '' ? $request->input('latitud') : null,
+            'longitud' => $request->input('longitud') !== '' ? $request->input('longitud') : null,
+        ]);
+
         // Se validan los datos; 'sometimes' permite actualizar solo los campos enviados en la petición
         $validator = Validator::make($request->all(), [
             'titulo' => 'sometimes|required|string|max:100',
@@ -299,7 +311,9 @@ class EspacioController extends Controller
             'servicios' => 'array',
             'servicios.*' => 'integer|exists:servicios,id_servicio',
             'latitud' => 'sometimes|nullable|numeric',
-            'longitud' => 'sometimes|nullable|numeric'
+            'longitud' => 'sometimes|nullable|numeric',
+            'fotos' => 'sometimes|array',
+            'fotos.*' => 'image|mimes:jpeg,png,jpg|max:5120',
         ]);
 
         if ($validator->fails()) {
