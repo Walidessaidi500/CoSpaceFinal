@@ -55,22 +55,62 @@
         "MY_BOOKINGS": "Mis Reservas"
     },
     "LANDING": {
-        "HERO_TITLE": "Encuentra tu Espacio de trabajo",
-        "HERO_SUBTITLE": "Descubre espacios de coworking inspiradores y mejora tu productividad",
-        "CTA_EXPLORE": "Explora Coworkings",
-        "WHY_TITLE": "Porque elegir CoSpace",
+        "HERO_TITLE": "Encuentra tu Espacio de Trabajo Ideal",
+        "HERO_SUBTITLE": "Descubre espacios de coworking inspiradores cerca de ti. Reserva por días, conecta con profesionales y trabaja en un entorno que impulse tu productividad.",
+        "HERO_BADGE": "🚀 +500 Espacios Disponibles",
+        "CTA_EXPLORE": "Explorar Espacios",
+        "CTA_HOST": "Soy Anfitrión",
+        "WHY_TITLE": "¿Por qué elegir CoSpace?",
+        "WHY_SUBTITLE": "Todo lo que necesitas para trabajar cómodamente, en un solo lugar.",
         "FEATURES": {
-            "WIFI_TITLE": "Velocidad Wi-Fi",
-            "WIFI_DESC": "Alta velocidad de internet para un trabajo sin interrupciones",
-            "COFFEE_TITLE": "Café",
-            "COFFEE_DESC": "Bebidas incluidas",
+            "WIFI_TITLE": "Wi-Fi Ultra Rápido",
+            "WIFI_DESC": "Conexión estable y de alta velocidad en todos los espacios para que trabajes sin interrupciones.",
+            "COFFEE_TITLE": "Café & Snacks",
+            "COFFEE_DESC": "Bebidas y aperitivos incluidos para que te centres solo en lo que importa.",
             "NETWORKING_TITLE": "Networking",
-            "NETWORKING_DESC": "Conecta con profesionales afines",
+            "NETWORKING_DESC": "Conecta con profesionales de distintos sectores y amplía tu red de contactos.",
             "EASY_BOOKING_TITLE": "Reserva Fácil",
-            "EASY_BOOKING_DESC": "Reserva tu espacio en segundos"
+            "EASY_BOOKING_DESC": "Reserva tu espacio en segundos con pago seguro integrado con Stripe."
+        },
+        "STATS": {
+            "USERS": "Profesionales",
+            "CITIES": "Ciudades",
+            "SPACES": "Espacios",
+            "SATISFACTION": "Satisfacción"
+        },
+        "HOW_TITLE": "¿Cómo funciona?",
+        "HOW_SUBTITLE": "Reservar tu espacio ideal es más fácil de lo que crees.",
+        "HOW_STEPS": {
+            "STEP1_TITLE": "Explora",
+            "STEP1_DESC": "Busca entre cientos de espacios de coworking filtrados por ciudad, precio y servicios.",
+            "STEP2_TITLE": "Reserva",
+            "STEP2_DESC": "Elige las fechas en el calendario interactivo y paga de forma segura con tarjeta.",
+            "STEP3_TITLE": "Trabaja",
+            "STEP3_DESC": "Disfruta de un espacio profesional con todo lo que necesitas para ser productivo."
+        },
+        "TESTIMONIALS_TITLE": "Lo que dicen nuestros usuarios",
+        "TESTIMONIALS_SUBTITLE": "Miles de profesionales ya confían en CoSpace para encontrar su espacio perfecto.",
+        "TESTIMONIALS": {
+            "T1_NAME": "María García",
+            "T1_ROLE": "Diseñadora Freelance",
+            "T1_TEXT": "CoSpace me ha cambiado la forma de trabajar. Encontré un espacio increíble cerca de casa con todas las amenidades que necesitaba.",
+            "T2_NAME": "Carlos López",
+            "T2_ROLE": "Desarrollador Full Stack",
+            "T2_TEXT": "La plataforma es súper intuitiva. En menos de 5 minutos ya tenía mi espacio reservado. El Wi-Fi es excelente.",
+            "T3_NAME": "Ana Martínez",
+            "T3_ROLE": "Consultora de Marketing",
+            "T3_TEXT": "Me encanta el networking que se genera en los coworkings de CoSpace. He conocido clientes y colaboradores increíbles."
+        },
+        "HOST_TITLE": "¿Tienes un espacio disponible?",
+        "HOST_DESC": "Únete como anfitrión y empieza a generar ingresos con tu espacio. Miles de profesionales buscan un lugar como el tuyo.",
+        "HOST_CTA": "Registrarse como Anfitrión",
+        "HOST_FEATURES": {
+            "F1": "Gestión sencilla de reservas",
+            "F2": "Pagos seguros y automáticos",
+            "F3": "Panel de control completo"
         },
         "READY_TITLE": "¿Preparado para empezar?",
-        "READY_DESC": "Únete a miles de profesionales que trabajan en espacios increíbles.",
+        "READY_DESC": "Únete a miles de profesionales que ya trabajan en espacios increíbles. Tu próximo lugar de trabajo te espera.",
         "CTA_SEARCH": "Buscar Espacios"
     },
     "AUTH": {

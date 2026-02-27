@@ -55,22 +55,62 @@
         "MY_BOOKINGS": "My Bookings"
     },
     "LANDING": {
-        "HERO_TITLE": "Find your Workspace",
-        "HERO_SUBTITLE": "Discover inspiring coworking spaces and boost your productivity",
-        "CTA_EXPLORE": "Explore Coworkings",
-        "WHY_TITLE": "Why Choose CoSpace",
+        "HERO_TITLE": "Find Your Ideal Workspace",
+        "HERO_SUBTITLE": "Discover inspiring coworking spaces near you. Book by the day, connect with professionals, and work in an environment that boosts your productivity.",
+        "HERO_BADGE": "🚀 +500 Spaces Available",
+        "CTA_EXPLORE": "Explore Spaces",
+        "CTA_HOST": "I'm a Host",
+        "WHY_TITLE": "Why Choose CoSpace?",
+        "WHY_SUBTITLE": "Everything you need to work comfortably, all in one place.",
         "FEATURES": {
-            "WIFI_TITLE": "High-Speed Wi-Fi",
-            "WIFI_DESC": "Fast internet for uninterrupted work",
-            "COFFEE_TITLE": "Coffee",
-            "COFFEE_DESC": "Drinks included",
+            "WIFI_TITLE": "Ultra-Fast Wi-Fi",
+            "WIFI_DESC": "Stable, high-speed connection in every space so you can work without interruptions.",
+            "COFFEE_TITLE": "Coffee & Snacks",
+            "COFFEE_DESC": "Complimentary drinks and snacks so you can focus on what matters.",
             "NETWORKING_TITLE": "Networking",
-            "NETWORKING_DESC": "Connect with like-minded professionals",
+            "NETWORKING_DESC": "Connect with professionals from different industries and grow your network.",
             "EASY_BOOKING_TITLE": "Easy Booking",
-            "EASY_BOOKING_DESC": "Book your space in seconds"
+            "EASY_BOOKING_DESC": "Book your space in seconds with secure payment powered by Stripe."
         },
-        "READY_TITLE": "Ready to Start?",
-        "READY_DESC": "Join thousands of professionals working in amazing spaces.",
+        "STATS": {
+            "USERS": "Professionals",
+            "CITIES": "Cities",
+            "SPACES": "Spaces",
+            "SATISFACTION": "Satisfaction"
+        },
+        "HOW_TITLE": "How Does It Work?",
+        "HOW_SUBTITLE": "Booking your ideal space is easier than you think.",
+        "HOW_STEPS": {
+            "STEP1_TITLE": "Explore",
+            "STEP1_DESC": "Browse hundreds of coworking spaces filtered by city, price, and amenities.",
+            "STEP2_TITLE": "Book",
+            "STEP2_DESC": "Pick your dates on the interactive calendar and pay securely by card.",
+            "STEP3_TITLE": "Work",
+            "STEP3_DESC": "Enjoy a professional space with everything you need to be productive."
+        },
+        "TESTIMONIALS_TITLE": "What Our Users Say",
+        "TESTIMONIALS_SUBTITLE": "Thousands of professionals already trust CoSpace to find their perfect workspace.",
+        "TESTIMONIALS": {
+            "T1_NAME": "María García",
+            "T1_ROLE": "Freelance Designer",
+            "T1_TEXT": "CoSpace has changed the way I work. I found an amazing space near home with all the amenities I needed.",
+            "T2_NAME": "Carlos López",
+            "T2_ROLE": "Full Stack Developer",
+            "T2_TEXT": "The platform is super intuitive. In less than 5 minutes I had my space booked. The Wi-Fi is excellent.",
+            "T3_NAME": "Ana Martínez",
+            "T3_ROLE": "Marketing Consultant",
+            "T3_TEXT": "I love the networking in CoSpace coworkings. I've met incredible clients and collaborators."
+        },
+        "HOST_TITLE": "Have an Available Space?",
+        "HOST_DESC": "Join as a host and start earning income from your space. Thousands of professionals are looking for a place like yours.",
+        "HOST_CTA": "Register as Host",
+        "HOST_FEATURES": {
+            "F1": "Simple booking management",
+            "F2": "Secure automatic payments",
+            "F3": "Complete control panel"
+        },
+        "READY_TITLE": "Ready to Get Started?",
+        "READY_DESC": "Join thousands of professionals already working in amazing spaces. Your next workspace awaits.",
         "CTA_SEARCH": "Search Spaces"
     },
     "AUTH": {

@@ -55,22 +55,62 @@
         "MY_BOOKINGS": "Les Meues Reserves"
     },
     "LANDING": {
-        "HERO_TITLE": "Troba el teu Espai de treball",
-        "HERO_SUBTITLE": "Descobreix espais de coworking inspiradors i millora la teua productivitat",
-        "CTA_EXPLORE": "Explora Coworkings",
-        "WHY_TITLE": "Perquè triar CoSpace",
+        "HERO_TITLE": "Troba el teu Espai de Treball Ideal",
+        "HERO_SUBTITLE": "Descobreix espais de coworking inspiradors prop de tu. Reserva per dies, connecta amb professionals i treballa en un entorn que impulse la teua productivitat.",
+        "HERO_BADGE": "🚀 +500 Espais Disponibles",
+        "CTA_EXPLORE": "Explorar Espais",
+        "CTA_HOST": "Soc Amfitrió",
+        "WHY_TITLE": "Per què triar CoSpace?",
+        "WHY_SUBTITLE": "Tot el que necessites per treballar còmodament, en un sol lloc.",
         "FEATURES": {
-            "WIFI_TITLE": "Velocitat Wi-Fi",
-            "WIFI_DESC": "Alta velocitat d'internet per a un treball sense interrupcions",
-            "COFFEE_TITLE": "Café",
-            "COFFEE_DESC": "Begudes incloses",
+            "WIFI_TITLE": "Wi-Fi Ultra Ràpid",
+            "WIFI_DESC": "Connexió estable i d'alta velocitat en tots els espais per a que treballes sense interrupcions.",
+            "COFFEE_TITLE": "Café & Snacks",
+            "COFFEE_DESC": "Begudes i aperitius inclosos per a que et centres només en el que importa.",
             "NETWORKING_TITLE": "Networking",
-            "NETWORKING_DESC": "Connecta amb professionals afins",
+            "NETWORKING_DESC": "Connecta amb professionals de distints sectors i amplia la teua xarxa de contactes.",
             "EASY_BOOKING_TITLE": "Reserva Fàcil",
-            "EASY_BOOKING_DESC": "Reserva el teu espai en segons"
+            "EASY_BOOKING_DESC": "Reserva el teu espai en segons amb pagament segur integrat amb Stripe."
+        },
+        "STATS": {
+            "USERS": "Professionals",
+            "CITIES": "Ciutats",
+            "SPACES": "Espais",
+            "SATISFACTION": "Satisfacció"
+        },
+        "HOW_TITLE": "Com funciona?",
+        "HOW_SUBTITLE": "Reservar el teu espai ideal és més fàcil del que creus.",
+        "HOW_STEPS": {
+            "STEP1_TITLE": "Explora",
+            "STEP1_DESC": "Busca entre centenars d'espais de coworking filtrats per ciutat, preu i serveis.",
+            "STEP2_TITLE": "Reserva",
+            "STEP2_DESC": "Tria les dates al calendari interactiu i paga de forma segura amb targeta.",
+            "STEP3_TITLE": "Treballa",
+            "STEP3_DESC": "Gaudeix d'un espai professional amb tot el que necessites per a ser productiu."
+        },
+        "TESTIMONIALS_TITLE": "El que diuen els nostres usuaris",
+        "TESTIMONIALS_SUBTITLE": "Milers de professionals ja confien en CoSpace per trobar el seu espai perfecte.",
+        "TESTIMONIALS": {
+            "T1_NAME": "María García",
+            "T1_ROLE": "Dissenyadora Freelance",
+            "T1_TEXT": "CoSpace m'ha canviat la forma de treballar. Vaig trobar un espai increïble prop de casa amb totes les comoditats que necessitava.",
+            "T2_NAME": "Carlos López",
+            "T2_ROLE": "Desenvolupador Full Stack",
+            "T2_TEXT": "La plataforma és súper intuïtiva. En menys de 5 minuts ja tenia el meu espai reservat. El Wi-Fi és excel·lent.",
+            "T3_NAME": "Ana Martínez",
+            "T3_ROLE": "Consultora de Màrqueting",
+            "T3_TEXT": "M'encanta el networking que es genera als coworkings de CoSpace. He conegut clients i col·laboradors increïbles."
+        },
+        "HOST_TITLE": "Tens un espai disponible?",
+        "HOST_DESC": "Uneix-te com a amfitrió i comença a generar ingressos amb el teu espai. Milers de professionals busquen un lloc com el teu.",
+        "HOST_CTA": "Registrar-se com a Amfitrió",
+        "HOST_FEATURES": {
+            "F1": "Gestió senzilla de reserves",
+            "F2": "Pagaments segurs i automàtics",
+            "F3": "Panell de control complet"
         },
         "READY_TITLE": "Preparat per a començar?",
-        "READY_DESC": "Uneix-te a milers de professionals que treballen en espais increïbles.",
+        "READY_DESC": "Uneix-te a milers de professionals que ja treballen en espais increïbles. El teu pròxim lloc de treball t'espera.",
         "CTA_SEARCH": "Buscar Espais"
     },
     "AUTH": {
