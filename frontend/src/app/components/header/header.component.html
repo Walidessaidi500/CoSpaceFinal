@@ -154,7 +154,7 @@
                         @if (user.foto_perfil) {
                         <div
                             class="w-10 h-10 rounded-full border-2 border-white dark:border-primary-blue shadow-md overflow-hidden">
-                            <img [src]="user.foto_perfil.startsWith('http') ? user.foto_perfil : baseUrl + (user.foto_perfil.startsWith('/storage') ? '' : '/storage/') + user.foto_perfil"
+                            <img [src]="user.foto_perfil.startsWith('data:image') || user.foto_perfil.startsWith('http') ? user.foto_perfil : baseUrl + (user.foto_perfil.startsWith('/storage') ? '' : '/storage/') + user.foto_perfil"
                                 alt="Perfil" class="w-full h-full object-cover">
                         </div>
                         } @else {

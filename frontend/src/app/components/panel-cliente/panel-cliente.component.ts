@@ -182,7 +182,7 @@ export class PanelClienteComponent implements OnInit {
             const principalPhoto = reserva.espacio.fotos.find((f: any) => f.es_principal == 1 || f.es_principal === true) || reserva.espacio.fotos[0];
             const url = principalPhoto.url_foto;
 
-            if (url.startsWith('http')) return url;
+            if (url.startsWith('http') || url.startsWith('data:image')) return url;
             const baseUrl = environment.apiUrl.replace(/\/api\/?$/, '');
             const cleanUrl = url.startsWith('/') ? url : `/${url}`;
             return `${baseUrl}${cleanUrl}`;

@@ -402,7 +402,7 @@ export class EspaciosDetallesComponent implements OnInit {
   getAutorFoto(valoracion: any): string | null {
     if (valoracion.autor?.foto_perfil) {
       const foto = valoracion.autor.foto_perfil;
-      if (foto.startsWith('http')) return foto;
+      if (foto.startsWith('http') || foto.startsWith('data:image')) return foto;
       const storagePath = foto.startsWith('/storage/') ? foto
         : foto.startsWith('storage/') ? `/${foto}`
           : `/storage/${foto}`;
@@ -414,7 +414,7 @@ export class EspaciosDetallesComponent implements OnInit {
   /** Obtiene la URL completa de la foto de perfil del anfitrión del espacio. */
   getAnfitrionFoto(foto: string | null): string | null {
     if (!foto) return null;
-    if (foto.startsWith('http')) return foto;
+    if (foto.startsWith('http') || foto.startsWith('data:image')) return foto;
     const storagePath = foto.startsWith('/storage/') ? foto
       : foto.startsWith('storage/') ? `/${foto}`
         : `/storage/${foto}`;
@@ -431,7 +431,7 @@ export class EspaciosDetallesComponent implements OnInit {
    */
   private getFullUrl(path: string | null): string {
     if (!path) return '';
-    if (path.startsWith('http')) return path;
+    if (path.startsWith('http') || path.startsWith('data:image')) return path;
     const baseUrl = environment.apiUrl.replace(/\/api\/?$/, '');
     const cleanUrl = path.startsWith('/') ? path : `/${path}`;
     return `${baseUrl}${cleanUrl}`;

@@ -85,7 +85,7 @@ export class PerfilAnfitrion implements OnInit {
 
   private getInitialFotoUrl(foto: string | null): string | null {
     if (!foto) return null;
-    if (foto.startsWith('http')) return foto;
+    if (foto.startsWith('http') || foto.startsWith('data:image')) return foto;
 
     // Check if it's already a full path
     const storagePath = foto.startsWith('/storage/') ? foto
@@ -103,7 +103,7 @@ export class PerfilAnfitrion implements OnInit {
     const principal = fotos.find(f => f.es_principal == 1 || f.es_principal === true) || fotos[0];
     const url = principal.url_foto;
 
-    if (url.startsWith('http')) return url;
+    if (url.startsWith('http') || url.startsWith('data:image')) return url;
     const baseUrl = environment.apiUrl.replace(/\/api\/?$/, '');
     const cleanUrl = url.startsWith('/') ? url : `/${url}`;
     return `${baseUrl}${cleanUrl}`;

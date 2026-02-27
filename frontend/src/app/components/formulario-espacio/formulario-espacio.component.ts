@@ -277,7 +277,7 @@ export class FormularioEspacioComponent implements AfterViewInit {
    */
   private getFullUrl(path: string | null): string {
     if (!path) return '';
-    if (path.startsWith('http')) return path;
+    if (path.startsWith('http') || path.startsWith('data:image')) return path;
     return `${environment.baseUrl}${path}`;
   }
 }

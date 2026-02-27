@@ -52,8 +52,8 @@ export class EspacioCardComponent {
       const foto = principal || this.espacio.fotos[0];
       const url = foto.url_foto;
 
-      // Si la URL ya es absoluta, se devuelve directamente
-      if (url.startsWith('http')) return url;
+      // Si la URL ya es absoluta o base64, se devuelve directamente
+      if (url.startsWith('http') || url.startsWith('data:image')) return url;
       // Se construye la URL completa a partir de la URL base de la API
       const baseUrl = environment.apiUrl.replace(/\/api\/?$/, '');
       const cleanUrl = url.startsWith('/') ? url : `/${url}`;

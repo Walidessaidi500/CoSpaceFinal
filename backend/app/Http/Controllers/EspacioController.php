@@ -154,11 +154,12 @@ class EspacioController extends Controller
                 // La primera foto (índice 0) se marca como foto principal del espacio
                 if ($request->hasFile('fotos')) {
                     foreach ($request->file('fotos') as $index => $foto) {
-                        $path = $foto->store('espacios', 'public');
+                        $mimeType = $foto->getClientMimeType();
+                        $base64 = base64_encode(file_get_contents($foto->path()));
 
                         \App\Models\FotoEspacio::create([
                             'id_espacio' => $espacio->id_espacio,
-                            'url_foto' => '/storage/' . $path,
+                            'url_foto' => 'data:' . $mimeType . ';base64,' . $base64,
                             'es_principal' => $index === 0
                         ]);
                     }
@@ -349,10 +350,12 @@ class EspacioController extends Controller
                 // Si se enviaron nuevas fotos, se almacenan y registran como fotos adicionales del espacio
                 if ($request->hasFile('fotos')) {
                     foreach ($request->file('fotos') as $foto) {
-                        $path = $foto->store('espacios', 'public');
+                        $mimeType = $foto->getClientMimeType();
+                        $base64 = base64_encode(file_get_contents($foto->path()));
+
                         \App\Models\FotoEspacio::create([
                             'id_espacio' => $espacio->id_espacio,
-                            'url_foto' => '/storage/' . $path,
+                            'url_foto' => 'data:' . $mimeType . ';base64,' . $base64,
                             'es_principal' => false
                         ]);
                     }

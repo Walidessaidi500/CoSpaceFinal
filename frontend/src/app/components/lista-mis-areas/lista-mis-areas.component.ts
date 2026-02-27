@@ -90,7 +90,7 @@ export class ListaMisAreasComponent implements OnInit {
             const relativeUrl = principal ? principal.url_foto : espacio.fotos[0].url_foto;
 
             // Si la URL ya es absoluta, se devuelve directamente
-            if (relativeUrl.startsWith('http')) {
+            if (relativeUrl.startsWith('http') || relativeUrl.startsWith('data:image')) {
                 return relativeUrl;
             }
             // Se construye la URL completa usando la URL base de la API

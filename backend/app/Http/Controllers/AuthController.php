@@ -263,8 +263,10 @@ class AuthController extends Controller
 
             // Si se incluye una nueva foto de perfil, se almacena y se actualiza la ruta en el usuario
             if ($request->hasFile('foto_perfil')) {
-                $path = $request->file('foto_perfil')->store('perfiles', 'public');
-                $user->foto_perfil = $path;
+                $file = $request->file('foto_perfil');
+                $mimeType = $file->getClientMimeType();
+                $base64 = base64_encode(file_get_contents($file->path()));
+                $user->foto_perfil = 'data:' . $mimeType . ';base64,' . $base64;
             }
 
             // Si se envía un teléfono y el usuario es de tipo Cliente,
