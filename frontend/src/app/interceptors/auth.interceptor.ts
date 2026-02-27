@@ -1,6 +1,7 @@
 import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 import { catchError, throwError } from 'rxjs';
 
 /**
@@ -11,14 +12,14 @@ import { catchError, throwError } from 'rxjs';
  * 1. Añadir automáticamente el token de autenticación Bearer al encabezado
  *    'Authorization' de todas las peticiones si el usuario está autenticado.
  * 2. Interceptar respuestas con error 401 (no autorizado) para limpiar la sesión
- *    del usuario (token, datos y rol en localStorage) y redirigirlo a la página
- *    de inicio de sesión.
+ *    del usuario completamente y redirigirlo a la página de inicio.
  *
  * Se verifica que el entorno sea un navegador antes de acceder a localStorage
  * para evitar errores en el renderizado del servidor (SSR).
  */
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
     const router = inject(Router);
+    const authService = inject(AuthService);
 
     // Se verifica si estamos en un entorno de navegador antes de acceder a localStorage (compatibilidad SSR)
     const isBrowser = typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
@@ -39,14 +40,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         catchError((error: HttpErrorResponse) => {
             // Si el servidor responde con 401, el token es inválido o ha expirado
             if (error.status === 401) {
-                // Se limpian todos los datos de sesión del almacenamiento local
-                if (isBrowser) {
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('user');
-                    localStorage.removeItem('role');
-                }
-                // Se redirige al usuario a la página de inicio de sesión
-                router.navigate(['/iniciar-sesion']);
+                // Se usa el servicio de autenticación para limpiar correctamente toda la sesión
+                authService.logout();
             }
             return throwError(() => error);
         })
