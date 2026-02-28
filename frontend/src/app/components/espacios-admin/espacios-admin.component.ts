@@ -83,7 +83,7 @@ export class EspaciosAdminComponent implements OnInit {
                 e.titulo?.toLowerCase().includes(term) ||
                 e.ciudad?.toLowerCase().includes(term) ||
                 e.anfitrion?.toLowerCase().includes(term);
-            const matchEstado = !this.filterEstado || e.estado?.toLowerCase() === this.filterEstado.toLowerCase();
+            const matchEstado = !this.filterEstado || e.estado === this.filterEstado;
             return matchSearch && matchEstado;
         });
     }

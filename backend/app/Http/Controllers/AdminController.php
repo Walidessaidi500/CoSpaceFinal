@@ -396,8 +396,10 @@ class AdminController extends Controller
      * Actualiza los datos de un usuario existente.
      *
      * Permite modificar el nombre, email, tipo de usuario (rol) y estado de la cuenta.
-     * La validación del email incluye una regla de unicidad que excluye al propio usuario
-     * para evitar conflictos cuando no se cambia el correo electrónico.
+     * Cuando se cambia el rol, se gestionan las tablas de perfil asociadas:
+     * - Si pasa a Cliente: se elimina de 'anfitriones' y se crea en 'clientes'.
+     * - Si pasa a Anfitrion: se elimina de 'clientes' y se crea en 'anfitriones'.
+     * - Si pasa a Admin: se elimina de ambas tablas de perfil.
      *
      * @param Request $request Datos de la petición con los campos a actualizar.
      * @param int $id Identificador único del usuario a actualizar.
@@ -405,15 +407,12 @@ class AdminController extends Controller
      */
     public function updateUser(Request $request, $id)
     {
-        // Se busca el usuario por su ID
         $user = Usuario::find($id);
 
-        // Si no existe, se devuelve un error 404
         if (!$user) {
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
-        // Se validan los datos; la regla unique del email excluye al usuario actual para evitar conflictos
         $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
             'nombre_completo' => 'sometimes|required|string|max:255',
             'email' => 'sometimes|required|email|max:255|unique:usuarios,email,' . $id . ',id_usuario',
@@ -421,18 +420,51 @@ class AdminController extends Controller
             'estado_cuenta' => 'sometimes|required|string|in:Activo,Suspendido,Pendiente',
         ]);
 
-        // Si la validación falla, se devuelven los errores detallados
         if ($validator->fails()) {
             return response()->json(['message' => 'Datos inválidos', 'errors' => $validator->errors()], 422);
         }
 
-        // Se actualizan solo los campos permitidos del usuario
-        $user->update($request->only(['nombre_completo', 'email', 'tipo_usuario', 'estado_cuenta']));
+        try {
+            DB::transaction(function () use ($request, $user) {
+                $rolAnterior = $user->tipo_usuario;
+                $nuevoRol = $request->input('tipo_usuario', $rolAnterior);
 
-        return response()->json([
-            'message' => 'Usuario actualizado exitosamente',
-            'data' => $user
-        ]);
+                $user->update($request->only(['nombre_completo', 'email', 'tipo_usuario', 'estado_cuenta']));
+
+                if ($nuevoRol !== $rolAnterior) {
+                    // Se elimina el perfil del rol anterior
+                    if ($rolAnterior === 'Anfitrion') {
+                        \App\Models\Anfitrion::where('id_usuario', $user->id_usuario)->delete();
+                    } elseif ($rolAnterior === 'Cliente') {
+                        \App\Models\Cliente::where('id_usuario', $user->id_usuario)->delete();
+                    }
+
+                    // Se crea el perfil del nuevo rol
+                    if ($nuevoRol === 'Anfitrion') {
+                        \App\Models\Anfitrion::firstOrCreate(
+                            ['id_usuario' => $user->id_usuario],
+                            ['biografia' => '', 'es_verificado' => false, 'cantidad_espacios' => 0]
+                        );
+                    } elseif ($nuevoRol === 'Cliente') {
+                        \App\Models\Cliente::firstOrCreate(
+                            ['id_usuario' => $user->id_usuario],
+                            ['telefono' => null, 'metodo_pago_pref' => null]
+                        );
+                    }
+                    // Si el nuevo rol es Admin, no se necesita tabla de perfil adicional
+                }
+            });
+
+            return response()->json([
+                'message' => 'Usuario actualizado exitosamente',
+                'data' => $user->fresh()
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al actualizar el usuario',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     // ==========================================
