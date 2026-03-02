@@ -71,7 +71,7 @@ export class RegistroClienteComponent {
       next: (res: any) => {
         console.log('Cliente registrado:', res);
         alert('Cuenta de cliente creada con éxito');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/iniciar-sesion']);
         this.loading = false;
       },
       error: (err: any) => {
